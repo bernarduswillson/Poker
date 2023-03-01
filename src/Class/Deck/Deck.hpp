@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "Card.hpp"
+// #include "../Card/Card.hpp"
 
 template <typename T>
 class Deck
@@ -15,8 +15,10 @@ private:
 public:
     Deck();
     ~Deck();
+    void addCard(T card);
     void shuffle();
     void roll();
+    void getValues();
 };
 
 #endif
