@@ -29,12 +29,12 @@ double Card::getValue() {
     return this->value;
 }
 
-int main(int argc, char const *argv[])
-{
-    double x;
-    std::string y;
-    std::cin >> x >> y;
-    Card card(x, y);
-    std::cout << card.getValue() << std::endl;
-    return 0;
-}
+// int main(int argc, char const *argv[])
+// {
+//     double x;
+//     std::string y;
+//     std::cin >> x >> y;
+//     Card card(x, y);
+//     std::cout << card.getValue() << std::endl;
+//     return 0;
+// }

@@ -2,7 +2,9 @@
 
 class Ability {
     private:
-        std::string name;
+        double value;
     public:
-        void use();
+        Ability();
+        Ability(double value);
+        double getValue();
 };
