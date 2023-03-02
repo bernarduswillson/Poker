@@ -16,6 +16,5 @@ Player::~Player() {
 }
 
 void Player::displayPlayer() {
-    std::cout << "Player Name: " << this->name << std::endl;
-    std::cout << "Player Points: " << this->points << std::endl;
+    std::cout << this->name << "(" << this->points << ")" << std::endl;
 }
