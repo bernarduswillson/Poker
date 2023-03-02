@@ -12,17 +12,17 @@
 
 class Player
 {
-private:
-std::string name;
-int points;
+    private:
+        std::string name;
+        int points;
 
-const int id;
-static int num_players;
+        const int id;
+        static int num_players;
 
-public:
-Player();
-~Player();
-void displayPlayer();
+    public:
+        Player();
+        ~Player();
+        void displayPlayer();
 };
 
 #endif
