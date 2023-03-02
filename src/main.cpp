@@ -5,5 +5,7 @@ int main()
     // Initialize Game State
     GameState *gameState = new GameState();
 
+    gameState->displayGameState();
+
     return 0;
 }

@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "GameState.hpp"
 
 GameState::GameState()
@@ -9,6 +11,19 @@ GameState::GameState()
 
 GameState::~GameState() {}
 
+void GameState::displayGameState()
+{
+    std::cout << "\n#------===== GAME STATUS =====------#\n"
+              << std::endl;
+    std::cout << "Game:\t\t" << this->game << std::endl;
+    std::cout << "Round:\t\t" << this->round << std::endl;
+    std::cout << "Table Prize:\t" << this->prize << std::endl;
+    displayLeaderboard();
+}
+
 void GameState::initializePlayers() {}
 
-void GameState::displayPlayers() {}
+void GameState::displayLeaderboard()
+{
+    std::cout << "Leaderboard:" << std::endl;
+}

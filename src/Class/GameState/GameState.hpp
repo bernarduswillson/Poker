@@ -13,8 +13,9 @@ public:
     GameState();
     ~GameState();
 
+    void displayGameState();
     void initializePlayers();
-    void displayPlayers();
+    void displayLeaderboard();
 };
 
 #endif
