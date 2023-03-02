@@ -1,4 +1,4 @@
-#include "Player.hpp";
+#include "Player.hpp"
 
 int Player::num_players = 0;
 
