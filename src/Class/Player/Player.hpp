@@ -13,18 +13,16 @@
 class Player
 {
 private:
-    int id;
-    std::string name;
-    int points;
-    std::vector<Card> hands;
-    Ability ability;
-    Package package;
+std::string name;
+int points;
 
-    static int playerId;
+const int id;
+static int num_players;
 
 public:
-    Player();
-    ~Player();
+Player();
+~Player();
+void displayPlayer();
 };
 
 #endif
