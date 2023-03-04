@@ -3,28 +3,22 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
-
-#include "../Card/Card.hpp"
-#include "../Ability/Ability.hpp"
-#include "../Package/Package.hpp"
-#include "../GameState/GameState.hpp"
 
 class Player
 {
 private:
-    int id;
+    const int id;
     std::string name;
     int points;
-    std::vector<Card> hands;
-    Ability ability;
-    Package package;
 
-    static int playerId;
+    static int num_players;
 
 public:
     Player();
     ~Player();
+
+    std::string getName();
+    int getPoints();
 };
 
 #endif

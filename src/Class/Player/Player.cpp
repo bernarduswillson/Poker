@@ -1,26 +1,25 @@
-#include "Player.hpp";
+#include "Player.hpp"
 
-int Player::playerId = 0;
+int Player::num_players = 0;
 
-Player::Player() : id(playerId + 1)
+Player::Player() : id(num_players + 1)
 {
-    // Input player name
-    bool isNameValid = false;
-    std::cout << "\nInput player " << this->id << " name: " << std::endl;
-    std::cin >> this->name;
-
-    // Initialize point
+    std::string name;
+    std::cout << "Enter player " << this->id << " name: ";
+    std::cin >> name;
+    this->name = name;
     this->points = 0;
+    num_players++;
+}
 
-    // Initialize empty hands
-    std::vector<Card> *hands = new std::vector<Card>;
-    this->hands = *hands;
+Player::~Player() {}
 
-    // Initialize empty ability
-    Ability *ability = new Ability();
-    this->ability = *ability;
+std::string Player::getName()
+{
+    return this->name;
+}
 
-    // Initialize empty package
-    Package *package = new Package();
-    this->package = *package;
+int Player::getPoints()
+{
+    return this->points;
 }
