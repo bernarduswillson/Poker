@@ -2,19 +2,24 @@
 
 int Player::num_players = 0;
 
-Player::Player() : id(num_players + 1) {
+Player::Player() : id(num_players + 1)
+{
     std::string name;
-    std::cout << "Input Player Name: ";
+    std::cout << "Enter player " << this->id << " name: ";
     std::cin >> name;
-    std::cout << std::endl;
     this->name = name;
     this->points = 0;
     num_players++;
 }
 
-Player::~Player() {
+Player::~Player() {}
+
+std::string Player::getName()
+{
+    return this->name;
 }
 
-void Player::displayPlayer() {
-    std::cout << this->name << "(" << this->points << ")" << std::endl;
+int Player::getPoints()
+{
+    return this->points;
 }

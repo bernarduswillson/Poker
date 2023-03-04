@@ -1,8 +1,10 @@
 #ifndef __PLAYERLIST_HPP__
 #define __PLAYERLIST_HPP__
 
-#include <iostream>
-#include "../Player/Player.cpp"
+#include <vector>
+#include <string>
+
+#include "../Player/Player.hpp"
 
 class PlayerList
 {
@@ -13,8 +15,12 @@ private:
 public:
     PlayerList();
     ~PlayerList();
+
+    int getNumOfPlayers();
+    std::string getPlayerName(int);
+    int getPlayerPoints(int);
+
     void addPlayer();
-    // int getNumOfPlayers();
 };
 
 #endif

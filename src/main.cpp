@@ -2,10 +2,14 @@
 
 int main()
 {
-    // Initialize Game State
+    // INITIALIZE GAME =============================================
     GameState *gameState = new GameState();
 
-    gameState->displayGameState();
+    // START GAME ==================================================
+    gameState->startNewGame();
+
+    // CLEAR MEMORY ================================================
+    delete gameState;
 
     return 0;
 }
