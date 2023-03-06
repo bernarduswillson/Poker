@@ -2,6 +2,9 @@
 #define __DECK_HPP__
 
 #include <vector>
+#include "../PlayerList/PlayerList.hpp"
+#include "../Card/Card.hpp"
+
 
 // #include "../Card/Card.hpp"
 
@@ -17,7 +20,8 @@ public:
     ~Deck();
     void addCard(T card);
     void shuffle();
-    void roll();
+    void roll(PlayerList &players, std::vector <T> &table);
+    // void roll(Ability &ability);
     void getValues();
 };
 

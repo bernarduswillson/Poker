@@ -28,6 +28,11 @@ int PlayerList::getPlayerPoints(int idx)
     return this->playersBuffer[idx].getPoints();
 }
 
+Player PlayerList::getPlayer(int idx)
+{
+    return this->playersBuffer[idx];
+}
+
 void PlayerList::addPlayer()
 {
     this->playersBuffer.push_back(Player());

@@ -19,7 +19,7 @@ public:
     int getNumOfPlayers();
     std::string getPlayerName(int);
     int getPlayerPoints(int);
-
+    Player getPlayer(int);
     void addPlayer();
 };
 

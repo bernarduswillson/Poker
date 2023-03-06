@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include "../Card/Card.hpp"
 
 class Player
 {
@@ -10,7 +11,7 @@ private:
     const int id;
     std::string name;
     int points;
-
+    vector<Card> hand;
     static int num_players;
 
 public:
@@ -19,6 +20,7 @@ public:
 
     std::string getName();
     int getPoints();
+    void setHand(Card card);
 };
 
 #endif

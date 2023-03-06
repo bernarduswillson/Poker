@@ -23,3 +23,8 @@ int Player::getPoints()
 {
     return this->points;
 }
+
+void Player::setHand(Card card)
+{
+    this->hand.push_back(card);
+}
