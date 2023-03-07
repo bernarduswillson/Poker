@@ -13,13 +13,17 @@ private:
     std::vector<Player> playersBuffer;
 
 public:
+    // Constructor and Destructor
     PlayerList();
     ~PlayerList();
 
+    // Getter and Setter
     int getNumOfPlayers();
     std::string getPlayerName(int);
     int getPlayerPoints(int);
     Player getPlayer(int);
+
+    // Methods
     void addPlayer();
 };
 

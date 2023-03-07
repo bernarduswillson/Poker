@@ -18,14 +18,18 @@ private:
     std::vector<Card> table;
 
 public:
+    // Constructor and Destructor
     GameState();
     ~GameState();
 
+    // Methods
     void displaySplash();
     void displayGameState();
     void displayLeaderboard();
     void startNewGame();
     void initializePlayers();
+    void initializeDeck();
+    void initializeRandomDeck();
 };
 
 #endif
