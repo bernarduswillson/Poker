@@ -27,6 +27,9 @@ public:
     void shuffle();
     // void roll(PlayerList &players, std::vector<T> &table);
     // void roll(Ability &ability);
+    T drawCard();
+
+    void displayDeck();
 };
 
 #endif

@@ -30,6 +30,7 @@ public:
     void initializePlayers();
     void initializeDeck();
     void initializeRandomDeck();
+    void roll();
 };
 
 #endif

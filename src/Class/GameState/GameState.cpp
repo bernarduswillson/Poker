@@ -70,7 +70,15 @@ void GameState::startNewGame()
     this->round = 1;
 
     // 1. Display game status
+    this->roll();
     this->displayGameState();
+    for (int i = 0; i < this->players->getNumOfPlayers(); i++)
+    {
+        // 2. Display player's hand
+        this->players->displayPlayerCards(i);
+    }
+    std::cout<<"===================="<<std::endl;
+    this->playingDeck->displayDeck();
 }
 void GameState::initializePlayers()
 {
@@ -157,4 +165,16 @@ void GameState::initializeRandomDeck()
     }
 
     this->playingDeck->shuffle();
+}
+
+void GameState::roll()
+{
+    std::vector<Card> rolledCards;
+    for (int i = 0; i < players->getNumOfPlayers(); i++)
+    {
+        rolledCards.push_back(this->playingDeck->drawCard());
+        rolledCards.push_back(this->playingDeck->drawCard());
+        players->setPlayerCards(i, rolledCards);
+        rolledCards.clear();
+    }
 }

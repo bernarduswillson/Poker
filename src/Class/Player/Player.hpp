@@ -23,7 +23,8 @@ public:
     // Getter and Setter
     std::string getName();
     int getPoints();
-    void setHand(Card card);
+    void setHand(std::vector <Card> hand);
+    void displayHand();
 };
 
 #endif

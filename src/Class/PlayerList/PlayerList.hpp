@@ -25,6 +25,8 @@ public:
 
     // Methods
     void addPlayer();
+    void setPlayerCards(int, std::vector<Card>);
+    void displayPlayerCards(int);
 };
 
 #endif

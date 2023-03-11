@@ -7,6 +7,7 @@ int main()
 
     // START GAME ==================================================
     gameState->startNewGame();
+    
 
     // CLEAR MEMORY ================================================
     delete gameState;

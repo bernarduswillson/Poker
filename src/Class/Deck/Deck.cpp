@@ -54,3 +54,21 @@ void Deck<T>::getValues()
         this->cardBuffer[i].displaycard();
     }
 }
+
+template <typename T>
+T Deck<T>::drawCard()
+{
+    T card = this->cardBuffer.back();
+    this->cardBuffer.pop_back();
+    return card;
+}
+
+template <typename T>
+void Deck<T>::displayDeck()
+{
+    for (int i = 0; i < this->cardBuffer.size(); i++)
+    {
+        this->cardBuffer[i].displaycard();
+    }
+}
+

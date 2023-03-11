@@ -24,7 +24,15 @@ int Player::getPoints()
     return this->points;
 }
 
-void Player::setHand(Card card)
+void Player::setHand(std::vector <Card> hand)
 {
-    this->hand.push_back(card);
+    this->hand = hand;
+}
+
+void Player::displayHand()
+{
+    for (int i = 0; i < this->hand.size(); i++)
+    {
+        this->hand[i].displaycard();
+    }
 }

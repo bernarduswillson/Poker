@@ -39,6 +39,16 @@ void PlayerList::addPlayer()
     numOfPlayers++;
 }
 
+void PlayerList::setPlayerCards(int idx, std::vector<Card> cards)
+{
+    this->playersBuffer[idx].setHand(cards);
+}
+
+void PlayerList::displayPlayerCards(int idx)
+{
+    this->playersBuffer[idx].displayHand();
+}
+
 // int PlayerList::getNumOfPlayers()
 // {
 //     return numOfPlayers;

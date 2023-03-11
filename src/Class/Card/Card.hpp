@@ -22,6 +22,7 @@ public:
 
     // Methods
     void displaycard();
+
 };
 
 #endif
