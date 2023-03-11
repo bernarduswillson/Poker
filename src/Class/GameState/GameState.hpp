@@ -26,11 +26,14 @@ public:
     void displaySplash();
     void displayGameState();
     void displayLeaderboard();
+    void displayTable();
     void startNewGame();
+    void startNewRound();
     void initializePlayers();
     void initializeDeck();
     void initializeRandomDeck();
     void roll();
+    void rollTable();
 };
 
 #endif

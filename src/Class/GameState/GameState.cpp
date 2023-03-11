@@ -64,6 +64,26 @@ void GameState::displayLeaderboard() /* ditra: belum disort */
               << std::endl;
 }
 
+void GameState::displayTable()
+{
+    std::cout << "\n#-----=========== TABLE ===========-----#\n"
+              << std::endl;
+    if (round < 5) {
+        for (int i = 0; i < round; i++)
+        {
+            this->table[i].displaycard();
+        }
+    }
+    else {
+        for (int i = 0; i < 5; i++)
+        {
+            this->table[i].displaycard();
+        }
+    }
+    std::cout << "\n#-----=====#*#========#@#========#*#=====-----#\n"
+              << std::endl;
+}
+
 void GameState::startNewGame()
 {
     this->game++;
@@ -71,6 +91,7 @@ void GameState::startNewGame()
 
     // 1. Display game status
     this->roll();
+    this->rollTable();
     this->displayGameState();
     for (int i = 0; i < this->players->getNumOfPlayers(); i++)
     {
@@ -79,7 +100,32 @@ void GameState::startNewGame()
     }
     std::cout<<"===================="<<std::endl;
     this->playingDeck->displayDeck();
+    this->displayTable();
+    std::cin.get();
+
+    for (int i = 0; i < 5 ; i++)
+    {
+        std::cin.get();
+        this->startNewRound();
+    }
+
 }
+
+void GameState::startNewRound(){
+    this->round++;
+    this->prize = 64;
+    this->turn = 1;
+    this->displayGameState();
+    for (int i = 0; i < this->players->getNumOfPlayers(); i++)
+    {
+        // 2. Display player's hand
+        std::cout << "Player " << i+1 << " Hand's" << std::endl;
+        this->players->displayPlayerCards(i);
+    }
+    this->displayTable();
+    
+}
+
 void GameState::initializePlayers()
 {
     system("clear");
@@ -176,5 +222,13 @@ void GameState::roll()
         rolledCards.push_back(this->playingDeck->drawCard());
         players->setPlayerCards(i, rolledCards);
         rolledCards.clear();
+    }
+}
+
+void GameState::rollTable()
+{
+    for (int i = 0; i < 5; i++)
+    {
+        this->table.push_back(this->playingDeck->drawCard());
     }
 }
