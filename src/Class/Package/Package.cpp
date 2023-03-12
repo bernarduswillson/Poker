@@ -1,7 +1,7 @@
 #include "Package.hpp"
 #include <iostream>
 #include <cmath>
-#include <bits/stdc++.h>
+
 
 
 Package::Package() {
@@ -56,13 +56,9 @@ std::tuple<int, int> Package::isStraightFlush(std::vector<double> value) {
                 return result;
             }
             if (sameColor[i] == sameColor[i+1] - 10){
-                std::cout << sameColor[i] << " " << sameColor[i+1] << std::endl;
-                std::cout << "T" << std::endl;
                 count++;
             }
             else {
-                std::cout << sameColor[i] << " " << sameColor[i+1] << std::endl;
-                std::cout << "F" << std::endl;
                 count = 0;
             }
         }
@@ -139,36 +135,6 @@ std::tuple<int, int> Package::isFullHouse(std::vector<double> value) {
     return std::make_tuple(-1, -1);
 }
 
-std::tuple<int, int> Package::isPair(std::vector<double> value) {
-    std::sort(value.begin(), value.end(), std::greater<double>());
-    for (int i = 0; i < value.size(); i++) {
-        for (int j = i + 1; j < value.size(); j++) {
-            if (floor(value[i] * 10) == floor(value[j] * 10)) {
-                return std::make_tuple(2, value[i]*100);
-            }
-        }
-    }
-    return std::make_tuple(-1, -1);
-}
-
-std::tuple<int, int> Package::isTwoPair(std::vector<double> value) {
-    std::sort(value.begin(), value.end());
-    int maxValue = 0;
-    int count = 0;
-    for (int i = 0; i < value.size(); i++) {
-        for (int j = i + 1; j < value.size(); j++) {
-            if (floor(value[i] * 10) == floor(value[j] * 10)) {
-                maxValue = round(value[j]*100);
-                count++;
-            }
-        }
-    }
-    if (count >= 2){
-        return std::make_tuple(3, maxValue);
-    }
-    return std::make_tuple(-1, -1);
-}
-
 std::tuple<int, int> Package::isFlush(std::vector<double> value) {
     std::vector<int> H, B, K, M;
     std::tuple<int, int> result;
@@ -209,12 +175,102 @@ std::tuple<int, int> Package::isFlush(std::vector<double> value) {
     return std::make_tuple(-1, -1);
 }
 
+std::tuple<int, int> Package::isStraight(std::vector<double> value) {
+    std::vector<int> sameValue;
+    std::tuple<int, int> result;
+    int maxValue = -1;
+    for (int i = 0; i < value.size(); i++) {
+        sameValue.push_back(floor(value[i]*10)*10);
+    }
+    sort(sameValue.begin(), sameValue.end());
+    int count = 0;
+    for (int i = 0 ; i < sameValue.size() - 1 ; i++){
+        if (sameValue[i+1] - sameValue[i] == 10) {
+            count++;
+            if (count == 4 ){
+                maxValue = sameValue[i+1];
+            }
+        }
+        else if (sameValue[i] != sameValue[i+1]){
+            count = 0;
+        }
+    }
+    if (maxValue != -1){
+        result = std::make_tuple(5, maxValue);
+        return result;
+    }
+    return std::make_tuple(-1, -1);
+}
+
+
+std::tuple<int, int> Package::isThreeKind(std::vector<double> value) {
+    std::vector<int> sameValue;
+    std::tuple<int, int> result;
+    bool trip = false;
+    int tripValue;
+    for (int i = 0; i < value.size(); i++) {
+        sameValue.push_back(floor(value[i]*10)*10);
+    }
+    sort(sameValue.begin(), sameValue.end());
+    int count = 0;
+    for (int i = 0; i < sameValue.size() - 1; i++){
+        if (count == 2 ){
+            trip = true;
+            tripValue = sameValue[i-1];
+        }
+        if (sameValue[i] == sameValue[i+1]){
+            count++;
+        }
+        else {
+            count = 0;
+        }
+    }
+    if (trip ){
+        result = std::make_tuple(4, tripValue);
+        return result;
+    }
+    return std::make_tuple(-1, -1);
+}
+
+std::tuple<int, int> Package::isTwoPair(std::vector<double> value) {
+    std::sort(value.begin(), value.end());
+    int maxValue = 0;
+    int count = 0;
+    for (int i = 0; i < value.size(); i++) {
+        for (int j = i + 1; j < value.size(); j++) {
+            if (floor(value[i] * 10) == floor(value[j] * 10)) {
+                maxValue = round(value[j]*100);
+                count++;
+            }
+        }
+    }
+    if (count >= 2){
+        return std::make_tuple(3, maxValue);
+    }
+    return std::make_tuple(-1, -1);
+}
+
+std::tuple<int, int> Package::isPair(std::vector<double> value) {
+    std::sort(value.begin(), value.end(), std::greater<double>());
+    for (int i = 0; i < value.size(); i++) {
+        for (int j = i + 1; j < value.size(); j++) {
+            if (floor(value[i] * 10) == floor(value[j] * 10)) {
+                return std::make_tuple(2, value[i]*100);
+            }
+        }
+    }
+    return std::make_tuple(-1, -1);
+}
+
+
+
+
 int main() {
     std::vector<double> v;
     Package p;
     v.push_back(0.89);
     v.push_back(1.09);
-    v.push_back(0.09);
+    v.push_back(0.59);
     v.push_back(0.49);
     v.push_back(0.29);
     v.push_back(0.39);
@@ -225,10 +281,14 @@ int main() {
     std::tuple<int, int> result4 = p.isPair(v);
     std::tuple<int, int> result5 = p.isTwoPair(v);
     std::tuple<int, int> result6 = p.isFlush(v);
+    std::tuple<int, int> result7 = p.isThreeKind(v);
+    std::tuple<int, int> result8 = p.isStraight(v);
     std::cout << std::get<0>(result) << " " << std::get<1>(result) << std::endl;
     std::cout << std::get<0>(result2) << " " << std::get<1>(result2) << std::endl;
     std::cout << std::get<0>(result3) << " " << std::get<1>(result3) << std::endl;
     std::cout << std::get<0>(result4) << " " << std::get<1>(result4) << std::endl;
     std::cout << std::get<0>(result5) << " " << std::get<1>(result5) << std::endl;
     std::cout << std::get<0>(result6) << " " << std::get<1>(result6) << std::endl;
+    std::cout << std::get<0>(result7) << " " << std::get<1>(result7) << std::endl;
+    std::cout << std::get<0>(result8) << " " << std::get<1>(result8) << std::endl;
 }
