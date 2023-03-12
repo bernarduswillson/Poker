@@ -1,7 +1,7 @@
 #include "Package.hpp"
 #include <iostream>
 #include <cmath>
-#include <bits/stdc++.h>
+
 
 Package::Package() {
     this->value.push_back(0.1);
@@ -103,29 +103,45 @@ std::tuple<int, int> Package::isFourKind(std::vector<double> value) {
 }
 
 std::tuple<int, int> Package::isFullHouse(std::vector<double> value) {
-    std::map<int, int> freq;
-    for (auto v : value) {
-        int val = static_cast<int>(round(v * 100));
-        if (freq.find(val) == freq.end()) {
-            freq[val] = 1;
-        } else {
-            freq[val]++;
+    std::vector<int> sameValue;
+    std::tuple<int, int> result;
+    bool trip = false, doub = false;
+    int tripValue;
+    for (int i = 0; i < value.size(); i++) {
+        sameValue.push_back(floor(value[i]*10)*10);
+    }
+    sort(sameValue.begin(), sameValue.end());
+    int count = 0;
+    for (int i = 0; i < sameValue.size() - 1; i++){
+        if (count == 2 ){
+            trip = true;
+            tripValue = sameValue[i-1];
+        }
+        if (sameValue[i] == sameValue[i+1]){
+            count++;
+        }
+        else {
+            count = 0;
         }
     }
-    int triple = -1;
-    int pair = -1;
-    for (auto [val, count] : freq) {
-        if (count == 3 && val > triple) {
-            triple = val;
-        } else if (count >= 2 && val > pair) {
-            pair = val;
+    if (trip == true){
+        for (int i = 0; i < sameValue.size() - 1; i++){
+            if (count == 1 ){
+                doub = true;
+            }
+            if (sameValue[i] == sameValue[i+1]){
+                count++;
+            }
+            else {
+                count = 0;
+            }
         }
     }
-    if (triple >= 0 && pair >= 0) {
-        return std::make_tuple(9, (triple > pair) ? triple : pair);
-    } else {
-        return std::make_tuple(-1, -1);
+    if (trip && doub){
+        result = std::make_tuple(7, tripValue);
+        return result;
     }
+    return std::make_tuple(-1, -1);
 }
 
 std::tuple<int, int> Package::isPair(std::vector<double> value) {

@@ -19,6 +19,11 @@ public:
     std::tuple<int, int> isStraightFlush(std::vector<double>);
     std::tuple<int, int> isFourKind(std::vector<double>);
     std::tuple<int, int> isFullHouse(std::vector<double>);
+    std::tuple<int, int> isFlush(std::vector<double>);
+    std::tuple<int, int> isStraight(std::vector<double>);
+    std::tuple<int, int> isThreeKind(std::vector<double>);
+    std::tuple<int, int> isTwoPair(std::vector<double>);
+    std::tuple<int, int> isPair(std::vector<double>);
 
     std::tuple<int, int> isPair(std::vector<double>);
 
