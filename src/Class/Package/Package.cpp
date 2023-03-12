@@ -1,6 +1,7 @@
 #include "Package.hpp"
 #include <iostream>
 #include <cmath>
+#include <bits/stdc++.h>
 
 
 Package::Package() {
@@ -14,41 +15,35 @@ Package::Package() {
 }
 
 std::tuple<int, int> Package::isStraightFlush(std::vector<double> value) {
-    std::vector<int> H;
-    std::vector<int> B;
-    std::vector<int> K;
-    std::vector<int> M;
+    std::vector<int> H, B, K, M;
     std::vector<int> sameColor;
     std::tuple<int, int> result;
     for (int i = 0; i < value.size(); i++) {
-        if (round(fmod(value[i] * 100, 10)) == 0) {
-            H.push_back(round(value[i]*100));
-        }
-        else if (round(fmod(value[i] * 100, 10)) == 3) {
-            round(value[i]);
-            B.push_back(round(value[i]*100));
+        if (round(fmod(value[i] * 100, 10)) == 9) {
+            M.push_back(floor(value[i]*100));
         }
         else if (round(fmod(value[i] * 100, 10)) == 6) {
-            round(value[i]);
-            K.push_back(round(value[i]*100));
+            K.push_back(floor(value[i]*100));
         }
-        else if (round(fmod(value[i] * 100, 10)) == 9) {
-            round(value[i]);
-            M.push_back(round(value[i]*100));
+        else if (round(fmod(value[i] * 100, 10)) == 3) {
+            B.push_back(floor(value[i]*100));
+        }
+        else if (round(fmod(value[i] * 100, 10)) == 0) {
+            H.push_back(floor(value[i]*100));
         }
     }
 
-    if (H.size() >= 5){
-        sameColor = H;
-    }
-    else if (B.size() >= 5){
-        sameColor = B;
+    if (M.size() >= 5){
+        sameColor = M;
     }
     else if (K.size() >= 5){
         sameColor = K;
     }
-    else if (M.size() >= 5){
-        sameColor = M;
+    else if (B.size() >= 5){
+        sameColor = B;
+    }
+    else if (H.size() >= 5){
+        sameColor = H;
     }
 
     sort(sameColor.begin(), sameColor.end());
@@ -156,22 +151,84 @@ std::tuple<int, int> Package::isPair(std::vector<double> value) {
     return std::make_tuple(-1, -1);
 }
 
+std::tuple<int, int> Package::isTwoPair(std::vector<double> value) {
+    std::sort(value.begin(), value.end());
+    int maxValue = 0;
+    int count = 0;
+    for (int i = 0; i < value.size(); i++) {
+        for (int j = i + 1; j < value.size(); j++) {
+            if (floor(value[i] * 10) == floor(value[j] * 10)) {
+                maxValue = value[j]*100;
+                count++;
+            }
+        }
+    }
+    if (count >= 2){
+        return std::make_tuple(3, maxValue);
+    }
+    return std::make_tuple(-1, -1);
+}
+
+std::tuple<int, int> Package::isFlush(std::vector<double> value) {
+    std::vector<int> H, B, K, M;
+    std::tuple<int, int> result;
+    sort(value.begin(), value.end(), std::greater<double>());
+    for (int i = 0; i < value.size(); i++) {
+        if (round(fmod(value[i] * 100, 10)) == 9) {
+            M.push_back(round(value[i]*100));
+        }
+        else if (round(fmod(value[i] * 100, 10)) == 6) {
+            K.push_back(round(value[i]*100));
+        }
+        else if (round(fmod(value[i] * 100, 10)) == 3) {
+            B.push_back(round(value[i]*100));
+        }
+        else if (round(fmod(value[i] * 100, 10)) == 0) {
+            H.push_back(round(value[i]*100));
+        }
+    }
+
+    if (M.size() >= 5){
+        result = std::make_tuple(6, M[0]);
+        return result;
+    }
+    else if (K.size() >= 5){
+        result = std::make_tuple(6, K[0]);
+        return result;
+    }
+    else if (B.size() >= 5){
+        result = std::make_tuple(6, B[0]);
+        return result;
+    }
+    else if (H.size() >= 5){
+        result = std::make_tuple(6, H[0]);
+        return result;
+    }
+    
+
+    return std::make_tuple(-1, -1);
+}
+
 int main() {
     std::vector<double> v;
     Package p;
     v.push_back(0.59);
     v.push_back(1.09);
-    v.push_back(0.40);
-    v.push_back(0.43);
-    v.push_back(0.26);
+    v.push_back(0.09);
+    v.push_back(0.49);
     v.push_back(0.29);
-    v.push_back(0.23);
+    v.push_back(0.39);
+    v.push_back(0.19);
     std::tuple<int, int> result = p.isStraightFlush(v);
     std::tuple<int, int> result2 = p.isFourKind(v);
     std::tuple<int, int> result3 = p.isFullHouse(v);
     std::tuple<int, int> result4 = p.isPair(v);
+    std::tuple<int, int> result5 = p.isTwoPair(v);
+    std::tuple<int, int> result6 = p.isFlush(v);
     std::cout << std::get<0>(result) << " " << std::get<1>(result) << std::endl;
     std::cout << std::get<0>(result2) << " " << std::get<1>(result2) << std::endl;
     std::cout << std::get<0>(result3) << " " << std::get<1>(result3) << std::endl;
     std::cout << std::get<0>(result4) << " " << std::get<1>(result4) << std::endl;
+    std::cout << std::get<0>(result5) << " " << std::get<1>(result5) << std::endl;
+    std::cout << std::get<0>(result6) << " " << std::get<1>(result6) << std::endl;
 }

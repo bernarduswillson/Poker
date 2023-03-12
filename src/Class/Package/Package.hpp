@@ -25,8 +25,6 @@ public:
     std::tuple<int, int> isTwoPair(std::vector<double>);
     std::tuple<int, int> isPair(std::vector<double>);
 
-    std::tuple<int, int> isPair(std::vector<double>);
-
 
 };
 
