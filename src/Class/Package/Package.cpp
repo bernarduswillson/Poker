@@ -20,16 +20,16 @@ std::tuple<int, int> Package::isStraightFlush(std::vector<double> value) {
     std::tuple<int, int> result;
     for (int i = 0; i < value.size(); i++) {
         if (round(fmod(value[i] * 100, 10)) == 9) {
-            M.push_back(floor(value[i]*100));
+            M.push_back(round(value[i]*100));
         }
         else if (round(fmod(value[i] * 100, 10)) == 6) {
-            K.push_back(floor(value[i]*100));
+            K.push_back(round(value[i]*100));
         }
         else if (round(fmod(value[i] * 100, 10)) == 3) {
-            B.push_back(floor(value[i]*100));
+            B.push_back(round(value[i]*100));
         }
         else if (round(fmod(value[i] * 100, 10)) == 0) {
-            H.push_back(floor(value[i]*100));
+            H.push_back(round(value[i]*100));
         }
     }
 
@@ -52,7 +52,7 @@ std::tuple<int, int> Package::isStraightFlush(std::vector<double> value) {
     if (sameColor.size() >= 5){
         for (int i = 0; i < sameColor.size() - 1; i++){
             if (count == 4){
-                result = std::make_tuple(9, sameColor[i+1]);
+                result = std::make_tuple(9, sameColor[i]);
                 return result;
             }
             if (sameColor[i] == sameColor[i+1] - 10){
@@ -158,7 +158,7 @@ std::tuple<int, int> Package::isTwoPair(std::vector<double> value) {
     for (int i = 0; i < value.size(); i++) {
         for (int j = i + 1; j < value.size(); j++) {
             if (floor(value[i] * 10) == floor(value[j] * 10)) {
-                maxValue = value[j]*100;
+                maxValue = round(value[j]*100);
                 count++;
             }
         }
@@ -212,7 +212,7 @@ std::tuple<int, int> Package::isFlush(std::vector<double> value) {
 int main() {
     std::vector<double> v;
     Package p;
-    v.push_back(0.59);
+    v.push_back(0.89);
     v.push_back(1.09);
     v.push_back(0.09);
     v.push_back(0.49);
