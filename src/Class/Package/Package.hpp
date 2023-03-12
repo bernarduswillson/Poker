@@ -20,6 +20,8 @@ public:
     std::tuple<int, int> isFourKind(std::vector<double>);
     std::tuple<int, int> isFullHouse(std::vector<double>);
 
+    std::tuple<int, int> isPair(std::vector<double>);
+
 
 };
 

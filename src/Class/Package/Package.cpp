@@ -105,7 +105,7 @@ std::tuple<int, int> Package::isFourKind(std::vector<double> value) {
 std::tuple<int, int> Package::isFullHouse(std::vector<double> value) {
     std::map<int, int> freq;
     for (auto v : value) {
-        int val = static_cast<int>(v * 100);
+        int val = static_cast<int>(round(v * 100));
         if (freq.find(val) == freq.end()) {
             freq[val] = 1;
         } else {
@@ -128,22 +128,34 @@ std::tuple<int, int> Package::isFullHouse(std::vector<double> value) {
     }
 }
 
-
+std::tuple<int, int> Package::isPair(std::vector<double> value) {
+    std::sort(value.begin(), value.end(), std::greater<double>());
+    for (int i = 0; i < value.size(); i++) {
+        for (int j = i + 1; j < value.size(); j++) {
+            if (floor(value[i] * 10) == floor(value[j] * 10)) {
+                return std::make_tuple(2, value[i]*100);
+            }
+        }
+    }
+    return std::make_tuple(-1, -1);
+}
 
 int main() {
     std::vector<double> v;
     Package p;
     v.push_back(0.59);
     v.push_back(1.09);
-    v.push_back(0.49);
     v.push_back(0.40);
+    v.push_back(0.43);
     v.push_back(0.26);
     v.push_back(0.29);
     v.push_back(0.23);
     std::tuple<int, int> result = p.isStraightFlush(v);
     std::tuple<int, int> result2 = p.isFourKind(v);
     std::tuple<int, int> result3 = p.isFullHouse(v);
+    std::tuple<int, int> result4 = p.isPair(v);
     std::cout << std::get<0>(result) << " " << std::get<1>(result) << std::endl;
     std::cout << std::get<0>(result2) << " " << std::get<1>(result2) << std::endl;
     std::cout << std::get<0>(result3) << " " << std::get<1>(result3) << std::endl;
+    std::cout << std::get<0>(result4) << " " << std::get<1>(result4) << std::endl;
 }
