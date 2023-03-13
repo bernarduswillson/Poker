@@ -1,17 +1,81 @@
 #include "Package.hpp"
 #include <iostream>
 #include <cmath>
+#include <bits/stdc++.h>
 
 
 
 Package::Package() {
-    this->value.push_back(0.1);
-    this->value.push_back(0.2);
-    this->value.push_back(0.3);
-    this->value.push_back(0.4);
-    this->value.push_back(0.5);
-    this->value.push_back(0.6);
-    this->value.push_back(0.7);
+}
+
+std::tuple<int, int> Package::identifyPackage(std::vector<double> table, std::vector<double> player) {
+    std::vector<double> allCards;
+    for (int i = 0; i < table.size(); i++) {
+        allCards.push_back(table[i]);
+    }
+    for (int i = 0; i < player.size(); i++) {
+        allCards.push_back(player[i]);
+    }
+
+    if (std::get<0>(isStraightFlush(allCards)) == 9) {
+        std::cout << "Straight Flush" << std::endl;
+        return std::make_tuple(9, std::get<1>(isStraightFlush(allCards)));
+    }
+    else if (std::get<0>(isFourKind(allCards)) == 8) {
+        std::cout << "Four of a Kind" << std::endl;
+        return std::make_tuple(8, std::get<1>(isFourKind(allCards)));
+    }
+    else if (std::get<0>(isFullHouse(allCards)) == 7) {
+        std::cout << "Full House" << std::endl;
+        return std::make_tuple(7, std::get<1>(isFullHouse(allCards)));
+    }
+    else if (std::get<0>(isFlush(allCards)) == 6) {
+        std::cout << "Flush" << std::endl;
+        return std::make_tuple(6, std::get<1>(isFlush(allCards)));
+    }
+    else if (std::get<0>(isStraight(allCards)) == 5) {
+        std::cout << "Straight" << std::endl;
+        return std::make_tuple(5, std::get<1>(isStraight(allCards)));
+    }
+    else if (std::get<0>(isThreeKind(allCards)) == 4) {
+        std::cout << "Three of a Kind" << std::endl;
+        return std::make_tuple(4, std::get<1>(isThreeKind(allCards)));
+    }
+    else if (std::get<0>(isTwoPair(allCards)) == 3) {
+        std::cout << "Two Pair" << std::endl;
+        return std::make_tuple(3, std::get<1>(isTwoPair(allCards)));
+    }
+    else if (std::get<0>(isPair(allCards)) == 2) {
+        std::cout << "Pair" << std::endl;
+        return std::make_tuple(2, std::get<1>(isPair(allCards)));
+    }
+    else {
+        std::cout << "High Card" << std::endl;
+        return std::make_tuple(1, 0);
+    }
+}
+
+void Package::identifyWinner(std::vector<std::vector<double>> playerList, std::vector<double> table) {
+    //identify package per player
+    std::vector<std::tuple<int, int>> packageList;
+    for (int i = 0; i < playerList.size(); i++) {
+        packageList.push_back(identifyPackage(table, playerList[i]));
+    }
+
+    //compare package
+    int winner = 0;
+    for (int i = 0; i < packageList.size(); i++) {
+        if (std::get<0>(packageList[i]) > std::get<0>(packageList[winner])) {
+            winner = i;
+        }
+        else if (std::get<0>(packageList[i]) == std::get<0>(packageList[winner])) {
+            if (std::get<1>(packageList[i]) > std::get<1>(packageList[winner])) {
+                winner = i;
+            }
+        }
+    }
+    std::cout << std::endl;
+    std::cout << "Winner is player " << winner + 1 << std::endl;
 }
 
 std::tuple<int, int> Package::isStraightFlush(std::vector<double> value) {
@@ -51,15 +115,15 @@ std::tuple<int, int> Package::isStraightFlush(std::vector<double> value) {
     int count = 0;
     if (sameColor.size() >= 5){
         for (int i = 0; i < sameColor.size() - 1; i++){
-            if (count == 4){
-                result = std::make_tuple(9, sameColor[i]);
-                return result;
-            }
             if (sameColor[i] == sameColor[i+1] - 10){
                 count++;
             }
             else {
                 count = 0;
+            }
+            if (count == 4){
+                result = std::make_tuple(9, sameColor[i]);
+                return result;
             }
         }
     }
@@ -71,22 +135,22 @@ std::tuple<int, int> Package::isFourKind(std::vector<double> value) {
     std::vector<int> sameValue;
     std::tuple<int, int> result;
     for (int i = 0; i < value.size(); i++) {
-        sameValue.push_back(floor(value[i]*10)*10);
+        sameValue.push_back(round(value[i]*100));
     }
 
     sort(sameValue.begin(), sameValue.end());
 
     int count = 0;
     for (int i = 0; i < sameValue.size() - 1; i++){
-        if (count == 3){
-            result = std::make_tuple(8, sameValue[i-1]);
-            return result;
-        }
-        if (sameValue[i] == sameValue[i+1]){
+        if (floor(sameValue[i] / 10) == floor(sameValue[i+1] / 10)){
             count++;
         }
         else {
             count = 0;
+        }
+        if (count == 3){
+            result = std::make_tuple(8, sameValue[i-1]);
+            return result;
         }
     }
 
@@ -99,32 +163,34 @@ std::tuple<int, int> Package::isFullHouse(std::vector<double> value) {
     bool trip = false, doub = false;
     int tripValue;
     for (int i = 0; i < value.size(); i++) {
-        sameValue.push_back(floor(value[i]*10)*10);
+        sameValue.push_back(round(value[i]*100));
     }
     sort(sameValue.begin(), sameValue.end());
+    int progress = 0;
     int count = 0;
     for (int i = 0; i < sameValue.size() - 1; i++){
-        if (count == 2 ){
-            trip = true;
-            tripValue = sameValue[i-1];
-        }
-        if (sameValue[i] == sameValue[i+1]){
+        if (floor(sameValue[i] / 10) == floor(sameValue[i+1] / 10)){
             count++;
         }
         else {
             count = 0;
         }
+        if (count == 2){
+            progress = i;
+            trip = true;
+            tripValue = sameValue[i-1];
+        }
     }
     if (trip == true){
-        for (int i = 0; i < sameValue.size() - 1; i++){
-            if (count == 1 ){
-                doub = true;
-            }
-            if (sameValue[i] == sameValue[i+1]){
+        for (int i = progress; i < sameValue.size() - 1; i++){
+            if (floor(sameValue[i] / 10) == floor(sameValue[i+1] / 10)){
                 count++;
             }
             else {
                 count = 0;
+            }
+            if (count == 1 ){
+                doub = true;
             }
         }
     }
@@ -156,7 +222,7 @@ std::tuple<int, int> Package::isFlush(std::vector<double> value) {
 
     if (M.size() >= 5){
         result = std::make_tuple(6, M[0]);
-        return result;
+        return std::make_tuple(6, M[0]);
     }
     else if (K.size() >= 5){
         result = std::make_tuple(6, K[0]);
@@ -180,7 +246,7 @@ std::tuple<int, int> Package::isStraight(std::vector<double> value) {
     std::tuple<int, int> result;
     int maxValue = -1;
     for (int i = 0; i < value.size(); i++) {
-        sameValue.push_back(floor(value[i]*10)*10);
+        sameValue.push_back(round(value[i]*100));
     }
     sort(sameValue.begin(), sameValue.end());
     int count = 0;
@@ -209,23 +275,23 @@ std::tuple<int, int> Package::isThreeKind(std::vector<double> value) {
     bool trip = false;
     int tripValue;
     for (int i = 0; i < value.size(); i++) {
-        sameValue.push_back(floor(value[i]*10)*10);
+        sameValue.push_back(round(value[i]*100));
     }
     sort(sameValue.begin(), sameValue.end());
     int count = 0;
     for (int i = 0; i < sameValue.size() - 1; i++){
-        if (count == 2 ){
-            trip = true;
-            tripValue = sameValue[i-1];
-        }
-        if (sameValue[i] == sameValue[i+1]){
+        if (floor(sameValue[i] / 10) == floor(sameValue[i+1] / 10)){
             count++;
         }
         else {
             count = 0;
         }
+        if (count == 2){
+            trip = true;
+            tripValue = sameValue[i-1];
+        }
     }
-    if (trip ){
+    if (trip){
         result = std::make_tuple(4, tripValue);
         return result;
     }
@@ -266,29 +332,23 @@ std::tuple<int, int> Package::isPair(std::vector<double> value) {
 
 
 int main() {
-    std::vector<double> v;
+    //make vector of vector
+    std::vector<std::vector<double>> hands;
+    std::vector<double> hand1 = {1.33, 1.39};
+    std::vector<double> hand2 = {0.93, 0.69};
+    std::vector<double> hand3 = {0.36, 1.43};
+    std::vector<double> hand4 = {0.23, 0.43};
+    std::vector<double> hand5 = {0.5, 0.59};
+
+    std::vector <double> table = {0.13, 0.33, 1.09, 1.36, 0.53};
+
+    hands.push_back(hand1);
+    hands.push_back(hand2);
+    hands.push_back(hand3);
+    hands.push_back(hand4);
+    hands.push_back(hand5);
+
+    //identify winner
     Package p;
-    v.push_back(0.89);
-    v.push_back(1.09);
-    v.push_back(0.59);
-    v.push_back(0.49);
-    v.push_back(0.29);
-    v.push_back(0.39);
-    v.push_back(0.19);
-    std::tuple<int, int> result = p.isStraightFlush(v);
-    std::tuple<int, int> result2 = p.isFourKind(v);
-    std::tuple<int, int> result3 = p.isFullHouse(v);
-    std::tuple<int, int> result4 = p.isPair(v);
-    std::tuple<int, int> result5 = p.isTwoPair(v);
-    std::tuple<int, int> result6 = p.isFlush(v);
-    std::tuple<int, int> result7 = p.isThreeKind(v);
-    std::tuple<int, int> result8 = p.isStraight(v);
-    std::cout << std::get<0>(result) << " " << std::get<1>(result) << std::endl;
-    std::cout << std::get<0>(result2) << " " << std::get<1>(result2) << std::endl;
-    std::cout << std::get<0>(result3) << " " << std::get<1>(result3) << std::endl;
-    std::cout << std::get<0>(result4) << " " << std::get<1>(result4) << std::endl;
-    std::cout << std::get<0>(result5) << " " << std::get<1>(result5) << std::endl;
-    std::cout << std::get<0>(result6) << " " << std::get<1>(result6) << std::endl;
-    std::cout << std::get<0>(result7) << " " << std::get<1>(result7) << std::endl;
-    std::cout << std::get<0>(result8) << " " << std::get<1>(result8) << std::endl;
+    p.identifyWinner(hands, table);
 }

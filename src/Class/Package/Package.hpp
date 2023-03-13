@@ -9,13 +9,13 @@ class Package
 {
 private:
     int packageType;
-    int straightFlushValue;
 
     std::vector<double> value;
 
 public:
     Package();
-    int identifyPackage(std::vector<Card> table, Player player);
+    std::tuple<int, int> identifyPackage(std::vector<double> table, std::vector<double> player);
+    void identifyWinner(std::vector<std::vector<double>>, std::vector<double> table); //masukannya harusnya playerlist
     std::tuple<int, int> isStraightFlush(std::vector<double>);
     std::tuple<int, int> isFourKind(std::vector<double>);
     std::tuple<int, int> isFullHouse(std::vector<double>);
