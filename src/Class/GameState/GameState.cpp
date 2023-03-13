@@ -10,11 +10,14 @@ GameState::GameState()
     this->prize = 0;
     this->players = new PlayerList();
     this->playingDeck = new Deck<Card>;
+    this->table = new Table();
 }
 
 GameState::~GameState()
 {
     delete this->players;
+    delete this->playingDeck;
+    delete this->table;
 }
 
 // === DISPLAY =================================================
@@ -43,6 +46,15 @@ void GameState::displayGameState()
     std::cout
         << "\n#-----=====#*#========#@#========#*#=====-----#\n"
         << std::endl;
+}
+
+void GameState::displayTable()
+{
+    std::cout << "\n#-----============== TABLE ==============-----#\n"
+              << std::endl;
+    this->table->display(this->round);
+    std::cout << "\n#-----=====#*#========#@#========#*#=====-----#\n"
+              << std::endl;
 }
 
 // === INITIALIZER =============================================
@@ -118,6 +130,11 @@ void GameState::randomizeDeck()
     }
 
     this->playingDeck->shuffle();
+
+    for (int i = 0; i < 5; i++)
+    {
+        this->table->push(this->playingDeck->getElmt(i));
+    }
 }
 
 // === GAME CONTROL ============================================

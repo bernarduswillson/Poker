@@ -7,6 +7,7 @@
 #include "../Player/Player.hpp"
 #include "../Deck/Deck.hpp"
 #include "../Card/Card.hpp"
+#include "../Table/Table.hpp"
 
 class GameState
 {
@@ -16,6 +17,7 @@ private:
     long long int prize;
     PlayerList *players;
     Deck<Card> *playingDeck;
+    Table *table;
 
 public:
     // === CONSTRUCTOR DESTRUCTOR ==================================
@@ -25,6 +27,7 @@ public:
     // === DISPLAY =================================================
     void displaySplash();
     void displayGameState();
+    void displayTable();
 
     // === INITIALIZER =============================================
     void initializePlayer();

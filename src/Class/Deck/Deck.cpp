@@ -6,13 +6,7 @@ template <typename T>
 Deck<T>::Deck() : InventoryHolder() {}
 
 template <typename T>
-Deck<T>::~Deck()
-{
-    for (int i = 0; i < this->buffer.size(); i++)
-    {
-        delete this->getElmt(i);
-    }
-}
+Deck<T>::~Deck() {}
 
 // === GETTER ==================================================
 
