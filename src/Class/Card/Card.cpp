@@ -1,9 +1,10 @@
 #include "Card.hpp"
 
-Card::Card():Calculable()
+Card::Card(double number, double color):Calculable()
 {
-    number = 0;
-    color = "none";
+    this->number = number;
+    this->color = color;
+    this->value = number * 0.1 + color * 0.03;
 }
 
 Card::~Card()
@@ -15,12 +16,12 @@ double Card::getValue()
     return this->value;
 }
 
-int Card::getNumber()
+double Card::getNumber()
 {
     return number;
 }
 
-std::string Card::getColor()
+double Card::getColor()
 {
     return color;
 }

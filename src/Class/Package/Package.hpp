@@ -14,6 +14,7 @@ class Package : virtual public Calculable
         const double highestFlush = 8.43;
         const double highestFullHouse = 0;
         const double highestFourOfAKind = 0;
+        int vall;
 
     public:
         //constructor

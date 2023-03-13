@@ -5,17 +5,17 @@
 class Card : virtual public Calculable
 {
     private:
-        int number;
-        std::string color;
+        double number;
+        double color;
 
     public:
         //constructor
-        Card();
+        Card(double, double);
         //destructor
         ~Card();
         virtual double getValue();
-        int getNumber();
-        std::string getColor();
+        double getNumber();
+        double getColor();
         void setValue(double value);
         
 };

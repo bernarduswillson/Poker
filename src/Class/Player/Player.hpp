@@ -32,7 +32,7 @@ public:
 
     // === METHOD ==================================================
     void inputName();
-    // void findCombo(Pair river);
+    // void findCombo(Package river);
 };
 
 #endif
