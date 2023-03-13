@@ -3,7 +3,9 @@
 
 #include <iostream>
 // #include "../Card/Card.hpp"
-// #include "../Calculable/Calculable.hpp"
+#include "../Calculable/Calculable.hpp"
+#include "../Package/Package.hpp"
+#include "../Combination/Pair/Pair.hpp"
 
 class Player
 {
@@ -30,7 +32,7 @@ public:
 
     // === METHOD ==================================================
     void inputName();
-    // void findCombo(Package river);
+    // void findCombo(Pair river);
 };
 
 #endif

@@ -1,10 +1,8 @@
 #include "Package.hpp"
 
-Package::Package():Calculable(0)
+Package::Package():Calculable()
 {
     this->cardBuffer = std::vector<Card>();
-    this->vallll = 0;
-
 }
 
 Package::~Package()
