@@ -3,9 +3,7 @@
 
 #include <iostream>
 // #include "../Card/Card.hpp"
-#include "../Calculable/Calculable.hpp"
-#include "../Package/Package.hpp"
-#include "../Combination/Pair/Pair.hpp"
+// #include "../Calculable/Calculable.hpp"
 
 class Player
 {

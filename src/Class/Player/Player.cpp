@@ -52,8 +52,8 @@ void Player::inputName()
     std::string inputName;
     std::cout << "Enter player name: ";
     std::cin >> inputName;
+    this->name = inputName;
 }
-
 // void findCombo(Package river) {
 
 // }
