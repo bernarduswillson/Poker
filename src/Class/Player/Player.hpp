@@ -18,12 +18,13 @@ private:
 public:
     // Constructor and Destructor
     Player();
+    Player &operator=(const Player &);
     ~Player();
 
     // Getter and Setter
     std::string getName();
     int getPoints();
-    void setHand(std::vector <Card> hand);
+    void setHand(std::vector<Card> hand);
     void displayHand();
 };
 

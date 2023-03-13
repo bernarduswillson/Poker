@@ -12,6 +12,14 @@ Player::Player() : id(num_players + 1)
     num_players++;
 }
 
+Player &Player::operator=(const Player &other)
+{
+    this->name = other.name;
+    this->points = other.points;
+    this->hand = other.hand;
+    return *this;
+}
+
 Player::~Player() {}
 
 std::string Player::getName()
@@ -24,7 +32,7 @@ int Player::getPoints()
     return this->points;
 }
 
-void Player::setHand(std::vector <Card> hand)
+void Player::setHand(std::vector<Card> hand)
 {
     this->hand = hand;
 }
@@ -34,5 +42,6 @@ void Player::displayHand()
     for (int i = 0; i < this->hand.size(); i++)
     {
         this->hand[i].displaycard();
+        std::cout << " ";
     }
 }

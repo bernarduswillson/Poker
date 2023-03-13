@@ -21,12 +21,13 @@ public:
     int getNumOfPlayers();
     std::string getPlayerName(int);
     int getPlayerPoints(int);
-    Player getPlayer(int);
+    Player getPlayer(int) const;
 
     // Methods
     void addPlayer();
     void setPlayerCards(int, std::vector<Card>);
     void displayPlayerCards(int);
+    void roundRobin();
 };
 
 #endif

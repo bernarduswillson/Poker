@@ -1,7 +1,9 @@
 #ifndef __GAME_STATE_HPP__
 #define __GAME_STATE_HPP__
 
+#include <iostream>
 #include <vector>
+#include <string>
 #include "../PlayerList/PlayerList.hpp"
 #include "../Deck/Deck.hpp"
 #include "../Card/Card.hpp"
@@ -27,6 +29,8 @@ public:
     void displayGameState();
     void displayLeaderboard();
     void displayTable();
+    void displayPlayer();
+
     void startNewGame();
     void startNewRound();
     void initializePlayers();
@@ -34,6 +38,11 @@ public:
     void initializeRandomDeck();
     void roll();
     void rollTable();
+
+    void nextTurn();
+    void nextRound();
+
+    void playerAction();
 };
 
 #endif
