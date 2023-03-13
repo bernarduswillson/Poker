@@ -51,7 +51,8 @@ std::tuple<int, int> Package::identifyPackage(std::vector<double> table, std::ve
     }
     else {
         std::cout << "High Card" << std::endl;
-        return std::make_tuple(1, 0);
+        sort(player.begin(), player.end(), std::greater<double>());
+        return std::make_tuple(1, player[0]);
     }
 }
 
@@ -71,6 +72,14 @@ void Package::identifyWinner(std::vector<std::vector<double>> playerList, std::v
         else if (std::get<0>(packageList[i]) == std::get<0>(packageList[winner])) {
             if (std::get<1>(packageList[i]) > std::get<1>(packageList[winner])) {
                 winner = i;
+            }
+            // else compare high cards
+            else if (std::get<1>(packageList[i]) == std::get<1>(packageList[winner])) {
+                sort(playerList[i].begin(), playerList[i].end(), std::greater<double>());
+                sort(playerList[winner].begin(), playerList[winner].end(), std::greater<double>());
+                if (playerList[i][0] > playerList[winner][0]){
+                    winner = i;
+                }
             }
         }
     }
@@ -182,6 +191,7 @@ std::tuple<int, int> Package::isFullHouse(std::vector<double> value) {
             tripValue = sameValue[i-1];
         }
     }
+    count = 0;
     if (trip == true){
         for (int i = progress; i < sameValue.size() - 1; i++){
             if (floor(sameValue[i] / 10) == floor(sameValue[i+1] / 10)){
@@ -196,6 +206,9 @@ std::tuple<int, int> Package::isFullHouse(std::vector<double> value) {
         }
     }
     else { // kalo 2 dulu yang muncul
+        count = 0;
+        trip = false, doub = false;
+        progress = 0;
         for (int i = 0; i < sameValue.size() - 1; i++){
             if (floor(sameValue[i] / 10) == floor(sameValue[i+1] / 10)){
                 count++;
@@ -208,6 +221,7 @@ std::tuple<int, int> Package::isFullHouse(std::vector<double> value) {
                 doub = true;
             }
         }
+        count = 0;
         if (doub == true){
             for (int i = progress; i < sameValue.size() - 1; i++){
                 if (floor(sameValue[i] / 10) == floor(sameValue[i+1] / 10)){
@@ -275,26 +289,28 @@ std::tuple<int, int> Package::isFlush(std::vector<double> value) {
 std::tuple<int, int> Package::isStraight(std::vector<double> value) {
     std::vector<int> sameValue;
     std::tuple<int, int> result;
-    int maxValue = -1;
     for (int i = 0; i < value.size(); i++) {
-        sameValue.push_back(round(value[i]*100));
+        sameValue.push_back(floor(value[i]*10)*10);
     }
-    sort(sameValue.begin(), sameValue.end());
+    sort(sameValue.begin(), sameValue.end(), std::greater<int>());
     int count = 0;
+    int maxValue;
     for (int i = 0 ; i < sameValue.size() - 1 ; i++){
-        if (sameValue[i+1] - sameValue[i] == 10) {
+        if (sameValue[i] == sameValue[i+1] + 10) {
             count++;
-            if (count == 4 ){
-                maxValue = sameValue[i+1];
+            if (count == 1) {
+                maxValue = sameValue[i];
             }
         }
-        else if (sameValue[i] != sameValue[i+1]){
-            count = 0;
+        else if (sameValue[i] == sameValue[i+1]) {
+            //do nothing
         }
-    }
-    if (maxValue != -1){
-        result = std::make_tuple(5, maxValue);
-        return result;
+        else {
+            count = 0;
+        } 
+        if (count == 4){
+            return std::make_tuple(5, maxValue);
+        }
     }
     return std::make_tuple(-1, -1);
 }
@@ -365,13 +381,13 @@ std::tuple<int, int> Package::isPair(std::vector<double> value) {
 int main() {
     //make vector of vector
     std::vector<std::vector<double>> hands;
-    std::vector<double> hand1 = {1.33, 1.39};
-    std::vector<double> hand2 = {0.93, 0.69};
-    std::vector<double> hand3 = {0.36, 1.43};
-    std::vector<double> hand4 = {0.23, 0.43};
-    std::vector<double> hand5 = {0.5, 0.59};
+    std::vector<double> hand1 = {1.13, 1.39};
+    std::vector<double> hand2 = {0.9, 1.23};
+    std::vector<double> hand3 = {0.73, 1.4};
+    std::vector<double> hand4 = {0.83, 1.3};
+    std::vector<double> hand5 = {0.9, 1.19};
 
-    std::vector <double> table = {0.13, 0.33, 1.09, 1.36, 0.53};
+    std::vector <double> table = {0.13, 0.23, 0.36, 0.49, 0.53};
 
     hands.push_back(hand1);
     hands.push_back(hand2);
