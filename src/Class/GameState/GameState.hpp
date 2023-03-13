@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "../InventoryHolder/InventoryHolder.hpp"
+#include "../PlayerList/PlayerList.hpp"
 #include "../Player/Player.hpp"
 
 class GameState
@@ -12,6 +12,7 @@ private:
     int game;
     int round;
     long long int prize;
+    PlayerList *players;
 
 public:
     // === CONSTRUCTOR DESTRUCTOR ==================================

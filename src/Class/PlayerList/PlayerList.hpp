@@ -16,7 +16,10 @@ public:
 
     // === GETTER ==================================================
     int getLength() override;
-    Player getElmt(int index);
+    Player getElmt(int);
+
+    // === INSERT ==================================================
+    void push(const Player &);
 };
 
 #endif
