@@ -1,5 +1,6 @@
 {
     "files.associations": {
+<<<<<<< HEAD
         "*.pl": "prolog",
         "*.tcc": "cpp",
         "iostream": "cpp",
@@ -103,5 +104,8 @@
         "__tuple": "cpp",
         "ios": "cpp",
         "locale": "cpp"
+=======
+        "*.tcc": "cpp"
+>>>>>>> 23e9839 (feat: add Players constructor)
     }
 }
