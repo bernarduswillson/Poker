@@ -11,7 +11,7 @@ int main()
     gameState->displaySplash();
     gameState->newGame();
 
-    gameState->displayGameState();
+    // gameState->displayGameState();
 
     // CLEAR MEMORY ================================================
     delete gameState;

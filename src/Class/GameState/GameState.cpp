@@ -1,4 +1,5 @@
 #include "GameState.hpp"
+#include "../Deck/Deck.cpp" // temporary solution
 
 // === CONSTRUCTOR DESTRUCTOR ==================================
 
@@ -8,6 +9,7 @@ GameState::GameState()
     this->round = 0;
     this->prize = 0;
     this->players = new PlayerList();
+    this->playingDeck = new Deck<Card>;
 }
 
 GameState::~GameState()
@@ -43,6 +45,81 @@ void GameState::displayGameState()
         << std::endl;
 }
 
+// === INITIALIZER =============================================
+
+void GameState::initializePlayer()
+{
+    system("clear");
+    std::cout << "\n##=========## WAITING FOR PLAYERS ##=========##\n"
+              << std::endl;
+    for (int i = 0; i < 7; i++)
+    {
+        Player *player = new Player();
+        player->inputName();
+        players->push(*player);
+    }
+}
+
+void GameState::initializePlayingDeck()
+{
+    bool isMenuValid = false;
+    std::string menu;
+    std::string errMsg;
+
+    while (!isMenuValid)
+    {
+        system("clear");
+        std::cout << "\n#-----======= PLAYING DECK OPTION =======-----#\n"
+                  << std::endl;
+        std::cout << "                1. Generate random" << std::endl;
+        std::cout << "             2. Import from text file" << std::endl;
+        std::cout << "\n#-----=====#*#========#@#========#*#=====-----#\n"
+                  << std::endl;
+
+        std::cout << errMsg;
+
+        try
+        {
+            std::cout << "Select menu: ";
+            std::cin >> menu;
+
+            if (menu != "1" && menu != "2")
+            {
+                throw "Menu not available\n";
+            }
+
+            isMenuValid = true;
+        }
+        catch (const char *err)
+        {
+            errMsg = err;
+        }
+        catch (...)
+        {
+            errMsg = "Menu invalid\n";
+        }
+    }
+
+    if (menu == "1")
+    {
+        this->randomizeDeck();
+    }
+}
+
+void GameState::randomizeDeck()
+{
+    for (int i = 1; i < 14; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            Card *newCard = new Card(i, j);
+            this->playingDeck->push(*newCard);
+        }
+    }
+
+    this->playingDeck->shuffle();
+}
+
 // === GAME CONTROL ============================================
 
 void GameState::newGame()
@@ -53,15 +130,10 @@ void GameState::newGame()
     this->prize = 64;
 
     // 2. Initialize players
-    system("clear");
-    std::cout << "\n##=========## WAITING FOR PLAYERS ##=========##\n"
-              << std::endl;
-    for (int i = 0; i < 7; i++)
-    {
-        Player *player = new Player();
-        player->inputName();
-        players->push(*player);
-    }
+    initializePlayer();
+
+    // 3. Initialize deck
+    initializePlayingDeck();
 }
 
 void GameState::nextRound()
