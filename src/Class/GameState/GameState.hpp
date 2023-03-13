@@ -3,6 +3,9 @@
 
 #include <iostream>
 
+#include "../InventoryHolder/InventoryHolder.hpp"
+#include "../Player/Player.hpp"
+
 class GameState
 {
 private:
