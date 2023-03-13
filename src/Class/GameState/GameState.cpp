@@ -9,7 +9,9 @@ GameState::GameState()
     this->prize = 0;
 }
 
-GameState::~GameState() {}
+GameState::~GameState()
+{
+}
 
 // === DISPLAY =================================================
 
@@ -43,6 +45,7 @@ void GameState::displayGameState()
 
 void GameState::newGame()
 {
+    // 1. Initialize game status
     this->game = 1;
     this->round = 1;
     this->prize = 64;

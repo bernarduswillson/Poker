@@ -1,30 +1,30 @@
 #include "Player.hpp"
 
 // === CONSTRUCTOR DESTRUCTOR ==================================
-Player::Player() {
-    std::string inputName;
-    std::cout << "Enter player name: ";
-    std::cin >> inputName;
-
-    this->name = inputName;
+Player::Player()
+{
     this->points = 0;
 }
 
-Player::~Player() {
+Player::~Player()
+{
     // delete [] this->hands;
 }
 
 // === GETTER SETTER ===========================================
-std::string Player::getName() {
+std::string Player::getName()
+{
     return this->name;
 }
 
-long long int Player::getPoints() {
+long long int Player::getPoints()
+{
     return this->points;
 }
 
 // === OPERATOR OVERLOADING ====================================
-void Player::operator+(long long int addedPoints) {
+void Player::operator+(long long int addedPoints)
+{
     this->points += addedPoints;
 }
 
@@ -36,7 +36,8 @@ void Player::operator+(long long int addedPoints) {
 
 // }
 
-Player& Player::operator=(const Player& other) {
+Player &Player::operator=(const Player &other)
+{
     this->name = other.name;
     this->points = other.points;
     // this->hands = other.hands;
@@ -46,6 +47,12 @@ Player& Player::operator=(const Player& other) {
 }
 
 // === METHOD ==================================================
+void Player::inputName()
+{
+    std::string inputName;
+    std::cout << "Enter player name: ";
+    std::cin >> inputName;
+}
 // void findCombo(Package river) {
 
 // }

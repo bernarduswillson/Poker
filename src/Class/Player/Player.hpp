@@ -12,7 +12,7 @@ private:
     long long int points;
     // Card* hands;
     // Calculable highestCombo;
-    
+
 public:
     // === CONSTRUCTOR DESTRUCTOR ==================================
     Player();
@@ -26,9 +26,10 @@ public:
     void operator+(long long int addedPoints);
     // void operator+(Card addedCard);
     // void operator-(Card removedCard);
-    Player& operator=(const Player& other);
+    Player &operator=(const Player &other);
 
     // === METHOD ==================================================
+    void inputName();
     // void findCombo(Package river);
 };
 

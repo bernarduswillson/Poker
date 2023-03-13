@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "./Class/GameState/GameState.hpp"
-#include "./Class/InventoryHolder/InventoryHolder.cpp"
 
 int main()
 {
@@ -9,8 +8,8 @@ int main()
     GameState *gameState = new GameState();
 
     // START GAME ==================================================
-    gameState->newGame();
     gameState->displaySplash();
+    gameState->newGame();
 
     gameState->displayGameState();
 
