@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "./Class/GameState/GameState.hpp"
 
 int main()
@@ -6,8 +8,8 @@ int main()
     GameState *gameState = new GameState();
 
     // START GAME ==================================================
-    gameState->newGame();
     gameState->displaySplash();
+    gameState->newGame();
 
     gameState->displayGameState();
 

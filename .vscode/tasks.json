@@ -15,7 +15,10 @@
             "args": [
                 "-std=c++17",
                 "./src/main.cpp",
-                "./src/Class/*/*.cpp",
+                "./src/Class/GameState/GameState.cpp",
+                "./src/Class/PlayerList/PlayerList.cpp",
+                "./src/Class/InventoryHolder/InventoryHolder.cpp",
+                "./src/Class/Player/Player.cpp",
                 "-o",
                 "./bin/candyCard.out",
             ]
