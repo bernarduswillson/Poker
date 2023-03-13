@@ -6,10 +6,13 @@ int main()
     GameState *gameState = new GameState();
 
     // START GAME ==================================================
-    gameState->startNewGame();
+    gameState->newGame();
+    gameState->displaySplash();
+
+    gameState->displayGameState();
 
     // CLEAR MEMORY ================================================
     delete gameState;
 
-    return 0;
+    // return 0;
 }
