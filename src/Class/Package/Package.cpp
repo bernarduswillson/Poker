@@ -168,6 +168,7 @@ std::tuple<int, int> Package::isFullHouse(std::vector<double> value) {
     sort(sameValue.begin(), sameValue.end());
     int progress = 0;
     int count = 0;
+    // kalo 3 dulu yang muncul
     for (int i = 0; i < sameValue.size() - 1; i++){
         if (floor(sameValue[i] / 10) == floor(sameValue[i+1] / 10)){
             count++;
@@ -189,11 +190,41 @@ std::tuple<int, int> Package::isFullHouse(std::vector<double> value) {
             else {
                 count = 0;
             }
-            if (count == 1 ){
+            if (count == 1){
                 doub = true;
             }
         }
     }
+    else { // kalo 2 dulu yang muncul
+        for (int i = 0; i < sameValue.size() - 1; i++){
+            if (floor(sameValue[i] / 10) == floor(sameValue[i+1] / 10)){
+                count++;
+            }
+            else {
+                count = 0;
+            }
+            if (count == 1){
+                progress = i;
+                doub = true;
+            }
+        }
+        if (doub == true){
+            for (int i = progress; i < sameValue.size() - 1; i++){
+                if (floor(sameValue[i] / 10) == floor(sameValue[i+1] / 10)){
+                    count++;
+                }
+                else {
+                    count = 0;
+                }
+                if (count == 2){
+                    trip = true;
+                    tripValue = sameValue[i-1];
+                }
+            }
+        }
+    }
+
+
     if (trip && doub){
         result = std::make_tuple(7, tripValue);
         return result;
