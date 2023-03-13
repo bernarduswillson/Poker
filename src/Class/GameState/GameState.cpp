@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "GameState.hpp"
 #include "../Deck/Deck.cpp" // temporary solution
 
