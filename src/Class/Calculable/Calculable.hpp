@@ -1,3 +1,6 @@
+#ifndef __CALCULABLE_HPP__
+#define __CALCULABLE_HPP__
+
 #include <iostream>
 
 //create abstract class
@@ -17,3 +20,5 @@ class Calculable
         bool operator=(Calculable &obj);
         virtual void setValue(double value) = 0;
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef __CARD_HPP__
+#define __CARD_HPP__
+
 #include <iostream>
 #include <string>
 #include "../Calculable/Calculable.hpp"
@@ -19,3 +22,5 @@ class Card : virtual public Calculable
         void setValue(double value);
         
 };
+
+#endif

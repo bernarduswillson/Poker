@@ -1,3 +1,6 @@
+#ifndef __PACKAGE_HPP__
+#define __PACKAGE_HPP__
+
 #include "../Calculable/Calculable.hpp"
 #include "../Card/Card.hpp"
 #include <vector>
@@ -27,3 +30,5 @@ class Package : virtual public Calculable
         virtual void setValue(double value);
         
 };
+
+#endif
