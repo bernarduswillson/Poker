@@ -8,6 +8,8 @@ GameState::GameState()
     this->game = 0;
     this->round = 0;
     this->prize = 0;
+    this->target = 0;
+    this->ongoing = false;
     this->players = new PlayerList();
     this->playingDeck = new Deck<Card>;
     this->table = new Table();
@@ -18,6 +20,12 @@ GameState::~GameState()
     delete this->players;
     delete this->playingDeck;
     delete this->table;
+}
+
+// === GETTER SETTER ===========================================
+bool GameState::isOngoing()
+{
+    return this->ongoing;
 }
 
 // === DISPLAY =================================================
@@ -53,6 +61,15 @@ void GameState::displayTable()
     std::cout << "\n#-----============== TABLE ==============-----#\n"
               << std::endl;
     this->table->display(this->round);
+    std::cout << "\n#-----=====#*#========#@#========#*#=====-----#\n"
+              << std::endl;
+}
+
+void GameState::displayWinner()
+{
+    std::cout << "\n#-----======= CONGRATULATION !!! ========-----#\n"
+              << std::endl;
+    std::cout << this->winner.getName() << " wins the game with " << this->winner.getPoints() << " points!" << std::endl;
     std::cout << "\n#-----=====#*#========#@#========#*#=====-----#\n"
               << std::endl;
 }
@@ -159,6 +176,18 @@ void GameState::rollPlayingCard()
     }
 }
 
+void GameState::evaluateGameWinner()
+{
+    for (int i = 0; i < 7; i++)
+    {
+        if (this->players->getElmt(i).getPoints() >= this->target)
+        {
+            this->ongoing = false;
+            this->winner = this->players->getElmt(i);
+        }
+    }
+}
+
 // === GAME CONTROL ============================================
 
 void GameState::newGame()
@@ -167,6 +196,8 @@ void GameState::newGame()
     this->game = 1;
     this->round = 1;
     this->prize = 64;
+    this->target = 4294967296;
+    this->ongoing = true;
 
     // 2. Initialize players
     initializePlayer();
@@ -181,6 +212,8 @@ void GameState::newGame()
 void GameState::nextTurn()
 {
     this->players->roundRobin();
+    long long int temp = 4294967296;
+    this->players->getElmt(0) = this->players->getElmt(0) + temp;
 }
 
 void GameState::nextRound()
@@ -190,6 +223,7 @@ void GameState::nextRound()
 
 void GameState::nextGame()
 {
+    this->evaluateGameWinner();
     this->game++;
     this->round = 1;
     this->prize = 64;

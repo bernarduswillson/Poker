@@ -15,25 +15,33 @@ private:
     int game;
     int round;
     long long int prize;
+    long long int target;
+    bool ongoing;
     PlayerList *players;
     Deck<Card> *playingDeck;
     Table *table;
+    Player winner;
 
 public:
     // === CONSTRUCTOR DESTRUCTOR ==================================
     GameState();
     ~GameState();
 
+    // === GETTER SETTER ===========================================
+    bool isOngoing();
+
     // === DISPLAY =================================================
     void displaySplash();
     void displayGameState();
     void displayTable();
+    void displayWinner();
 
     // === INITIALIZER =============================================
     void initializePlayer();
     void initializePlayingDeck();
     void randomizeDeck();
     void rollPlayingCard();
+    void evaluateGameWinner();
 
     // === GAME CONTROL ============================================
     void newGame();

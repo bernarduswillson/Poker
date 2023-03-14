@@ -11,17 +11,25 @@ int main()
     gameState->displaySplash();
     gameState->newGame();
 
-    for (int round = 1; round < 7; round++)
+    // GAME ONGOING ================================================
+    while (gameState->isOngoing())
     {
-        for (int turn = 1; turn < 8; turn++)
+        for (int round = 1; round < 7; round++)
         {
-            gameState->displayGameState();
-            gameState->displayTable();
-            gameState->playerAction();
-            gameState->nextTurn();
+            for (int turn = 1; turn < 8; turn++)
+            {
+                gameState->displayGameState();
+                gameState->displayTable();
+                gameState->playerAction();
+                gameState->nextTurn();
+            }
+            gameState->nextRound();
         }
-        gameState->nextRound();
+        gameState->nextGame();
     }
+
+    // GAME FINISHED ===============================================
+    gameState->displayWinner();
 
     // CLEAR MEMORY ================================================
     delete gameState;
