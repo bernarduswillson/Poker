@@ -46,6 +46,8 @@ public:
     std::pair<bool, Card> isFullHouse(std::vector<Card> card);
     std::pair<bool, Card> isFourOfAKind(std::vector<Card> card);
     std::pair<bool, Card> isStraightFlush(std::vector<Card> card);
+
+    void displayHands();
 };
 
 #endif
