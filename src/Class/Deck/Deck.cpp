@@ -31,6 +31,12 @@ void Deck<T>::push(const T &other)
 }
 
 template <typename T>
+void Deck<T>::pop()
+{
+    this->buffer.pop_back();
+}
+
+template <typename T>
 void Deck<T>::shuffle()
 {
     int swapidx1 = 0;
@@ -48,3 +54,12 @@ void Deck<T>::shuffle()
         this->buffer[swapidx2] = temp;
     }
 }
+
+template <typename T>
+T Deck<T>::roll()
+{
+    T temp = T(this->buffer[0]);
+    this->buffer.erase(this->buffer.begin());
+    return temp;
+}
+

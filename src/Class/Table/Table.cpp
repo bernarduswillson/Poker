@@ -28,7 +28,8 @@ void Table::display(int round)
 {
     for (int i = 0; i < round - 1; i++)
     {
-        std::cout << this->getElmt(i).getNumber() << " ";
+        this->getElmt(i).displayCard();
+        std::cout << " ";
     }
     for (int i = 0; i < 6 - round; i++)
     {

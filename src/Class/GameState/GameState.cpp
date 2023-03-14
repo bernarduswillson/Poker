@@ -137,6 +137,28 @@ void GameState::randomizeDeck()
     }
 }
 
+void GameState::rollPlayingCard()
+{
+    std::vector<Card> temp;
+    for (int j = 0; j < 2; j++)
+    {
+        std::vector<Card> rolledCards;
+        for (int i = 0; i < 7; i++)
+        {
+            rolledCards.push_back(this->playingDeck->roll());
+            rolledCards.push_back(this->playingDeck->roll());
+            players->setPlayerCards(i, rolledCards);
+            rolledCards.clear();
+        }
+    }
+
+    for (int i = 0; i < 5; i++)
+    {
+        this->table->push(this->playingDeck->getElmt(0));
+        this->playingDeck->pop();
+    }
+}
+
 // === GAME CONTROL ============================================
 
 void GameState::newGame()
@@ -151,6 +173,14 @@ void GameState::newGame()
 
     // 3. Initialize deck
     initializePlayingDeck();
+
+    // 4. Roll playing cards
+    rollPlayingCard();
+}
+
+void GameState::nextTurn()
+{
+    this->players->roundRobin();
 }
 
 void GameState::nextRound()
@@ -163,4 +193,65 @@ void GameState::nextGame()
     this->game++;
     this->round = 1;
     this->prize = 64;
+}
+
+void GameState::playerAction()
+{
+    std::string action;
+    std::string errMsg;
+    bool isValid = false;
+
+    while (!isValid)
+    {
+
+        std::cout << "\n#-----=========== PLAYER TURN ===========-----#\n"
+                  << std::endl;
+        std::cout << "Name:\t" << this->players->getElmt(0).getName() << std::endl;
+        std::cout << "Points:\t" << this->players->getElmt(0).getPoints() << std::endl;
+        std::cout << "Hands:\t";
+        this->players->getElmt(0).displayHands();
+        std::cout << std::endl;
+        std::cout << std::endl;
+        std::cout << "Action menu:" << std::endl;
+        std::cout << "1. Double" << std::endl;
+        std::cout << "2. Next" << std::endl;
+        std::cout << "3. Half" << std::endl;
+        std::cout << "4. [Ability]" << std::endl; //
+        std::cout << std::endl;
+
+        try
+        {
+            std::cerr << errMsg;
+            std::cout << "Action: ";
+            std::cin >> action;
+            if (action == "1")
+            {
+                this->prize *= 2;
+            }
+            else if (action == "2")
+            {
+                // do nothing
+            }
+            else if (action == "3")
+            {
+                if (this->prize != 1)
+                {
+                    this->prize /= 2;
+                }
+            }
+            else if (action == "4")
+            {
+                // call ability
+            }
+            else
+            {
+                throw "Action is not available\n";
+            }
+            isValid = true;
+        }
+        catch (const char *err)
+        {
+            errMsg = err;
+        }
+    }
 }

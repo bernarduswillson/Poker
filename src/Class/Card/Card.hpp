@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <cmath>
 #include "../Calculable/Calculable.hpp"
 
 class Card : virtual public Calculable

@@ -11,8 +11,17 @@ int main()
     gameState->displaySplash();
     gameState->newGame();
 
-    gameState->displayGameState();
-    gameState->displayTable();
+    for (int round = 1; round < 7; round++)
+    {
+        for (int turn = 1; turn < 8; turn++)
+        {
+            gameState->displayGameState();
+            gameState->displayTable();
+            gameState->playerAction();
+            gameState->nextTurn();
+        }
+        gameState->nextRound();
+    }
 
     // CLEAR MEMORY ================================================
     delete gameState;

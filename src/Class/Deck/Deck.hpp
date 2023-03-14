@@ -24,8 +24,9 @@ public:
 
     // === METHODS =================================================
     void push(const T &);
-    void swap(T &, T &);
+    void pop();
     void shuffle();
+    T roll();
 };
 
 #endif
