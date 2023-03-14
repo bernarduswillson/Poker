@@ -21,6 +21,9 @@ public:
     // === INSERT ==================================================
     void push(const Player &);
     void setPlayerCards(int, std::vector<Card>);
+
+    // === METHODS =================================================
+    void roundRobin();
 };
 
 #endif

@@ -37,6 +37,7 @@ public:
 
     // === GAME CONTROL ============================================
     void newGame();
+    void nextTurn();
     void nextRound();
     void nextGame();
     void playerAction();

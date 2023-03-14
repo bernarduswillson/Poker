@@ -30,3 +30,12 @@ void PlayerList::setPlayerCards(int idx, std::vector<Card> cards)
 {
     this->buffer[idx].setHands(cards);
 }
+
+// === METHODS =================================================
+void PlayerList::roundRobin()
+{
+    Player temp = this->buffer[0];
+    std::vector<Player>::iterator itr = this->buffer.begin();
+    this->buffer.erase(itr);
+    this->buffer.push_back(temp);
+}

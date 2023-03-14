@@ -139,17 +139,17 @@ void GameState::randomizeDeck()
 
 void GameState::rollPlayingCard()
 {
-    std::vector <Card> temp;
+    std::vector<Card> temp;
     for (int j = 0; j < 2; j++)
     {
-    std::vector<Card> rolledCards;
-    for (int i = 0; i < 7; i++)
-    {
-        rolledCards.push_back(this->playingDeck->roll());
-        rolledCards.push_back(this->playingDeck->roll());
-        players->setPlayerCards(i, rolledCards);
-        rolledCards.clear();
-    }
+        std::vector<Card> rolledCards;
+        for (int i = 0; i < 7; i++)
+        {
+            rolledCards.push_back(this->playingDeck->roll());
+            rolledCards.push_back(this->playingDeck->roll());
+            players->setPlayerCards(i, rolledCards);
+            rolledCards.clear();
+        }
     }
 
     for (int i = 0; i < 5; i++)
@@ -176,6 +176,11 @@ void GameState::newGame()
 
     // 4. Roll playing cards
     rollPlayingCard();
+}
+
+void GameState::nextTurn()
+{
+    this->players->roundRobin();
 }
 
 void GameState::nextRound()
@@ -229,7 +234,10 @@ void GameState::playerAction()
             }
             else if (action == "3")
             {
-                this->prize /= 2;
+                if (this->prize != 1)
+                {
+                    this->prize /= 2;
+                }
             }
             else if (action == "4")
             {
