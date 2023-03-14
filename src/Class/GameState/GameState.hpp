@@ -33,11 +33,13 @@ public:
     void initializePlayer();
     void initializePlayingDeck();
     void randomizeDeck();
+    void rollPlayingCard();
 
     // === GAME CONTROL ============================================
     void newGame();
     void nextRound();
     void nextGame();
+    void playerAction();
 };
 
 #endif

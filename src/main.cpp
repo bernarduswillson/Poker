@@ -13,6 +13,9 @@ int main()
 
     gameState->displayGameState();
     gameState->displayTable();
+    gameState->playerAction();
+    // Card c(5, 0);
+    // std::cout << c << std::endl;
 
     // CLEAR MEMORY ================================================
     delete gameState;

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <cmath>
 #include "../Calculable/Calculable.hpp"
 
 class Card : virtual public Calculable
@@ -12,14 +13,19 @@ private:
     double color;
 
 public:
-    // constructor
+    // === CONSTRUCTOR DESTRUCTOR ==================================
     Card(double, double);
-    // destructor
+    void operator=(const Card &other);
     ~Card();
+
+    // === GETTER SETTER ===========================================
     virtual double getValue();
     double getNumber();
     double getColor();
     void setValue(double value);
+
+    // === DISPLAY =================================================
+    void displayCard();
 };
 
 #endif

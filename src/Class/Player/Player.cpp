@@ -6,10 +6,18 @@ Player::Player()
     this->points = 0;
 }
 
-Player::~Player()
+void Player::operator=(const Player &other)
 {
-    // delete [] this->hands;
+    this->name = other.name;
+    this->points = other.points;
+    for (int i = 0; i < 2; i++)
+    {
+        this->hands[i] = other.hands[i];
+    }
+    // this->highestCombo = other.highestCombo;
 }
+
+Player::~Player() {}
 
 // === GETTER SETTER ===========================================
 std::string Player::getName()
@@ -22,29 +30,32 @@ long long int Player::getPoints()
     return this->points;
 }
 
-// === OPERATOR OVERLOADING ====================================
-void Player::operator+(long long int addedPoints)
+std::vector<Card> Player::getHands()
 {
-    this->points += addedPoints;
+    return this->hands;
 }
 
-// void Player::operator+(Card addedCard) {
+Card Player::getHands(int idx)
+{
+    return this->hands[idx];
+}
 
-// }
+// === OPERATOR OVERLOADING ====================================
+Player Player::operator+(long long int addedPoints)
+{
+    this->points += addedPoints;
+    return *this;
+}
+
+Player Player::operator+(Card addedCard)
+{
+    this->hands.push_back(addedCard);
+    return *this;
+}
 
 // void Player::operator-(Card removedCard) {
 
 // }
-
-Player &Player::operator=(const Player &other)
-{
-    this->name = other.name;
-    this->points = other.points;
-    // this->hands = other.hands;
-    // this->highestCombo = other.highestCombo;
-
-    return *this;
-}
 
 // === METHOD ==================================================
 void Player::inputName()
@@ -54,6 +65,14 @@ void Player::inputName()
     std::cin >> inputName;
     this->name = inputName;
 }
-// void findCombo(Package river) {
+// void findCombo(Package table) {
 
 // }
+
+// === DISPLAY =================================================
+void Player::displayHands()
+{
+    // this->hands[0].displayCard();
+    std::cout << this->hands[0].getNumber() << " " << this->hands[1].getNumber();
+    // this->hands[1].displayCard();
+}
