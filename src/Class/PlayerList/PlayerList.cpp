@@ -25,3 +25,8 @@ void PlayerList::push(const Player &player)
     this->buffer.push_back(player);
     this->length++;
 }
+
+void PlayerList::setPlayerCards(int idx, std::vector<Card> cards)
+{
+    this->buffer[idx].setHands(cards);
+}

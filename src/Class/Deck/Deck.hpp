@@ -26,6 +26,7 @@ public:
     void push(const T &);
     void pop();
     void shuffle();
+    T roll();
 };
 
 #endif

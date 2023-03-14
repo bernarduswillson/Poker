@@ -54,3 +54,12 @@ void Deck<T>::shuffle()
         this->buffer[swapidx2] = temp;
     }
 }
+
+template <typename T>
+T Deck<T>::roll()
+{
+    T temp = T(this->buffer[0]);
+    this->buffer.erase(this->buffer.begin());
+    return temp;
+}
+

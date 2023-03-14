@@ -26,6 +26,7 @@ public:
     long long int getPoints();
     std::vector<Card> getHands();
     Card getHands(int idx);
+    void setHands(std::vector<Card> hands);
 
     // === OPERATOR OVERLOADING ====================================
     Player operator+(long long int addedPoints);

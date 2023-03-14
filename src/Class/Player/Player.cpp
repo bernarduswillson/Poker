@@ -40,6 +40,11 @@ Card Player::getHands(int idx)
     return this->hands[idx];
 }
 
+void Player::setHands(std::vector<Card> hands)
+{
+    this->hands = hands;
+}
+
 // === OPERATOR OVERLOADING ====================================
 Player Player::operator+(long long int addedPoints)
 {
@@ -72,7 +77,7 @@ void Player::inputName()
 // === DISPLAY =================================================
 void Player::displayHands()
 {
-    // this->hands[0].displayCard();
-    std::cout << this->hands[0].getNumber() << " " << this->hands[1].getNumber();
-    // this->hands[1].displayCard();
+    this->hands[0].displayCard();
+    std::cout << " ";
+    this->hands[1].displayCard();
 }
