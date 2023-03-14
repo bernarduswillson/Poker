@@ -17,8 +17,12 @@
                 "./src/main.cpp",
                 "./src/Class/GameState/GameState.cpp",
                 "./src/Class/PlayerList/PlayerList.cpp",
-                "./src/Class/InventoryHolder/InventoryHolder.cpp",
                 "./src/Class/Player/Player.cpp",
+                "./src/Class/Deck/Deck.cpp",
+                "./src/Class/Card/Card.cpp",
+                "./src/Class/Table/Table.cpp",
+                "./src/Class/InventoryHolder/InventoryHolder.cpp",
+                "./src/Class/Calculable/Calculable.cpp",
                 "-o",
                 "./bin/candyCard.out",
             ]
