@@ -1,4 +1,6 @@
 #include "Package.hpp"
+#include <cmath>
+#include <bits/stdc++.h>
 
 Package::Package():Calculable()
 {
@@ -23,3 +25,5 @@ void Package::setValue(double value)
 {
     this->value = value;
 }
+
+
