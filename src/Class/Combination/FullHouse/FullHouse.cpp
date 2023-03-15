@@ -3,10 +3,7 @@
 FullHouse::FullHouse(std::vector<Card> cards)
 {
     this->name = "FullHouse";
-    for (int i = 0; i < cards.size(); i++) {
-        std::cout << cards[i].getNumber() << " " << cards[i].getColor() << std::endl;
-    }
-    this->value = cards[0].getNumber()*0.1 + cards[0].getColor()*0.03 + cards[1].getColor()*0.03 + cards[2].getColor()*0.03 + 8.61417;
+    this->value = cards[0].getNumber()*0.1 + cards[0].getColor()*0.03 + cards[1].getColor()*0.03 + cards[2].getColor()*0.03 + (cards[3].getNumber()*0.1 + cards[3].getColor()*0.03)*0.001+ 8.61417;
 }
 
 FullHouse::~FullHouse()
