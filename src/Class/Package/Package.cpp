@@ -36,3 +36,8 @@ void Package::operator=(const Package &other)
     this->cardBuffer = other.cardBuffer;
     this->value = other.value;
 }
+
+std::string Package::getName()
+{
+    return name;
+}

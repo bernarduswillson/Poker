@@ -10,6 +10,10 @@
 #include "../Combination/ThreeOfAKind/ThreeOfAKind.cpp"
 #include "../Combination/Straight/Straight.cpp"
 #include "../Combination/Flush/Flush.cpp"
+#include "../Combination/FullHouse/FullHouse.cpp"
+#include "../Combination/FourOfAKind/FourOfAKind.cpp"
+#include "../Combination/StraightFlush/StraightFlush.cpp"
+#include "../Combination/HighCard/HighCard.cpp"
 #include "../Table/Table.cpp"
 #include "../InventoryHolder/InventoryHolder.cpp"
 
