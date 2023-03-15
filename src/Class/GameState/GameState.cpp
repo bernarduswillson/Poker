@@ -12,6 +12,7 @@ GameState::GameState()
     this->ongoing = false;
     this->players = new PlayerList();
     this->playingDeck = new Deck<Card>;
+    this->abilityDeck = new Deck<Ability *>;
     this->table = new Table();
 }
 
@@ -23,6 +24,17 @@ GameState::~GameState()
 }
 
 // === GETTER SETTER ===========================================
+
+void GameState::setPrize(long long int newPrize)
+{
+    this->prize = newPrize;
+}
+
+long long int GameState::getPrize()
+{
+    return this->prize;
+}
+
 bool GameState::isOngoing()
 {
     return this->ongoing;
@@ -176,6 +188,21 @@ void GameState::rollPlayingCard()
     }
 }
 
+void GameState::initializeAbilityDeck()
+{
+    Multiplier *quadruple = new Multiplier(1);
+    this->abilityDeck->push(quadruple);
+
+    Multiplier *quarter = new Multiplier(2);
+    this->abilityDeck->push(quarter);
+}
+
+void GameState::rollAbility()
+{
+    this->playersAbility[this->players->getElmt(0).getName()] = this->abilityDeck->getElmt(0);
+    this->playersAbility[this->players->getElmt(1).getName()] = this->abilityDeck->getElmt(1);
+}
+
 void GameState::evaluateGameWinner()
 {
     for (int i = 0; i < 7; i++)
@@ -207,6 +234,12 @@ void GameState::newGame()
 
     // 4. Roll playing cards
     rollPlayingCard();
+
+    // 5. Initialize ability
+    initializeAbilityDeck();
+
+    // 6. Roll ability
+    rollAbility();
 }
 
 void GameState::nextTurn()
@@ -250,7 +283,10 @@ void GameState::playerAction()
         std::cout << "1. Double" << std::endl;
         std::cout << "2. Next" << std::endl;
         std::cout << "3. Half" << std::endl;
-        std::cout << "4. [Ability]" << std::endl; //
+        std::cout << "4. ";
+        std::cout << this->playersAbility[this->players->getElmt(0).getName()]->getName();
+        std::cout << " [Ability]" << std::endl;
+        // std::cout << "4. [Ability]" << std::endl;
         std::cout << std::endl;
 
         try
@@ -275,7 +311,7 @@ void GameState::playerAction()
             }
             else if (action == "4")
             {
-                // call ability
+                this->setPrize(this->playersAbility[this->players->getElmt(0).getName()]->use(this->prize));
             }
             else
             {

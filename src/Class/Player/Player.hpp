@@ -5,7 +5,6 @@
 #include <vector>
 
 #include "../Card/Card.hpp"
-// #include "../Calculable/Calculable.hpp"
 
 class Player
 {
@@ -13,7 +12,6 @@ private:
     std::string name;
     long long int points;
     std::vector<Card> hands;
-    // Calculable highestCombo;
 
 public:
     // === CONSTRUCTOR DESTRUCTOR ==================================

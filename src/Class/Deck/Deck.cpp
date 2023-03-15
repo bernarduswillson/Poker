@@ -62,4 +62,3 @@ T Deck<T>::roll()
     this->buffer.erase(this->buffer.begin());
     return temp;
 }
-

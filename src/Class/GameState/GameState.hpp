@@ -2,12 +2,15 @@
 #define __GAME_STATE_HPP__
 
 #include <iostream>
+#include <map>
 
 #include "../PlayerList/PlayerList.hpp"
 #include "../Player/Player.hpp"
 #include "../Deck/Deck.hpp"
 #include "../Card/Card.hpp"
 #include "../Table/Table.hpp"
+#include "../Ability/Ability.hpp"
+#include "../Multiplier/Multiplier.hpp"
 
 class GameState
 {
@@ -19,6 +22,8 @@ private:
     bool ongoing;
     PlayerList *players;
     Deck<Card> *playingDeck;
+    Deck<Ability *> *abilityDeck;
+    std::map<std::string, Ability *> playersAbility;
     Table *table;
     Player winner;
 
@@ -28,6 +33,8 @@ public:
     ~GameState();
 
     // === GETTER SETTER ===========================================
+    void setPrize(long long int);
+    long long int getPrize();
     bool isOngoing();
 
     // === DISPLAY =================================================
@@ -41,6 +48,8 @@ public:
     void initializePlayingDeck();
     void randomizeDeck();
     void rollPlayingCard();
+    void initializeAbilityDeck();
+    void rollAbility();
     void evaluateGameWinner();
 
     // === GAME CONTROL ============================================
