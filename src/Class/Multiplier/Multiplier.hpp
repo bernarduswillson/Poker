@@ -10,6 +10,7 @@ public:
     ~Multiplier();
 
     long long int use(long long int) override;
+    void use(PlayerList &, Deck<Card> &) override;
 };
 
 #endif

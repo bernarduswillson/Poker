@@ -4,12 +4,14 @@
 Player::Player()
 {
     this->points = 0;
+    this->isDisable = false;
 }
 
 void Player::operator=(const Player &other)
 {
     this->name = other.name;
     this->points = other.points;
+    this->isDisable = other.isDisable;
     for (int i = 0; i < 2; i++)
     {
         this->hands[i] = other.hands[i];
@@ -43,6 +45,16 @@ Card Player::getHands(int idx)
 void Player::setHands(std::vector<Card> hands)
 {
     this->hands = hands;
+}
+
+bool Player::getIsDisable()
+{
+    return this->isDisable;
+}
+
+void Player::setIsDisable()
+{
+    this->isDisable = !this->isDisable;
 }
 
 // === OPERATOR OVERLOADING ====================================

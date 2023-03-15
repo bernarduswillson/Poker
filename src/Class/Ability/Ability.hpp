@@ -3,6 +3,10 @@
 
 #include <string>
 
+#include "../PlayerList/PlayerList.hpp"
+#include "../Deck/Deck.hpp"
+#include "../Card/Card.hpp"
+
 class Ability
 {
 protected:
@@ -17,6 +21,7 @@ public:
     std::string getName();
 
     virtual long long int use(long long int) = 0;
+    virtual void use(PlayerList &, Deck<Card> &) = 0;
 };
 
 #endif

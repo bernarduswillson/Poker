@@ -11,6 +11,7 @@
 #include "../Table/Table.hpp"
 #include "../Ability/Ability.hpp"
 #include "../Multiplier/Multiplier.hpp"
+#include "../PlayerManipulation/PlayerManipulation.hpp"
 
 class GameState
 {

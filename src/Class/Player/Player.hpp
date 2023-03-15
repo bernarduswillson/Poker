@@ -12,6 +12,7 @@ private:
     std::string name;
     long long int points;
     std::vector<Card> hands;
+    bool isDisable;
 
 public:
     // === CONSTRUCTOR DESTRUCTOR ==================================
@@ -25,6 +26,8 @@ public:
     std::vector<Card> getHands();
     Card getHands(int idx);
     void setHands(std::vector<Card> hands);
+    bool getIsDisable();
+    void setIsDisable();
 
     // === OPERATOR OVERLOADING ====================================
     Player operator+(long long int addedPoints);

@@ -6,6 +6,12 @@ template <typename T>
 Deck<T>::Deck() : InventoryHolder() {}
 
 template <typename T>
+void Deck<T>::operator=(Deck<T> &other)
+{
+    this->buffer = other.buffer;
+}
+
+template <typename T>
 Deck<T>::~Deck() {}
 
 // === GETTER ==================================================

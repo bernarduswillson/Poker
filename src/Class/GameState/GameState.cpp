@@ -57,7 +57,7 @@ void GameState::displaySplash()
 
 void GameState::displayGameState()
 {
-    system("clear");
+    // system("clear");
     std::cout << "\n##=======## CANDY KINGDOM CARD GAME ##=======##\n"
               << std::endl;
     std::cout << "Game:\t\t" << this->game << std::endl;
@@ -190,6 +190,9 @@ void GameState::rollPlayingCard()
 
 void GameState::initializeAbilityDeck()
 {
+    PlayerManipulation *abiliyless = new PlayerManipulation(3);
+    this->abilityDeck->push(abiliyless);
+
     Multiplier *quadruple = new Multiplier(1);
     this->abilityDeck->push(quadruple);
 
@@ -201,6 +204,11 @@ void GameState::rollAbility()
 {
     this->playersAbility[this->players->getElmt(0).getName()] = this->abilityDeck->getElmt(0);
     this->playersAbility[this->players->getElmt(1).getName()] = this->abilityDeck->getElmt(1);
+    this->playersAbility[this->players->getElmt(2).getName()] = this->abilityDeck->getElmt(2);
+    this->playersAbility[this->players->getElmt(3).getName()] = this->abilityDeck->getElmt(2);
+    this->playersAbility[this->players->getElmt(4).getName()] = this->abilityDeck->getElmt(2);
+    this->playersAbility[this->players->getElmt(5).getName()] = this->abilityDeck->getElmt(2);
+    this->playersAbility[this->players->getElmt(6).getName()] = this->abilityDeck->getElmt(2);
 }
 
 void GameState::evaluateGameWinner()
@@ -245,8 +253,6 @@ void GameState::newGame()
 void GameState::nextTurn()
 {
     this->players->roundRobin();
-    long long int temp = 4294967296;
-    this->players->getElmt(0) = this->players->getElmt(0) + temp;
 }
 
 void GameState::nextRound()
@@ -270,7 +276,8 @@ void GameState::playerAction()
 
     while (!isValid)
     {
-
+        this->displayGameState();
+        this->displayTable();
         std::cout << "\n#-----=========== PLAYER TURN ===========-----#\n"
                   << std::endl;
         std::cout << "Name:\t" << this->players->getElmt(0).getName() << std::endl;
@@ -285,8 +292,13 @@ void GameState::playerAction()
         std::cout << "3. Half" << std::endl;
         std::cout << "4. ";
         std::cout << this->playersAbility[this->players->getElmt(0).getName()]->getName();
-        std::cout << " [Ability]" << std::endl;
-        // std::cout << "4. [Ability]" << std::endl;
+        // this->players->getElmt(0).setIsDisable();
+        std::cout << " [Ability]" << this->players->getElmt(0).getIsDisable();
+        if (this->players->getElmt(0).getIsDisable())
+        {
+            std::cout << " [Not available]";
+        }
+        std::cout << std::endl;
         std::cout << std::endl;
 
         try
@@ -311,7 +323,12 @@ void GameState::playerAction()
             }
             else if (action == "4")
             {
+                if (this->players->getElmt(0).getIsDisable())
+                {
+                    throw "Ability disabled\n";
+                }
                 this->setPrize(this->playersAbility[this->players->getElmt(0).getName()]->use(this->prize));
+                this->playersAbility[this->players->getElmt(0).getName()]->use(*this->players, *this->playingDeck);
             }
             else
             {

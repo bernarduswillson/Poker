@@ -18,6 +18,7 @@
                 "./src/Class/GameState/GameState.cpp",
                 "./src/Class/Ability/Ability.cpp",
                 "./src/Class/Multiplier/Multiplier.cpp",
+                "./src/Class/PlayerManipulation/PlayerManipulation.cpp",
                 "./src/Class/PlayerList/PlayerList.cpp",
                 "./src/Class/Player/Player.cpp",
                 "./src/Class/Deck/Deck.cpp",
