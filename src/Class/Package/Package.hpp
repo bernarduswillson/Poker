@@ -22,9 +22,11 @@ class Package : virtual public Calculable
     public:
         //constructor
         Package();
+        //copy constructor
+        void operator=(const Package &other);
         //destructor
         ~Package();
-        virtual double getValue() = 0;
+        virtual double getValue();
         std::vector<Card> getCardBuffer();
         void addCard(Card);
         virtual void setValue(double value);

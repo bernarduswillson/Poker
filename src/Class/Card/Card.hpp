@@ -16,6 +16,9 @@ private:
         //constructor
         Card(double, double);
         void operator=(const Card &other);
+        bool operator>(const Card &other);
+        bool operator<(const Card &other);
+        
         //destructor
         ~Card();
         virtual double getValue();

@@ -1,8 +1,9 @@
 #include "ThreeOfAKind.hpp"
 
-ThreeOfAKind::ThreeOfAKind()
+ThreeOfAKind::ThreeOfAKind(Card maxCard)
 {
     this->name = "ThreeOfAKind";
+    this->value = maxCard.getNumber()*0.1 + maxCard.getColor()*0.03 + 1.39;
 }
 
 ThreeOfAKind::~ThreeOfAKind()
