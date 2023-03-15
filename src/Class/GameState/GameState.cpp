@@ -190,6 +190,9 @@ void GameState::rollPlayingCard()
 
 void GameState::initializeAbilityDeck()
 {
+    PlayerManipulation *Reroll = new PlayerManipulation(1);
+    this->abilityDeck->push(Reroll);
+    
     PlayerManipulation *abiliyless = new PlayerManipulation(3);
     this->abilityDeck->push(abiliyless);
 

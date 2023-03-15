@@ -3,6 +3,11 @@
 PlayerManipulation::PlayerManipulation(int id) : Ability(id)
 {
     this->id = id;
+    if (id == 1)
+    {
+        this->name = "Reroll";
+    }
+
     if (id == 3)
     {
         this->name = "Abilityless";
@@ -18,6 +23,17 @@ long long int PlayerManipulation::use(long long int prize)
 
 void PlayerManipulation::use(PlayerList &players, Deck<Card> &playingDeck)
 {
+    // Reroll
+    if (this->id == 1)
+    {
+        std::vector<Card> temp;
+        for (int i = 0; i < 2; i++)
+        {
+            temp.push_back(playingDeck.roll());
+        }
+        players.getElmt(0).setHands(temp);
+    }
+    
     // Abilityless
     if (this->id == 3)
     {
