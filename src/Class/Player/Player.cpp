@@ -260,7 +260,7 @@ std::pair<bool, std::vector<Card>> Player::isFullHouse(std::vector<Card> card)
     // kalo 3 dulu yang muncul
     for (int i = 0; i < card.size() - 1; i++)
     {
-        if (floor(card[i].getValue()*10) == floor(card[i+1].getValue()*10))
+        if (card[i].getNumber() == card[i+1].getNumber())
         {
             result.push_back(card[i]);
             count++;
@@ -282,15 +282,17 @@ std::pair<bool, std::vector<Card>> Player::isFullHouse(std::vector<Card> card)
     count = 0;
     if (trip)
     {
-        for (int i = progress + 1; i < card.size() - 1; i++)
+        std::cout << progress << std::endl;
+        for (int i = progress; i < card.size() - 1; i++)
         {
             if (card[i].getNumber() == card[i+1].getNumber())
             {
-                result.push_back(card[i]);
+                std::cout << "cok" << std::endl;
+                std::cout << card[i].getValue() << std::endl;
+                std::cout << card[i+1].getValue() << std::endl;
                 count++;
                 if (count == 1)
                 {
-                    result.push_back(card[i+1]);
                     doub = true;
                     break;
                 }
@@ -305,63 +307,55 @@ std::pair<bool, std::vector<Card>> Player::isFullHouse(std::vector<Card> card)
     }
 
     // kalo 2 dulu yang muncul
-    if (!doub)
-    {
-        result.clear();
-        std::vector<Card> temp;
-        count = 0;
-        trip = false, doub = false;
-        progress = 0;
-        for (int i = 0; i < card.size() - 1; i++)
-        {
-            if (floor(card[i].getValue()*10) == floor(card[i+1].getValue()*10))
-            {
-                temp.push_back(card[i]);
-                count++;
-                if (count == 1)
-                {
-                    temp.push_back(card[i+1]);
-                    progress = i;
-                    doub = true;
-                    break;
-                }
-            }
-            else
-            {
-                temp.clear();
-                count = 0;
-                doub = false;
-            }
-        }
-        count = 0;
-        if (doub)
-        {
-            for (int i = progress + 1; i < card.size() - 1; i++)
-            {
-                if (floor(card[i].getValue()*10) == floor(card[i+1].getValue()*10))
-                {
-                    result.push_back(card[i]);
-                    count++;
-                    if (count == 2)
-                    {
-                        result.push_back(card[i+1]);
-                        trip = true;
-                        break;
-                    }
-                }
-                else
-                {
-                    result.clear();
-                    count = 0;
-                    trip = false;
-                }
-            }
-        }
-        for (int i = 0; i < temp.size(); i++)
-        {
-            result.push_back(temp[i]);
-        }
-    }
+    // if (!doub)
+    // {
+    //     result.clear();
+    //     count = 0;
+    //     trip = false, doub = false;
+    //     progress = 0;
+    //     for (int i = 0; i < card.size() - 1; i++)
+    //     {
+    //         if (card[i].getNumber() == card[i+1].getNumber())
+    //         {
+    //             count++;
+    //             if (count == 1)
+    //             {
+    //                 progress = i;
+    //                 doub = true;
+    //                 break;
+    //             }
+    //         }
+    //         else
+    //         {
+    //             count = 0;
+    //             doub = false;
+    //         }
+    //     }
+    //     count = 0;
+    //     if (doub)
+    //     {
+    //         for (int i = progress; i < card.size() - 1; i++)
+    //         {
+    //             if (card[i].getNumber() == card[i+1].getNumber())
+    //             {
+    //                 result.push_back(card[i]);
+    //                 count++;
+    //                 if (count == 2)
+    //                 {
+    //                     result.push_back(card[i+1]);
+    //                     trip = true;
+    //                     break;
+    //                 }
+    //             }
+    //             else
+    //             {
+    //                 result.clear();
+    //                 count = 0;
+    //                 trip = false;
+    //             }
+    //         }
+    //     }
+    // }
 
     if (trip && doub)
     {
@@ -471,14 +465,14 @@ int main() {
     Table table;
     std::vector<Card> card;
     // card.push_back(Card(1, 1));
-    card.push_back(Card(9, 2));
-    card.push_back(Card(8, 2));
+    card.push_back(Card(12, 3));
+    card.push_back(Card(12, 2));
     // card.push_back(Card(5, 1));
     // card.push_back(Card(4, 1));
-    table.push(Card(9, 3));
-    table.push(Card(10, 3));
-    table.push(Card(11, 3));
-    table.push(Card(12, 3));
+    table.push(Card(8, 3));
+    table.push(Card(7, 2));
+    table.push(Card(13, 1));
+    table.push(Card(13, 2));
     table.push(Card(13, 3));
     //add hand
     player.setHands(card);
@@ -587,9 +581,13 @@ void Player::findCombo(Table river) {
             {
                 delete p2;
                 straFlush.second.erase((straFlush.second.begin()));
-                std::vector<Card> temp,temp2,temp3;
+                std::vector<Card> temp,temp2,temp3,temp4;
                 // temp 1 buat straight
                 temp = table;
+                if (hands[0].getNumber()==13 || hands[1].getNumber()==13)
+                {
+                    temp.erase(temp.begin());
+                }
                 for (int i = 0; i < temp.size(); i++)
                 {
                     if (temp[i].getNumber() == this->hands[0].getNumber())
@@ -604,6 +602,7 @@ void Player::findCombo(Table river) {
                         temp.erase(temp.begin() + i);
                     }
                 }
+
                 temp.push_back(this->hands[0]);
                 temp.push_back(this->hands[1]);
                 temp = sortCard(temp);
@@ -629,6 +628,10 @@ void Player::findCombo(Table river) {
                 }
                 temp3.push_back(this->hands[0]);
                 temp3.push_back(this->hands[1]);
+                temp4=card;
+                if(this->hands[0].getNumber()==this->hands[1].getNumber()){
+                    pair = this->isPair(temp4);
+                }
                 std::pair<bool, std::vector<Card>> nstraFlush = this->isStraightFlush(temp3);
                 if (nstraFlush.first)
                 {
@@ -667,6 +670,9 @@ void Player::findCombo(Table river) {
     if (full.first && !found)
     {
         p2 = new FullHouse(full.second);
+        std::cout << "tes" << std::endl;
+        std::cout << p2->getValue() << std::endl;
+        std::cout << p->getValue() << std::endl;
         if (p2->getValue() == p->getValue())
         {
             delete p2;
@@ -717,13 +723,36 @@ void Player::findCombo(Table river) {
         if (p2->getValue() == p->getValue())
         {
             delete p2;
-            stra.second.erase((stra.second.begin()));
             std::vector<Card> temp;
             temp = stra.second;
+            for (int i = 0; i < temp.size(); i++)
+                {
+                    if (temp[i].getNumber() == this->hands[0].getNumber())
+                    {
+                        temp.erase(temp.begin() + i);
+                    }
+                }
+            for (int i = 0; i < temp.size(); i++)
+                {
+                    if (temp[i].getNumber() == this->hands[1].getNumber())
+                    {
+                        temp.erase(temp.begin() + i);
+                    }
+                }
             temp.push_back(this->hands[0]);
             temp.push_back(this->hands[1]);
             temp = sortCard(temp);
+            //print temp
+            for (int i = 0; i < temp.size(); i++)
+            {
+                std::cout << temp[i].getValue() << std::endl;
+            }
             std::pair<bool, std::vector<Card>> nstra = this->isStraight(temp);
+            // print nstra.second
+            for (int i = 0; i < nstra.second.size(); i++)
+            {
+                std::cout << nstra.second[i].getValue() << std::endl;
+            }
             if (nstra.first)
             {
                 p2 = new Straight(nstra.second);

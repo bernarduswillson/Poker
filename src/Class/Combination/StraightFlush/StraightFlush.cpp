@@ -3,7 +3,7 @@
 StraightFlush::StraightFlush(std::vector<Card> cards)
 {
     this->name = "StraightFlush";
-    this->value = cards[0].getColor() * 0.03 + cards[0].getNumber() * 0.1 + 11.5521;//tambah yang 4kind
+    this->value = cards[0].getColor() * 0.03 + cards[0].getNumber() * 0.1 + 11.3942;//tambah yang 4kind
 }
 
 StraightFlush::~StraightFlush()
