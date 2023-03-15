@@ -1,9 +1,8 @@
 #include "FourOfAKind.hpp"
 
-FourOfAKind::FourOfAKind(std::vector<Card> cards)
+FourOfAKind::FourOfAKind()
 {
     this->name = "FourOfAKind";
-    this->value = cards[0].getNumber()*0.1+0;//tambah flush
 }
 
 FourOfAKind::~FourOfAKind()

@@ -1,9 +1,8 @@
 #include "Straight.hpp"
 
-Straight::Straight(std::vector<Card> cards)
+Straight::Straight()
 {
     this->name = "Straight";
-    this->value = cards[0].getNumber()*0.1 + cards[0].getNumber()*0.03 + 5.65;
 }
 
 Straight::~Straight()

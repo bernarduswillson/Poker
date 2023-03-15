@@ -8,7 +8,7 @@ private:
     std::string name;
 public:
     //constructor
-    Flush(std::vector<Card>);
+    Flush();
     //destructor
     ~Flush();
     double getValue();

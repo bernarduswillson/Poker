@@ -8,7 +8,7 @@ private:
     std::string name;
 public:
     //constructor
-    TwoPair(std::vector<Card>);
+    TwoPair();
     //destructor
     ~TwoPair();
     double getValue();

@@ -8,7 +8,7 @@ private:
     std::string name;
 public:
     //constructor
-    FourOfAKind(std::vector<Card>);
+    FourOfAKind();
     //destructor
     ~FourOfAKind();
     double getValue();

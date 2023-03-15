@@ -1,6 +1,3 @@
-#ifndef __PACKAGE_HPP__
-#define __PACKAGE_HPP__
-
 #include "../Calculable/Calculable.hpp"
 #include "../Card/Card.hpp"
 #include <vector>
@@ -22,15 +19,11 @@ class Package : virtual public Calculable
     public:
         //constructor
         Package();
-        //copy constructor
-        void operator=(const Package &other);
         //destructor
         ~Package();
-        virtual double getValue();
+        virtual double getValue() = 0;
         std::vector<Card> getCardBuffer();
         void addCard(Card);
         virtual void setValue(double value);
         
 };
-
-#endif

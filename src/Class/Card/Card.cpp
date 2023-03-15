@@ -14,16 +14,6 @@ void Card::operator=(const Card &other)
     this->value = other.value;
 }
 
-bool Card::operator>(const Card &other)
-{
-    return this->value > other.value;
-}
-
-bool Card::operator<(const Card &other)
-{
-    return this->value < other.value;
-}
-
 Card::~Card()
 {
 }

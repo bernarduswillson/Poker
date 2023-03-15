@@ -1,9 +1,8 @@
 #include "TwoPair.hpp"
 
-TwoPair::TwoPair(std::vector<Card> cards)
+TwoPair::TwoPair()
 {
     this->name = "TwoPair";
-    this->value = cards[0].getNumber()*0.1 + cards[0].getColor()*0.03 + 2.78;
 }
 
 TwoPair::~TwoPair()

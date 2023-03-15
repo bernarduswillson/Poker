@@ -1,8 +1,15 @@
 #include "PlayerList.hpp"
 
+#include <iostream>
+
 // === CONSTRUCTOR DESTRUCTOR ==================================
 
 PlayerList::PlayerList() : InventoryHolder() {}
+
+void PlayerList::operator=(PlayerList &other)
+{
+    this->buffer = other.buffer;
+}
 
 PlayerList::~PlayerList() {}
 
@@ -13,7 +20,7 @@ int PlayerList::getLength()
     return this->length;
 }
 
-Player PlayerList::getElmt(int index)
+Player &PlayerList::getElmt(int index)
 {
     return this->buffer[index];
 }

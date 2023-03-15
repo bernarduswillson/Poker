@@ -8,7 +8,7 @@ private:
     std::string name;
 public:
     //constructor
-    StraightFlush(std::vector<Card>);
+    StraightFlush();
     //destructor
     ~StraightFlush();
     double getValue();

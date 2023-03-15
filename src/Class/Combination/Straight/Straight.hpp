@@ -8,7 +8,7 @@ private:
     std::string name;
 public:
     //constructor
-    Straight(std::vector<Card>);
+    Straight();
     //destructor
     ~Straight();
     double getValue();

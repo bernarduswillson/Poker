@@ -8,8 +8,11 @@ GameState::GameState()
     this->game = 0;
     this->round = 0;
     this->prize = 0;
+    this->target = 0;
+    this->ongoing = false;
     this->players = new PlayerList();
     this->playingDeck = new Deck<Card>;
+    this->abilityDeck = new Deck<Ability *>;
     this->table = new Table();
 }
 
@@ -18,6 +21,23 @@ GameState::~GameState()
     delete this->players;
     delete this->playingDeck;
     delete this->table;
+}
+
+// === GETTER SETTER ===========================================
+
+void GameState::setPrize(long long int newPrize)
+{
+    this->prize = newPrize;
+}
+
+long long int GameState::getPrize()
+{
+    return this->prize;
+}
+
+bool GameState::isOngoing()
+{
+    return this->ongoing;
 }
 
 // === DISPLAY =================================================
@@ -53,6 +73,15 @@ void GameState::displayTable()
     std::cout << "\n#-----============== TABLE ==============-----#\n"
               << std::endl;
     this->table->display(this->round);
+    std::cout << "\n#-----=====#*#========#@#========#*#=====-----#\n"
+              << std::endl;
+}
+
+void GameState::displayWinner()
+{
+    std::cout << "\n#-----======= CONGRATULATION !!! ========-----#\n"
+              << std::endl;
+    std::cout << this->winner.getName() << " wins the game with " << this->winner.getPoints() << " points!" << std::endl;
     std::cout << "\n#-----=====#*#========#@#========#*#=====-----#\n"
               << std::endl;
 }
@@ -159,6 +188,44 @@ void GameState::rollPlayingCard()
     }
 }
 
+void GameState::initializeAbilityDeck()
+{
+    PlayerManipulation *Reroll = new PlayerManipulation(1);
+    this->abilityDeck->push(Reroll);
+    
+    PlayerManipulation *abiliyless = new PlayerManipulation(3);
+    this->abilityDeck->push(abiliyless);
+
+    Multiplier *quadruple = new Multiplier(1);
+    this->abilityDeck->push(quadruple);
+
+    Multiplier *quarter = new Multiplier(2);
+    this->abilityDeck->push(quarter);
+}
+
+void GameState::rollAbility()
+{
+    this->playersAbility[this->players->getElmt(0).getName()] = this->abilityDeck->getElmt(0);
+    this->playersAbility[this->players->getElmt(1).getName()] = this->abilityDeck->getElmt(1);
+    this->playersAbility[this->players->getElmt(2).getName()] = this->abilityDeck->getElmt(2);
+    this->playersAbility[this->players->getElmt(3).getName()] = this->abilityDeck->getElmt(2);
+    this->playersAbility[this->players->getElmt(4).getName()] = this->abilityDeck->getElmt(2);
+    this->playersAbility[this->players->getElmt(5).getName()] = this->abilityDeck->getElmt(2);
+    this->playersAbility[this->players->getElmt(6).getName()] = this->abilityDeck->getElmt(2);
+}
+
+void GameState::evaluateGameWinner()
+{
+    for (int i = 0; i < 7; i++)
+    {
+        if (this->players->getElmt(i).getPoints() >= this->target)
+        {
+            this->ongoing = false;
+            this->winner = this->players->getElmt(i);
+        }
+    }
+}
+
 // === GAME CONTROL ============================================
 
 void GameState::newGame()
@@ -167,6 +234,8 @@ void GameState::newGame()
     this->game = 1;
     this->round = 1;
     this->prize = 64;
+    this->target = 4294967296;
+    this->ongoing = true;
 
     // 2. Initialize players
     initializePlayer();
@@ -176,6 +245,12 @@ void GameState::newGame()
 
     // 4. Roll playing cards
     rollPlayingCard();
+
+    // 5. Initialize ability
+    initializeAbilityDeck();
+
+    // 6. Roll ability
+    rollAbility();
 }
 
 void GameState::nextTurn()
@@ -186,10 +261,21 @@ void GameState::nextTurn()
 void GameState::nextRound()
 {
     this->round++;
+    this->players->roundRobin();
 }
 
 void GameState::nextGame()
 {
+    this->evaluateGameWinner();
+
+    for (int i = 0; i < 7; i++)
+    {
+        if (this->players->getElmt(i).getIsDisable())
+        {
+            this->players->getElmt(i).setIsDisable();
+        }
+    }
+
     this->game++;
     this->round = 1;
     this->prize = 64;
@@ -203,7 +289,8 @@ void GameState::playerAction()
 
     while (!isValid)
     {
-
+        this->displayGameState();
+        this->displayTable();
         std::cout << "\n#-----=========== PLAYER TURN ===========-----#\n"
                   << std::endl;
         std::cout << "Name:\t" << this->players->getElmt(0).getName() << std::endl;
@@ -216,7 +303,15 @@ void GameState::playerAction()
         std::cout << "1. Double" << std::endl;
         std::cout << "2. Next" << std::endl;
         std::cout << "3. Half" << std::endl;
-        std::cout << "4. [Ability]" << std::endl; //
+        std::cout << "4. ";
+        std::cout << this->playersAbility[this->players->getElmt(0).getName()]->getName();
+        // this->players->getElmt(0).setIsDisable();
+        std::cout << " [Ability]";
+        if (this->players->getElmt(0).getIsDisable())
+        {
+            std::cout << " [Not available]";
+        }
+        std::cout << std::endl;
         std::cout << std::endl;
 
         try
@@ -241,7 +336,13 @@ void GameState::playerAction()
             }
             else if (action == "4")
             {
-                // call ability
+                if (this->players->getElmt(0).getIsDisable())
+                {
+                    throw "Ability disabled\n";
+                }
+                this->setPrize(this->playersAbility[this->players->getElmt(0).getName()]->use(this->prize));
+                this->playersAbility[this->players->getElmt(0).getName()]->use(*this->players, *this->playingDeck);
+                this->players->getElmt(0).setIsDisable();
             }
             else
             {
