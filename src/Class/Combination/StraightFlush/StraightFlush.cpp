@@ -1,8 +1,9 @@
 #include "StraightFlush.hpp"
 
-StraightFlush::StraightFlush()
+StraightFlush::StraightFlush(std::vector<Card> cards)
 {
     this->name = "StraightFlush";
+    this->value = cards[0].getValue()+0;//tambah yang 4kind
 }
 
 StraightFlush::~StraightFlush()

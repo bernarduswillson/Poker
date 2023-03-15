@@ -6,6 +6,10 @@
 #include "../Calculable/Calculable.cpp"
 #include "../Package/Package.cpp"
 #include "../Combination/Pair/Pair.cpp"
+#include "../Combination/TwoPair/TwoPair.cpp"
+#include "../Combination/ThreeOfAKind/ThreeOfAKind.cpp"
+#include "../Combination/Straight/Straight.cpp"
+#include "../Combination/Flush/Flush.cpp"
 #include "../Table/Table.cpp"
 #include "../InventoryHolder/InventoryHolder.cpp"
 
@@ -38,6 +42,8 @@ public:
     // === METHOD ==================================================
     void inputName();
     void findCombo(Table river);
+
+    std::vector<Card> sortCard(std::vector<Card> card);
 
     std::pair<bool, std::vector<Card>> isHigh(std::vector<Card> card);
     std::pair<bool, std::vector<Card>> isPair(std::vector<Card> card);

@@ -64,6 +64,30 @@ Player Player::operator+(Card addedCard)
 
 // }
 
+std::vector<Card> Player::sortCard(std::vector<Card> card)
+{
+    std::vector<double> value;
+    std::vector<Card> result;
+
+    for (int i = 0; i < card.size(); i++)
+    {
+        value.push_back(card[i].getValue());
+    }
+    std::sort(value.begin(), value.end(), std::greater<double>());
+    for (int i = 0; i < value.size(); i++)
+    {
+        for (int j = 0; j < card.size(); j++)
+        {
+            if (value[i] == card[j].getValue())
+            {
+                result.push_back(card[j]);
+            }
+        }
+    }
+    return result;
+}
+
+
 // === METHOD ==================================================
 void Player::inputName()
 {
@@ -76,266 +100,153 @@ void Player::inputName()
 
 std::pair<bool, std::vector<Card>> Player::isPair(std::vector<Card> card)
 {
-    // std::vector<double> value;
     std::vector<Card> result;
-    
-    // for (int i = 0; i < card.size(); i++)
-    // {
-    //     value.push_back(card[i].getValue());
-    // }
-    // std::sort(value.begin(), value.end(), std::greater<double>());
-    // for (int i = 0; i < card.size()-1; i++)
-    // {
-    //     for (int j = 0; j < card.size()-2; j++)
-    //     {
-    //         if (card[j] > card[j+1])
-    //         {
-    //             std::cout << "tes" << std::endl;
-    //         }
-    //     }
-    // }
-    if (card[1] > card[2])
+    card = sortCard(card);
+    for (int i = 0; i < card.size(); i++) 
     {
-        std::cout << "tes" << std::endl;
-    }
-    for (int i = 0; i < card.size(); i++) {
-        for (int j = i + 1; j < card.size(); j++) {
-            if (card[i].getValue() == card[j].getValue()) {
+        for (int j = i + 1; j < card.size(); j++) 
+        {
+            if (floor(card[i].getValue()*10) == floor(card[j].getValue()*10)) 
+            {
                 result.push_back(card[i]);
                 result.push_back(card[j]);
                 return std::make_pair(true, result);
             }
         }
     }
-
-
-    // for (int i = 0; i < value.size(); i++)
-    // {
-    //     for (int j = i + 1; j < value.size(); j++)
-    //     {
-    //         if (floor(value[i] * 10) == floor(value[j] * 10))
-    //         {
-    //             for (int k = 0; k < card.size(); k++)
-    //             {
-    //                 if (value[i] == card[k].getValue()) {
-    //                     result.push_back(card[k]);
-    //                 }
-    //                 if (value[j] == card[k].getValue()) {
-    //                     result.push_back(card[k]);
-    //                 }
-    //             }
-    //             return std::make_pair(true, result);
-    //         }
-    //     }
-    // }
     return std::make_pair(false, result);
 }
 
-// std::pair<bool, std::vector<Card>> Player::isTwoPair(std::vector<Card> card)
-// {   
-//     std::vector<double> value;
-//     std::vector<Card> result;
-//     for (int i = 0; i < card.size(); i++)
-//     {
-//         value.push_back(card[i].getValue());
-//     }
-//     std::sort(value.begin(), value.end());
-//     int maxValue = 0;
-//     int count = 0;
-//     for (int i = 0; i < value.size(); i++)
-//     {
-//         for (int j = i + 1; j < value.size(); j++)
-//         {
-//             if (floor(value[i] * 10) == floor(value[j] * 10))
-//             {
-//                 result.push_back(card[i]);
-//                 result.push_back(card[j]);
-//                 count++;
-//             }
-//         }
-//     }
-//     if (count >= 2)
-//     {
-//         for (int k = 0; k < card.size(); k++)
-//         {
-//             if (maxValue == round(card[k].getValue() * 100))
-//             {
-//                 return std::make_pair(true, card[k]);
-//             }
-//         }
-//     }
-//     return std::make_pair(false, card[0]);
-// }
+std::pair<bool, std::vector<Card>> Player::isTwoPair(std::vector<Card> card)
+{   
+    std::vector<Card> result;
+    card = sortCard(card);
+    int maxValue = 0;
+    int count = 0;
+    for (int i = 0; i < card.size(); i++)
+    {
+        for (int j = i + 1; j < card.size(); j++)
+        {
+            if (floor(card[i].getValue()*10) == floor(card[j].getValue()*10))
+            {
+                result.push_back(card[i]);
+                result.push_back(card[j]);
+                count++;
+                if (count == 2) {
+                    return std::make_pair(true, result);
+                }
+            }
+        }
+    }
+    return std::make_pair(false, result);
+}
 
-// std::pair<bool, std::vector<Card>> Player::isThreeOfAKind(std::vector<Card> card)
-// {
-//     std::vector<double> value;
-//     for (int i = 0; i < card.size(); i++)
-//     {
-//         value.push_back(card[i].getValue());
-//     }
-//     std::vector<int> sameValue;
-//     std::tuple<int, int> result;
-//     bool trip = false;
-//     int tripValue;
-//     for (int i = 0; i < value.size(); i++)
-//     {
-//         sameValue.push_back(round(value[i] * 100));
-//     }
-//     sort(sameValue.begin(), sameValue.end(), std::greater<int>());
-//     int count = 0;
-//     for (int i = 0; i < sameValue.size() - 1; i++)
-//     {
-//         if (floor(sameValue[i] / 10) == floor(sameValue[i + 1] / 10))
-//         {
-//             count++;
-//         }
-//         else
-//         {
-//             count = 0;
-//         }
-//         if (count == 2)
-//         {
-//             trip = true;
-//             tripValue = sameValue[i - 1];
-//             break;
-//         }
-//     }
-//     if (trip)
-//     {
-//         for (int i = 0; i < card.size(); i++)
-//         {
-//             if (tripValue == round(card[i].getValue() * 100))
-//             {
-//                 return std::make_pair(true, card[i]);
-//             }
-//         }
-//     }
-//     return std::make_pair(false, card[0]);
-// }
+std::pair<bool, std::vector<Card>> Player::isThreeOfAKind(std::vector<Card> card)
+{
+    std::vector<Card> result;
+    card = sortCard(card);
+    bool trip = false;
+    int tripValue;
+    int count = 0;
+    for (int i = 0; i < card.size() - 1; i++)
+    {
+        if (floor(card[i].getValue()*10) == floor(card[i+1].getValue()*10))
+        {
+            result.push_back(card[i]);
+            count++;
+            if (count == 2)
+            {
+                result.push_back(card[i+1]);
+                trip = true;
+                break;
+            }
+        }
+        else
+        {
+            result.clear();
+            count = 0;
+        }
+    }
+    if (trip)
+    {
+        return std::make_pair(true, result);
+    }
+    return std::make_pair(false, result);
+}
 
-// std::pair<bool, std::vector<Card>> Player::isStraight(std::vector<Card> card)
-// {
-//     std::vector<double> value;
-//     for (int i = 0; i < card.size(); i++)
-//     {
-//         value.push_back(card[i].getValue());
-//     }
-//     std::vector<int> sameValue;
-//     std::tuple<int, int> result;
-//     for (int i = 0; i < value.size(); i++)
-//     {
-//         sameValue.push_back(floor(value[i] * 10) * 10);
-//     }
-//     sort(sameValue.begin(), sameValue.end(), std::greater<int>());
-//     int count = 0;
-//     int maxValue;
-//     for (int i = 0; i < sameValue.size() - 1; i++)
-//     {
-//         if (sameValue[i] == sameValue[i + 1] + 10)
-//         {
-//             count++;
-//             if (count == 1)
-//             {
-//                 maxValue = sameValue[i];
-//             }
-//         }
-//         else if (sameValue[i] == sameValue[i + 1])
-//         {
-//             // do nothing
-//         }
-//         else
-//         {
-//             count = 0;
-//         }
-//         if (count == 4)
-//         {
-//             for (int j = 0; j < card.size(); j++)
-//             {
-//                 if (maxValue == floor(card[j].getValue() * 10) * 10)
-//                 {
-//                     return std::make_pair(true, card[j]);
-//                 }
-//             }
-//         }
-//     }
-//     return std::make_pair(false, card[0]);
-// }
+std::pair<bool, std::vector<Card>> Player::isStraight(std::vector<Card> card)
+{
+    std::vector<Card> result;
+    card = sortCard(card);
+    int count = 0;
+    int maxValue;
+    for (int i = 0; i < card.size() - 1; i++)
+    {
+        if (floor(card[i].getValue() * 10) * 10 == floor(card[i+1].getValue() * 10) * 10 + 10)
+        {
+            result.push_back(card[i]);
+            count++;
+            if (count == 4)
+            {
+                result.push_back(card[i+1]);
+                return std::make_pair(true, result);
+            }
+        }
+        else if (card[i].getValue() == card[i+1].getValue())
+        {
+            // do nothing
+        }
+        else
+        {
+            result.clear();
+            count = 0;
+        }
+    }
+    return std::make_pair(false, result);
+}
 
-// std::pair<bool, std::vector<Card>> Player::isFlush(std::vector<Card> card)
-// {
-//     std::vector<double> value;
-//     for (int i = 0; i < card.size(); i++)
-//     {
-//         value.push_back(card[i].getValue());
-//     }
-//     std::vector<int> H, B, K, M;
-//     std::tuple<int, int> result;
-//     sort(value.begin(), value.end(), std::greater<double>());
-//     for (int i = 0; i < value.size(); i++)
-//     {
-//         if (round(fmod(value[i] * 100, 10)) == 9)
-//         {
-//             M.push_back(round(value[i] * 100));
-//         }
-//         else if (round(fmod(value[i] * 100, 10)) == 6)
-//         {
-//             K.push_back(round(value[i] * 100));
-//         }
-//         else if (round(fmod(value[i] * 100, 10)) == 3)
-//         {
-//             B.push_back(round(value[i] * 100));
-//         }
-//         else if (round(fmod(value[i] * 100, 10)) == 0)
-//         {
-//             H.push_back(round(value[i] * 100));
-//         }
-//     }
+std::pair<bool, std::vector<Card>> Player::isFlush(std::vector<Card> card)
+{
+    std::vector<Card> result;
+    std::vector<Card> H, B, K, M;
+    card = sortCard(card);
+    for (int i = 0; i < card.size(); i++)
+    {
+        if (card[i].getColor() == 3) {
+            M.push_back(card[i]);
+        }
+        else if (card[i].getColor() == 2) {
+            K.push_back(card[i]);
+        }
+        else if (card[i].getColor() == 1) {
+            B.push_back(card[i]);
+        }
+        else if (card[i].getColor() == 0) {
+            H.push_back(card[i]);
+        }
+    }
 
-//     if (M.size() >= 5)
-//     {
-//         for (int i = 0; i < card.size(); i++)
-//         {
-//             if (M[0] == round(card[i].getValue() * 100))
-//             {
-//                 return std::make_pair(true, card[i]);
-//             }
-//         }
-//     }
-//     else if (K.size() >= 5)
-//     {
-//         for (int i = 0; i < card.size(); i++)
-//         {
-//             if (K[0] == round(card[i].getValue() * 100))
-//             {
-//                 return std::make_pair(true, card[i]);
-//             }
-//         }
-//     }
-//     else if (B.size() >= 5)
-//     {
-//         for (int i = 0; i < card.size(); i++)
-//         {
-//             if (B[0] == round(card[i].getValue() * 100))
-//             {
-//                 return std::make_pair(true, card[i]);
-//             }
-//         }
-//     }
-//     else if (H.size() >= 5)
-//     {
-//         for (int i = 0; i < card.size(); i++)
-//         {
-//             if (H[0] == round(card[i].getValue() * 100))
-//             {
-//                 return std::make_pair(true, card[i]);
-//             }
-//         }
-//     }
+    if (M.size() >= 5)
+    {
+        return std::make_pair(true, M);
+    }
+    else if (K.size() >= 5)
+    {
+        return std::make_pair(true, K);
+    }
+    else if (B.size() >= 5)
+    {
+        return std::make_pair(true, B);
+    }
+    else if (H.size() >= 5)
+    {
+        return std::make_pair(true, H);
+    }
 
-//     return std::make_pair(false, card[0]);
-// }
+    return std::make_pair(false, result);
+}
 
+//8.77209
 // std::pair<bool, std::vector<Card>> Player::isFullHouse(std::vector<Card> card)
 // {
 //     std::vector<double> value;
@@ -579,11 +490,11 @@ int main() {
     card.push_back(Card(1, 3));
     // card.push_back(Card(5, 1));
     // card.push_back(Card(4, 1));
-    table.push(Card(3, 2));
-    table.push(Card(6, 1));
-    table.push(Card(7, 1));
-    table.push(Card(6, 3));
-    table.push(Card(9, 1));
+    table.push(Card(9, 3));
+    table.push(Card(10, 3));
+    table.push(Card(11, 3));
+    table.push(Card(12, 3));
+    table.push(Card(13, 3));
     //add hand
     player.setHands(card);
     // std::pair<bool, std::vector<Card>> pair = player.isPair(card);
@@ -603,18 +514,20 @@ int main() {
 
 void Player::findCombo(Table river) {
     Package *p;
-    Package *p2;
+    // Package *p2;
     std::vector<Card> table;
-    std::vector<Card> card;
+    // std::vector<Card> card;
     for (int i = 0; i < 5; i++)
     {
-        card.push_back(river.getElmt(i));
+        // card.push_back(river.getElmt(i));
         table.push_back(river.getElmt(i));
+        // std::cout << river.getElmt(i).getValue() << std::endl;
     }
     std::pair<bool, std::vector<Card>> tpair = this->isPair(table);
-    // std::pair<bool, std::vector<Card>> ttrip = this->isThreeOfAKind(table);
-    // std::pair<bool, std::vector<Card>> tstra = this->isStraight(table);
-    // std::pair<bool, std::vector<Card>> tflush = this->isFlush(table);
+    std::pair<bool, std::vector<Card>> tdoub = this->isTwoPair(table);
+    std::pair<bool, std::vector<Card>> ttrip = this->isThreeOfAKind(table);
+    std::pair<bool, std::vector<Card>> tstra = this->isStraight(table);
+    std::pair<bool, std::vector<Card>> tflush = this->isFlush(table);
     // std::pair<bool, std::vector<Card>> tfull = this->isFullHouse(table);
     // std::pair<bool, std::vector<Card>> tfour = this->isFourOfAKind(table);
     // std::pair<bool, std::vector<Card>> tstraFlush = this->isStraightFlush(table);
@@ -631,25 +544,26 @@ void Player::findCombo(Table river) {
     // {
     //     this->highestCombo = new FullHouse(full.second);
     // }
-    // else if (flush.first)
-    // {
-    //     this->highestCombo = new Flush(flush.second);
-    // }
-    // else if (stra.first)
-    // {
-    //     this->highestCombo = new Straight(stra.second);
-    // }
-    // else if (trip.first)
-    // {
-    //     this->highestCombo = new ThreeOfAKind(trip.second);
-    // }
-    // else if (doub.first)
-    // {
-    //     this->highestCombo = new DoublePair(doub.second);
-    // }
-    if (tpair.first)
+    if (tflush.first)
     {
-        p2 = new Pair(tpair.second);
+        p = new Flush(tflush.second);
+    }
+    else if (tstra.first)
+    {
+        p = new Straight(tstra.second);
+    }
+    else if (ttrip.first)
+    {
+        p = new ThreeOfAKind(ttrip.second);
+    }
+    else if (tdoub.first)
+    {
+        p = new TwoPair(tdoub.second);
+    }
+    else if (tpair.first)
+    {
+        p = new Pair(tpair.second);
+        // std::cout << "pair" << std::endl;
     }
     // else
     // {
@@ -659,10 +573,10 @@ void Player::findCombo(Table river) {
 
     //cek
     
-    card.push_back(this->hands[0]);
-    card.push_back(this->hands[1]);
+    // card.push_back(this->hands[0]);
+    // card.push_back(this->hands[1]);
 
-    std::pair<bool, std::vector<Card>> pair = this->isPair(card);
+    // std::pair<bool, std::vector<Card>> pair = this->isPair(card);
     // std::pair<bool, std::vector<Card>> trip = this->isThreeOfAKind(card);
     // std::pair<bool, std::vector<Card>> stra = this->isStraight(card);
     // std::pair<bool, std::vector<Card>> flush = this->isFlush(card);
@@ -698,26 +612,26 @@ void Player::findCombo(Table river) {
     // {
     //     this->highestCombo = new DoublePair(doub.second);
     // }
-    if (pair.first)
-    {
-        p = new Pair(pair.second);
-    }
+    // if (pair.first)
+    // {
+    //     p = new Pair(pair.second);
+    // }
     // else
     // {
     //     this->highestCombo = new HighCard(card[0]);
     // }
 
-    if (p->getValue() == p2->getValue())
-    {
-        if (this->hands[0].getValue() > this->hands[1].getValue())
-        {
-            // this->highestCombo = new HighCard(this->hands[0]);
-        }
-        else
-        {
-            // this->highestCombo = new HighCard(this->hands[1]);
-        }
-}
+//     if (p->getValue() == p2->getValue())
+//     {
+//         if (this->hands[0].getValue() > this->hands[1].getValue())
+//         {
+//             // this->highestCombo = new HighCard(this->hands[0]);
+//         }
+//         else
+//         {
+//             // this->highestCombo = new HighCard(this->hands[1]);
+//         }
+// }
     this->highestCombo = *p;
 }
 

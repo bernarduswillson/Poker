@@ -1,9 +1,9 @@
 #include "TwoPair.hpp"
 
-TwoPair::TwoPair(Card maxCard)
+TwoPair::TwoPair(std::vector<Card> cards)
 {
     this->name = "TwoPair";
-    this->value = maxCard.getNumber()*0.1 + maxCard.getColor()*0.03 + 2.78;
+    this->value = cards[0].getNumber()*0.1 + cards[0].getColor()*0.03 + 2.78;
 }
 
 TwoPair::~TwoPair()
