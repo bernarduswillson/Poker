@@ -57,7 +57,7 @@ void GameState::displaySplash()
 
 void GameState::displayGameState()
 {
-    // system("clear");
+    system("clear");
     std::cout << "\n##=======## CANDY KINGDOM CARD GAME ##=======##\n"
               << std::endl;
     std::cout << "Game:\t\t" << this->game << std::endl;
@@ -258,11 +258,21 @@ void GameState::nextTurn()
 void GameState::nextRound()
 {
     this->round++;
+    this->players->roundRobin();
 }
 
 void GameState::nextGame()
 {
     this->evaluateGameWinner();
+
+    for (int i = 0; i < 7; i++)
+    {
+        if (this->players->getElmt(i).getIsDisable())
+        {
+            this->players->getElmt(i).setIsDisable();
+        }
+    }
+
     this->game++;
     this->round = 1;
     this->prize = 64;
@@ -293,7 +303,7 @@ void GameState::playerAction()
         std::cout << "4. ";
         std::cout << this->playersAbility[this->players->getElmt(0).getName()]->getName();
         // this->players->getElmt(0).setIsDisable();
-        std::cout << " [Ability]" << this->players->getElmt(0).getIsDisable();
+        std::cout << " [Ability]";
         if (this->players->getElmt(0).getIsDisable())
         {
             std::cout << " [Not available]";
@@ -329,6 +339,7 @@ void GameState::playerAction()
                 }
                 this->setPrize(this->playersAbility[this->players->getElmt(0).getName()]->use(this->prize));
                 this->playersAbility[this->players->getElmt(0).getName()]->use(*this->players, *this->playingDeck);
+                this->players->getElmt(0).setIsDisable();
             }
             else
             {

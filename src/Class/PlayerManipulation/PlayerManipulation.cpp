@@ -27,7 +27,7 @@ void PlayerManipulation::use(PlayerList &players, Deck<Card> &playingDeck)
 
         while (!isValid)
         {
-            // system("clear");
+            system("clear");
             std::cout << "\n#-----=========== ABILITYLESS ===========-----#\n"
                       << std::endl;
             std::cout << "Available target: " << std::endl;

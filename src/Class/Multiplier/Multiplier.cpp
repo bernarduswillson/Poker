@@ -10,7 +10,13 @@ long long int Multiplier::use(long long int prize)
     {
         return 4 * prize;
     }
-    return prize / 4;
+
+    if (prize >= 4)
+    {
+        return prize / 4;
+    }
+
+    return prize;
 }
 
 void Multiplier::use(PlayerList &players, Deck<Card> &playingDeck) {}
