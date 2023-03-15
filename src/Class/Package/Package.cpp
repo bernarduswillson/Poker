@@ -23,3 +23,14 @@ void Package::setValue(double value)
 {
     this->value = value;
 }
+
+void Package::operator=(const Package &other)
+{
+    this->cardBuffer = other.cardBuffer;
+    this->value = other.value;
+}
+
+std::string Package::getName()
+{
+    return name;
+}

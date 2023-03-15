@@ -2,9 +2,20 @@
 #define __PLAYER_HPP__
 
 #include <iostream>
-#include <vector>
-
-#include "../Card/Card.hpp"
+#include "../Card/Card.cpp"
+#include "../Calculable/Calculable.cpp"
+#include "../Package/Package.cpp"
+#include "../Combination/Pair/Pair.cpp"
+#include "../Combination/TwoPair/TwoPair.cpp"
+#include "../Combination/ThreeOfAKind/ThreeOfAKind.cpp"
+#include "../Combination/Straight/Straight.cpp"
+#include "../Combination/Flush/Flush.cpp"
+#include "../Combination/FullHouse/FullHouse.cpp"
+#include "../Combination/FourOfAKind/FourOfAKind.cpp"
+#include "../Combination/StraightFlush/StraightFlush.cpp"
+#include "../Combination/HighCard/HighCard.cpp"
+#include "../Table/Table.cpp"
+#include "../InventoryHolder/InventoryHolder.cpp"
 
 class Player
 {

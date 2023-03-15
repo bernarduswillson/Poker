@@ -15,13 +15,15 @@ class Package : virtual public Calculable
         const double highestFullHouse = 0;
         const double highestFourOfAKind = 0;
         int vall;
+        std::string name;
 
     public:
         //constructor
         Package();
         //destructor
         ~Package();
-        virtual double getValue() = 0;
+        virtual double getValue();
+        virtual std::string getName();
         std::vector<Card> getCardBuffer();
         void addCard(Card);
         virtual void setValue(double value);

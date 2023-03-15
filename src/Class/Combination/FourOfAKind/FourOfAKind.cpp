@@ -3,6 +3,7 @@
 FourOfAKind::FourOfAKind()
 {
     this->name = "FourOfAKind";
+    this->value = cards[0].getNumber()*0.1+10.0955;//tambah flush
 }
 
 FourOfAKind::~FourOfAKind()
