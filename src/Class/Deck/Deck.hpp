@@ -16,6 +16,7 @@ private:
 public:
     // === CONSTRUCTOR DESTRUCTOR ==================================
     Deck();
+    void operator=(Deck<T> &);
     ~Deck();
 
     // === GETTER ==================================================

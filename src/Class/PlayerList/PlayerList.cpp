@@ -1,21 +1,33 @@
 #include "PlayerList.hpp"
 
+#include <iostream>
+
 // === CONSTRUCTOR DESTRUCTOR ==================================
 
 PlayerList::PlayerList() : InventoryHolder() {}
 
+void PlayerList::operator=(PlayerList &other)
+{
+    this->buffer = other.buffer;
+}
+
 PlayerList::~PlayerList() {}
 
-// === GETTER ==================================================
+// === GETTER SETTER ===========================================
 
 int PlayerList::getLength()
 {
     return this->length;
 }
 
-Player PlayerList::getElmt(int index)
+Player &PlayerList::getElmt(int index)
 {
     return this->buffer[index];
+}
+
+void PlayerList::setElmt(int index, Player newPlayer)
+{
+    this->buffer[index] = newPlayer;
 }
 
 // === INSERT ==================================================

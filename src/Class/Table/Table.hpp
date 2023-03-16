@@ -25,6 +25,7 @@ public:
 
     // === METHODS =================================================
     void push(Card);
+    Card pop();
 };
 
 #endif

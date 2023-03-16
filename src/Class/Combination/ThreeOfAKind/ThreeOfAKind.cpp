@@ -1,8 +1,9 @@
 #include "ThreeOfAKind.hpp"
 
-ThreeOfAKind::ThreeOfAKind()
+ThreeOfAKind::ThreeOfAKind(std::vector<Card> cards)
 {
     this->name = "ThreeOfAKind";
+    this->value = cards[0].getNumber()*0.1 + cards[0].getColor()*0.03 + cards[1].getColor()*0.03 + cards[2].getColor()*0.03 + 4.17;
 }
 
 ThreeOfAKind::~ThreeOfAKind()

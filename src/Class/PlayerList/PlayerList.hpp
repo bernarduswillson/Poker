@@ -12,11 +12,13 @@ private:
 public:
     // === CONSTRUCTOR DESTRUCTOR ==================================
     PlayerList();
+    void operator=(PlayerList &);
     ~PlayerList();
 
-    // === GETTER ==================================================
+    // === GETTER SETTER ===========================================
     int getLength() override;
-    Player getElmt(int);
+    Player &getElmt(int);
+    void setElmt(int, Player);
 
     // === INSERT ==================================================
     void push(const Player &);

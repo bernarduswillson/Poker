@@ -2,15 +2,15 @@
 #include "../../Card/Card.hpp"
 
 #include <iostream>
-class FourOfAKind :public Package
+class FullHouse :public Package
 {
 private:
     std::string name;
 public:
     //constructor
-    FourOfAKind(std::vector<Card>);
+    FullHouse(std::vector<Card>);
     //destructor
-    ~FourOfAKind();
+    ~FullHouse();
     double getValue();
     std::string getName();
     void setValue(double value);
