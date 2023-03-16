@@ -32,22 +32,21 @@ void PlayerManipulation::use(PlayerList &players, Deck<Card> &playingDeck, int &
             try
             {
                 std::cerr << errMsg;
-                std::cout << players.getLength() << std::endl;
                 std::cout << "\nChoose a target: ";
                 std::cin >> target;
 
                 if (target != "1" && target != "2" && target != "3" && target != "4" && target != "5" && target != "6" && target != "7")
                 {
-                    throw "Target is not available\n";
+                    throw TargetException();
                 }
 
                 isValid = true;
                 int targetIdx = std::stoi(target);
                 players.getElmt(targetIdx).setIsDisable();
             }
-            catch (const char *err)
+            catch (TargetException err)
             {
-                errMsg = err;
+                errMsg = err.what();
             }
         }
     }
@@ -75,17 +74,28 @@ void PlayerManipulation::use(PlayerList &players, Deck<Card> &playingDeck, int &
         std::vector<Player> complete;
         for (int i = 0; i < turn - 1; i++)
         {
-            complete.push_back(players.getElmt(8 - turn));
+            complete.push_back(players.getElmt(8 - turn + i));
         }
         std::reverse(complete.begin(), complete.end());
 
-        for (int i = 1; i < 8 - turn; i++)
+        int i = 1;
+        for (auto p : remains)
         {
-            players.setElmt(i, remains[i - 1]);
+            players.setElmt(i, p);
+            i++;
         }
-        for (int i = 0; i < turn - 1; i++)
+        for (auto p : complete)
         {
-            players.setElmt(8 - turn + i, complete[i]);
+            players.setElmt(i, p);
         }
+
+        // for (int i = 1; i < 7 - turn; i++)
+        // {
+        //     players.setElmt(i, remains[i - 1]);
+        // }
+        // for (int i = 0; i < turn - 1; i++)
+        // {
+        //     players.setElmt(8 - turn + i, complete[i]);
+        // }
     }
 }

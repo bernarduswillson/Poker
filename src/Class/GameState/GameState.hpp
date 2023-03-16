@@ -16,12 +16,13 @@
 #include "../Ability/Ability.hpp"
 #include "../Multiplier/Multiplier.hpp"
 #include "../PlayerManipulation/PlayerManipulation.hpp"
-
 #include "../PlayerList/PlayerList.hpp"
 #include "../Player/Player.hpp"
 #include "../Deck/Deck.hpp"
 #include "../Card/Card.hpp"
 #include "../Table/Table.hpp"
+#include "../Exception/Exception.hpp"
+#include "../GArray/GArray.hpp"
 
 class GameState
 {
@@ -37,7 +38,7 @@ private:
     Deck<Ability *> *abilityDeck;
     std::map<std::string, Ability *> playersAbility;
     Table *table;
-    Player winner;
+    Player *winner;
 
 public:
     // === CONSTRUCTOR DESTRUCTOR ==================================
@@ -54,6 +55,7 @@ public:
     void displayGameState();
     void displayTable();
     void displayWinner();
+    void displayLeaderboard();
 
     // === INITIALIZER =============================================
     void initializePlayer();
@@ -63,6 +65,7 @@ public:
     void rollPlayingCard();
     void initializeAbilityDeck();
     void rollAbility();
+    void evaluateWinner();
     void evaluateGameWinner();
 
     // === GAME CONTROL ============================================

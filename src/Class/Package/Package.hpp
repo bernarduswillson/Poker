@@ -7,32 +7,25 @@
 
 class Package : virtual public Calculable
 {
-    private:
-        std::vector<Card> cardBuffer;
-        const double highestHigh = 1.39;
-        const double highestPair = 2.78;
-        const double highestTwoPair = 4.17;
-        const double highestThreeOfAKind = 5.65;
-        const double highestStraight = 7.64;
-        const double highestFlush = 8.43;
-        const double highestFullHouse = 0;
-        const double highestFourOfAKind = 0;
-        int vall;
-        std::string name;
+private:
+    std::vector<Card> cardBuffer;
+    std::string name;
 
-    public:
-        //constructor
-        Package();
-        //copy constructor
-        void operator=(const Package &other);
-        //destructor
-        ~Package();
-        virtual double getValue();
-        virtual std::string getName();
-        std::vector<Card> getCardBuffer();
-        void addCard(Card);
-        virtual void setValue(double value);
-        
+public:
+    // constructor
+    Package();
+    // copy constructor
+    void operator=(const Package &other);
+    // destructor
+    ~Package();
+    virtual void setValue(double value);
+    virtual double getValue();
+    virtual std::string getName();
+    std::vector<Card> getCardBuffer();
+
+    bool operator>=(Package &);
+
+    void addCard(Card);
 };
 
 #endif

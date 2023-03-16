@@ -1,14 +1,19 @@
 #include "Package.hpp"
 
-Package::Package():Calculable()
+Package::Package() : Calculable()
 {
     this->cardBuffer = std::vector<Card>();
+}
+
+void Package::operator=(const Package &other)
+{
+    this->cardBuffer = other.cardBuffer;
+    this->value = other.value;
 }
 
 Package::~Package()
 {
 }
-
 
 double Package::getValue()
 {
@@ -30,13 +35,12 @@ void Package::setValue(double value)
     this->value = value;
 }
 
-void Package::operator=(const Package &other)
-{
-    this->cardBuffer = other.cardBuffer;
-    this->value = other.value;
-}
-
 std::string Package::getName()
 {
     return name;
+}
+
+bool Package::operator>=(Package &other)
+{
+    return this->getValue() >= other.getValue();
 }
