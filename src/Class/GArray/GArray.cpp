@@ -41,6 +41,4 @@ void GArray<T>::push(T elmt)
 template <typename T>
 void GArray<T>::gSort()
 {
-    sort(this->buffer.begin(), this->buffer.end());
-    std::reverse(this->buffer.begin(), this->buffer.end());
 }

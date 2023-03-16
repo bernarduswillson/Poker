@@ -96,12 +96,13 @@ void GameState::displayWinner()
 
 void GameState::displayLeaderboard()
 {
-    GArray<Player> playerLeaderboard;
+    std::vector<Player> leaderboard;
     for (int i = 0; i < 7; i++)
     {
-        playerLeaderboard.push(this->players->getElmt(i));
+        leaderboard.push_back(this->players->getElmt(i));
     }
-    playerLeaderboard.gSort();
+    std::sort(leaderboard.begin(), leaderboard.end());
+    std::reverse(leaderboard.begin(), leaderboard.end());
 
     system("clear");
     std::cout << "\n#-----=========== LEADERBOARD ===========-----#\n"
@@ -110,22 +111,22 @@ void GameState::displayLeaderboard()
     {
         if (i == 0)
         {
-            std::cout << "[1st] ";
+            std::cout << "[1st]\t";
         }
         else if (i == 1)
         {
-            std::cout << "[2nd] ";
+            std::cout << "[2nd]\t";
         }
         else if (i == 2)
         {
-            std::cout << "[3rd] ";
+            std::cout << "[3rd]\t";
         }
         else
         {
-            std::cout << i + 1 << ". ";
+            std::cout << i + 1 << ".\t";
         }
-        std::cout << this->players->getElmt(i).getName() << " (" << this->players->getElmt(i).getPoints() << ") with " << this->players->getElmt(i).getHighestCombo()->getName();
-        std::cout << this->players->getElmt(i).getHighestCombo()->getValue();
+        std::cout << leaderboard[i].getName() << " (" << leaderboard[i].getPoints() << ") with " << leaderboard[i].getHighestCombo()->getName();
+        // std::cout << this->players->getElmt(i).getHighestCombo()->getValue();
         std::cout << std::endl;
     }
     std::cout << "\n#-----=====#*#========#@#========#*#=====-----#\n"
