@@ -36,6 +36,7 @@
                 "./src/Class/Combination/TwoPair/TwoPair.cpp",
                 "./src/Class/Combination/Pair/Pair.cpp",
                 "./src/Class/Combination/HighCard/HighCard.cpp",
+                "./src/Class/GArray/GArray.cpp",
                 "-o",
                 "./bin/candyCard.out",
             ]

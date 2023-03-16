@@ -1,5 +1,6 @@
 #include "GameState.hpp"
-#include "../Deck/Deck.cpp" // temporary solution
+#include "../Deck/Deck.cpp"     // temporary solution
+#include "../GArray/GArray.cpp" // temporary solution
 
 // === CONSTRUCTOR DESTRUCTOR ==================================
 
@@ -169,40 +170,42 @@ void GameState::randomizeDeck()
     this->playingDeck->shuffle();
 }
 
-void GameState::generateDeckTxt(){
+void GameState::generateDeckTxt()
+{
     std::ifstream infile("./config/deck.txt");
     int a, b;
     std::vector<std::pair<int, int>> vec;
-    
-    while (infile >> a >> b) {
+
+    while (infile >> a >> b)
+    {
         vec.push_back(std::make_pair(a, b));
     }
-    
-    for (auto p : vec) {
+
+    for (auto p : vec)
+    {
         std::cout << "(" << p.first << ", " << p.second << ")" << std::endl;
     }
-    
-    for (auto p : vec) 
+
+    for (auto p : vec)
     {
         std::cout << "(" << p.first << ", " << p.second << ")" << std::endl;
         Card *newCard = new Card(p.first, p.second);
         this->playingDeck->push(*newCard);
     }
-    
 }
 
 void GameState::rollPlayingCard()
 {
 
-        std::vector<Card> rolledCards;
-        for (int i = 0; i < 7; i++)
-        {
-            rolledCards.push_back(this->playingDeck->roll());
-            rolledCards.push_back(this->playingDeck->roll());
-            players->setPlayerCards(i, rolledCards);
-            rolledCards.clear();
-        }
+    std::vector<Card> rolledCards;
+    for (int i = 0; i < 7; i++)
+    {
+        rolledCards.push_back(this->playingDeck->roll());
+        rolledCards.push_back(this->playingDeck->roll());
+        players->setPlayerCards(i, rolledCards);
+        rolledCards.clear();
     }
+}
 
 void GameState::initializeAbilityDeck()
 {
@@ -232,6 +235,18 @@ void GameState::rollAbility()
     this->playersAbility[this->players->getElmt(4).getName()] = this->abilityDeck->getElmt(3);
     this->playersAbility[this->players->getElmt(5).getName()] = this->abilityDeck->getElmt(1);
     this->playersAbility[this->players->getElmt(6).getName()] = this->abilityDeck->getElmt(1);
+}
+
+void GameState::evaluateWinner()
+{
+    GArray<Package> playersPackage;
+    for (int i = 0; i < 7; i++)
+    {
+        playersPackage.push(this->players->getElmt(i).getHighestCombo());
+    }
+    int winnerIdx = playersPackage.getIdxMax();
+
+    this->players->getElmt(winnerIdx) = this->players->getElmt(winnerIdx) + this->prize;
 }
 
 void GameState::evaluateGameWinner()
@@ -285,6 +300,7 @@ void GameState::nextRound()
 {
     this->round++;
     this->turn = 1;
+
     if (round == 2)
     {
         this->table->pop();
@@ -295,6 +311,7 @@ void GameState::nextRound()
 
 void GameState::nextGame()
 {
+    this->evaluateWinner();
     this->evaluateGameWinner();
 
     for (int i = 0; i < 7; i++)
@@ -309,7 +326,27 @@ void GameState::nextGame()
     this->round = 1;
     this->turn = 1;
     this->prize = 64;
+    delete this->table;
     this->table = new Table();
+    this->table->push(Card(20, 20));
+
+    // 1. Reset players card
+    for (int i = 0; i < 7; i++)
+    {
+        this->players->getElmt(i).resetHands();
+    }
+
+    // 2. Initialize deck
+    initializePlayingDeck();
+
+    // 3. Roll playing cards
+    rollPlayingCard();
+
+    // 4. Initialize ability
+    initializeAbilityDeck();
+
+    // 5. Roll ability
+    rollAbility();
 }
 
 void GameState::playerAction()
@@ -322,10 +359,9 @@ void GameState::playerAction()
     {
         this->displayGameState();
         this->displayTable();
-        std::cout << this->table->getLength() << std::endl;
-        this->players->getElmt(0).findCombo(*table);
-        for (int i = 0; i < this->playingDeck->getLength(); i++){
-            this->playingDeck->getElmt(i).displayCard() ;
+        for (int i = 0; i < this->playingDeck->getLength(); i++)
+        {
+            this->playingDeck->getElmt(i).displayCard();
         }
         std::cout << "\n#-----=========== PLAYER TURN ===========-----#\n"
                   << std::endl;
@@ -333,6 +369,9 @@ void GameState::playerAction()
         std::cout << "Points:\t" << this->players->getElmt(0).getPoints() << std::endl;
         std::cout << "Hands:\t";
         this->players->getElmt(0).displayHands();
+        std::cout << std::endl;
+        std::cout << "Combo:\t";
+        this->players->getElmt(0).findCombo(*table);
         std::cout << std::endl;
         std::cout << std::endl;
         std::cout << "Action menu:" << std::endl;

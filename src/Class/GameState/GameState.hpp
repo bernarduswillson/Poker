@@ -16,12 +16,12 @@
 #include "../Ability/Ability.hpp"
 #include "../Multiplier/Multiplier.hpp"
 #include "../PlayerManipulation/PlayerManipulation.hpp"
-
 #include "../PlayerList/PlayerList.hpp"
 #include "../Player/Player.hpp"
 #include "../Deck/Deck.hpp"
 #include "../Card/Card.hpp"
 #include "../Table/Table.hpp"
+#include "../GArray/GArray.hpp"
 
 class GameState
 {
@@ -63,6 +63,7 @@ public:
     void rollPlayingCard();
     void initializeAbilityDeck();
     void rollAbility();
+    void evaluateWinner();
     void evaluateGameWinner();
 
     // === GAME CONTROL ============================================
