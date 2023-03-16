@@ -477,7 +477,7 @@ void GameState::playerAction()
         // this->players->getElmt(0).setIsDisable();
         std::cout << " [";
         std::cout << this->playersAbility[this->players->getElmt(0).getName()]->getName();
-        std::cout << "]" << std::endl;
+        std::cout << "]";
         if (this->players->getElmt(0).getIsDisable())
         {
             std::cout << " [Not available]";
