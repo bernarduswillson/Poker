@@ -733,7 +733,8 @@ void Player::findCombo(Table river)
         {
             delete p2;
             std::vector<Card> temp;
-            if (hands[0].getNumber()==hands[1].getNumber()){
+            if (hands[0].getNumber() == hands[1].getNumber())
+            {
                 temp = full.second;
                 temp.erase(temp.end());
                 temp.erase(temp.end());
@@ -741,7 +742,8 @@ void Player::findCombo(Table river)
                 temp.push_back(this->hands[1]);
                 temp = sortCard(temp);
             }
-            else{
+            else
+            {
                 temp = table;
                 temp.erase((temp.begin()));
                 temp.push_back(this->hands[0]);
@@ -934,7 +936,8 @@ void Player::findCombo(Table river)
         if (p2->getValue() == p->getValue())
         {
             delete p2;
-            if (hands[0].getNumber()==hands[1].getNumber()){
+            if (hands[0].getNumber() == hands[1].getNumber())
+            {
                 std::vector<Card> temp;
                 temp = doub.second;
                 temp.erase(temp.end());
@@ -950,16 +953,18 @@ void Player::findCombo(Table river)
                     {
                         delete p2;
                     }
-                    else {
+                    else
+                    {
                         found = true;
                     }
                 }
             }
-            else{
+            else
+            {
                 std::vector<Card> temp;
                 temp = table;
                 // erase element in temp which is in hands
-                for (int i=0; i<temp.size(); i++)
+                for (int i = 0; i < temp.size(); i++)
                 {
                     if (temp[i].getNumber() == doub.second[3].getNumber())
                     {
@@ -967,7 +972,7 @@ void Player::findCombo(Table river)
                         break;
                     }
                 }
-                for (int i=0; i<temp.size(); i++)
+                for (int i = 0; i < temp.size(); i++)
                 {
                     if (temp[i].getNumber() == doub.second[3].getNumber())
                     {
@@ -986,12 +991,12 @@ void Player::findCombo(Table river)
                     {
                         delete p2;
                     }
-                    else {
+                    else
+                    {
                         found = true;
                     }
                 }
             }
-
         }
         else
         {
