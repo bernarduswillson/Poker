@@ -131,6 +131,7 @@ void GameState::displayLeaderboard()
     }
     std::cout << "\n#-----=====#*#========#@#========#*#=====-----#\n"
               << std::endl;
+    std::cout << "          Press enter to continue...           " << std::endl;
     std::cin.ignore();
     std::cin.get();
 }
@@ -161,8 +162,8 @@ void GameState::initializePlayingDeck()
         system("clear");
         std::cout << "\n#-----======= PLAYING DECK OPTION =======-----#\n"
                   << std::endl;
-        std::cout << "                1. Generate random" << std::endl;
-        std::cout << "             2. Import from text file" << std::endl;
+        std::cout << "              1. Generate random" << std::endl;
+        std::cout << "           2. Import from text file" << std::endl;
         std::cout << "\n#-----=====#*#========#@#========#*#=====-----#\n"
                   << std::endl;
 
@@ -270,17 +271,22 @@ void GameState::initializeAbilityDeck()
 
     PlayerManipulation *reverse = new PlayerManipulation(5);
     this->abilityDeck->push(reverse);
+
+    PlayerManipulation *sitch = new PlayerManipulation(6);
+    this->abilityDeck->push(sitch);
+
+    PlayerManipulation *swap = new PlayerManipulation(7);
+    this->abilityDeck->push(swap);
+
+    this->abilityDeck->shuffle();
 }
 
 void GameState::rollAbility()
 {
-    this->playersAbility[this->players->getElmt(0).getName()] = this->abilityDeck->getElmt(0);
-    this->playersAbility[this->players->getElmt(1).getName()] = this->abilityDeck->getElmt(1);
-    this->playersAbility[this->players->getElmt(2).getName()] = this->abilityDeck->getElmt(4);
-    this->playersAbility[this->players->getElmt(3).getName()] = this->abilityDeck->getElmt(2);
-    this->playersAbility[this->players->getElmt(4).getName()] = this->abilityDeck->getElmt(3);
-    this->playersAbility[this->players->getElmt(5).getName()] = this->abilityDeck->getElmt(1);
-    this->playersAbility[this->players->getElmt(6).getName()] = this->abilityDeck->getElmt(1);
+    for (int i = 0; i < 7; i++)
+    {
+        this->playersAbility[this->players->getElmt(i).getName()] = this->abilityDeck->getElmt(i);
+    }
 }
 
 void GameState::evaluateWinner()
@@ -328,6 +334,13 @@ void GameState::newGame()
 
     // 2. Initialize players
     initializePlayer();
+    for (int i = 0; i < 7; i++)
+    {
+        if (!this->players->getElmt(i).getIsDisable())
+        {
+            this->players->getElmt(i).setIsDisable();
+        }
+    }
     this->table->push(Card(20, 20));
 
     // 3. Initialize deck
@@ -357,6 +370,13 @@ void GameState::nextRound()
     if (round == 2)
     {
         this->table->pop();
+        for (int i = 0; i < 7; i++)
+        {
+            if (this->players->getElmt(i).getIsDisable())
+            {
+                this->players->getElmt(i).setIsDisable();
+            }
+        }
     }
     this->players->roundRobin();
     this->table->push(this->playingDeck->roll());
@@ -382,7 +402,16 @@ void GameState::nextGame()
     // 1.3 Reset playing deck
     delete this->playingDeck;
     this->playingDeck = new Deck<Card>;
-    // this->playingDeck->resetBuffer();
+
+    // 1.4 Reset ability deck
+    delete this->abilityDeck;
+    this->abilityDeck = new Deck<Ability *>;
+
+    // 1.5 Initialize ability
+    initializeAbilityDeck();
+
+    // 1.6 Roll ability
+    rollAbility();
 
     // 2.1 Reset players hands
     for (int i = 0; i < 7; i++)
@@ -393,7 +422,7 @@ void GameState::nextGame()
     // 2.2 Reset players ability
     for (int i = 0; i < 7; i++)
     {
-        if (this->players->getElmt(i).getIsDisable())
+        if (!this->players->getElmt(i).getIsDisable())
         {
             this->players->getElmt(i).setIsDisable();
         }
@@ -422,13 +451,13 @@ void GameState::playerAction()
     {
         this->displayGameState();
         this->displayTable();
-        for (int i = 0; i < this->playingDeck->getLength(); i++)
-        {
-            this->playingDeck->getElmt(i).displayCard();
-            std::cout << " ";
-        }
-        std::cout << std::endl;
-        std::cout << this->playingDeck->getLength() << std::endl;
+        // for (int i = 0; i < this->playingDeck->getLength(); i++)
+        // {
+        //     this->playingDeck->getElmt(i).displayCard();
+        //     std::cout << " ";
+        // }
+        // std::cout << std::endl;
+        // std::cout << this->playingDeck->getLength() << std::endl;
         std::cout << "\n#-----=========== PLAYER TURN ===========-----#\n"
                   << std::endl;
         std::cout << "Name:\t" << this->players->getElmt(0).getName() << std::endl;
