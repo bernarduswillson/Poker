@@ -124,9 +124,8 @@ void GameState::displayLeaderboard()
         {
             std::cout << i + 1 << ". ";
         }
-        std::cout << this->players->getElmt(i).getName() << " (" << this->players->getElmt(i).getPoints() << ") with ";
-        this->players->getElmt(i).findCombo(*table);
-        std::cout << this->players->getElmt(i).getHighestCombo().getValue();
+        std::cout << this->players->getElmt(i).getName() << " (" << this->players->getElmt(i).getPoints() << ") with " << this->players->getElmt(i).getHighestCombo()->getName();
+        std::cout << this->players->getElmt(i).getHighestCombo()->getValue();
         std::cout << std::endl;
     }
     std::cout << "\n#-----=====#*#========#@#========#*#=====-----#\n"
@@ -288,11 +287,8 @@ void GameState::evaluateWinner()
     GArray<Package> playersPackage;
     for (int i = 0; i < 7; i++)
     {
-        playersPackage.push(this->players->getElmt(i).getHighestCombo());
+        playersPackage.push(*this->players->getElmt(i).getHighestCombo());
         std::cout << playersPackage.getElmt(i).getName() << std::endl;
-        std::cout << playersPackage.getLength() << std::endl;
-        std::cin.ignore();
-        std::cin.get();
     }
     int winnerIdx = playersPackage.getIdxMax();
 
@@ -427,8 +423,8 @@ void GameState::playerAction()
         std::cout << "Hands:\t";
         this->players->getElmt(0).displayHands();
         std::cout << std::endl;
-        std::cout << "Combo:\t";
         this->players->getElmt(0).findCombo(*table);
+        std::cout << "Combo:\t" << this->players->getElmt(0).getHighestCombo()->getName();
         std::cout << std::endl;
         std::cout << std::endl;
         std::cout << "Action menu:" << std::endl;

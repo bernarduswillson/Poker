@@ -998,11 +998,10 @@ void Player::findCombo(Table river)
     //             p2 = new HighCard(card);
     //         }
     //     }
-    this->highestCombo = *p2;
-    std::cout << p2->getName() << std::endl;
+    this->highestCombo = p2;
 }
 
-Package Player::getHighestCombo()
+Package *Player::getHighestCombo()
 {
     return this->highestCombo;
 }

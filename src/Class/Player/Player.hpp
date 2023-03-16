@@ -24,7 +24,7 @@ private:
     long long int points;
     std::vector<Card> hands;
     bool isDisable;
-    Package highestCombo;
+    Package *highestCombo;
 
 public:
     // === CONSTRUCTOR DESTRUCTOR ==================================
@@ -40,7 +40,7 @@ public:
     void setHands(std::vector<Card> hands);
     bool getIsDisable();
     void setIsDisable();
-    Package getHighestCombo();
+    Package *getHighestCombo();
 
     // === OPERATOR OVERLOADING ====================================
     Player operator+(long long int addedPoints);
