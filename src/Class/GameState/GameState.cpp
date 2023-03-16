@@ -470,13 +470,14 @@ void GameState::playerAction()
         std::cout << std::endl;
         std::cout << std::endl;
         std::cout << "Action menu:" << std::endl;
-        std::cout << "1. Double" << std::endl;
-        std::cout << "2. Next" << std::endl;
-        std::cout << "3. Half" << std::endl;
-        std::cout << "4. ";
-        std::cout << this->playersAbility[this->players->getElmt(0).getName()]->getName();
+        std::cout << "1. DOUBLE" << std::endl;
+        std::cout << "2. NEXT" << std::endl;
+        std::cout << "3. HALF" << std::endl;
+        std::cout << "4. ABILITY";
         // this->players->getElmt(0).setIsDisable();
-        std::cout << " [Ability]";
+        std::cout << " [";
+        std::cout << this->playersAbility[this->players->getElmt(0).getName()]->getName();
+        std::cout << "]" << std::endl;
         if (this->players->getElmt(0).getIsDisable())
         {
             std::cout << " [Not available]";
@@ -489,22 +490,22 @@ void GameState::playerAction()
             std::cerr << errMsg;
             std::cout << "Action: ";
             std::cin >> action;
-            if (action == "1")
+            if (action == "DOUBLE")
             {
                 this->prize *= 2;
             }
-            else if (action == "2")
+            else if (action == "NEXT")
             {
                 // do nothing
             }
-            else if (action == "3")
+            else if (action == "HALF")
             {
                 if (this->prize != 1)
                 {
                     this->prize /= 2;
                 }
             }
-            else if (action == "4")
+            else if (action == "ABILITY")
             {
                 if (this->players->getElmt(0).getIsDisable())
                 {
