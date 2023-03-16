@@ -87,4 +87,82 @@ void PlayerManipulation::use(PlayerList &players, Deck<Card> &playingDeck, int &
             players.setElmt(8 - turn + i, complete[i]);
         }
     }
+
+    else if (this->id == 6){
+        std::string target, errMsg;
+        bool isValid = false ;
+
+        while (!isValid){
+            system("clear");
+            std::cout << "\n#-----=========== SWITCH ===========-----#\n"
+                      << std::endl;
+            std::cout<< "Available target :"<<std::endl ;
+            for (int i = 1; i < 7; i++){
+                std::cout << i << ". " << players.getElmt(i).getName() << std::endl;
+            }
+            try{
+                std::cerr << errMsg;
+                std::cout << "Pilih target : ";
+                std::cin >> target ;
+                if (target != "1" && target != "2" && target != "3" && target != "4" && target != "5" && target != "6"){
+                    throw TargetException();
+                }
+                isValid = true;
+                int targetIdx = std::stoi(target);
+                std::vector<Card> cards1 = players.getElmt(0).getHands() ;
+                std::vector<Card> cards2 = players.getElmt(targetIdx).getHands() ;
+                players.getElmt(0).setHands(cards2);
+                players.getElmt(targetIdx).setHands(cards1);
+
+            }
+            catch (TargetException err){
+                errMsg = err.what();
+            }
+        }
+    }
+
+    else if (this->id == 7){
+        std::string target1, target2, errMsg;
+        bool isValid = false ;
+
+        while (!isValid){
+            system("clear");
+            std::cout << "\n#-----=========== SWAP ===========-----#\n"
+                      << std::endl;
+            std::cout<< "Available target :"<<std::endl ;
+            for (int i = 1; i < 7; i++){
+                std::cout << i << ". " << players.getElmt(i).getName() << std::endl;
+            }
+            try{
+                std::cerr << errMsg;
+                std::cout << "Pilih target 1 : ";
+                std::cin >> target1 ;
+                std::cout << std::endl;
+                if (target1 != "1" && target1 != "2" && target1 != "3" && target1 != "4" && target1 != "5" && target1 != "6"){
+                    throw TargetException();
+                }
+                std::cout << "Pilih target 2 : ";
+                std::cin >> target2;
+                if (target2 != "1" && target2 != "2" && target2 != "3" && target2 != "4" && target2 != "5" && target2 != "6" && target2 != "7"){
+                    throw TargetException();
+                }
+                if (target2==target1){
+                    throw TargetException() ;
+                }
+
+                isValid = true;
+                int targetIdx1 = std::stoi(target1);
+                int targetIdx2 = std::stoi(target2);
+                std::vector<Card> cards1 = players.getElmt(targetIdx1).getHands() ;
+                std::vector<Card> cards2 = players.getElmt(targetIdx2).getHands() ;
+                std::swap_ranges(cards1.begin(), cards1.begin()+1, cards2.begin());
+                players.getElmt(targetIdx1).setHands(cards1);
+                players.getElmt(targetIdx2).setHands(cards2);
+
+            }
+            catch (TargetException err){
+                errMsg = err.what();
+            }
+        }
+    }
 }

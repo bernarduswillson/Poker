@@ -270,12 +270,18 @@ void GameState::initializeAbilityDeck()
 
     PlayerManipulation *reverse = new PlayerManipulation(5);
     this->abilityDeck->push(reverse);
+
+    PlayerManipulation *sitch = new PlayerManipulation(6);
+    this->abilityDeck->push(sitch);
+
+    PlayerManipulation *swap = new PlayerManipulation(7);
+    this->abilityDeck->push(swap);
 }
 
 void GameState::rollAbility()
 {
-    this->playersAbility[this->players->getElmt(0).getName()] = this->abilityDeck->getElmt(0);
-    this->playersAbility[this->players->getElmt(1).getName()] = this->abilityDeck->getElmt(1);
+    this->playersAbility[this->players->getElmt(0).getName()] = this->abilityDeck->getElmt(5);
+    this->playersAbility[this->players->getElmt(1).getName()] = this->abilityDeck->getElmt(6);
     this->playersAbility[this->players->getElmt(2).getName()] = this->abilityDeck->getElmt(4);
     this->playersAbility[this->players->getElmt(3).getName()] = this->abilityDeck->getElmt(2);
     this->playersAbility[this->players->getElmt(4).getName()] = this->abilityDeck->getElmt(3);

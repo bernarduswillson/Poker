@@ -28,6 +28,14 @@ Ability::Ability(int id)
     {
         this->name = "Reverse";
     }
+    else if (this->id == 6)
+    {
+        this->name = "Switch";
+    }
+    else if (this->id == 7)
+    {
+        this->name = "Swap";
+    }
 }
 
 Ability::~Ability() {}
