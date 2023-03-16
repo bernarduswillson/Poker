@@ -2,20 +2,20 @@
 #define __PLAYER_HPP__
 
 #include <iostream>
-#include "../Card/Card.hpp"
-#include "../Calculable/Calculable.hpp"
-#include "../Package/Package.hpp"
-#include "../Combination/Pair/Pair.hpp"
-#include "../Combination/TwoPair/TwoPair.hpp"
-#include "../Combination/ThreeOfAKind/ThreeOfAKind.hpp"
-#include "../Combination/Straight/Straight.hpp"
-#include "../Combination/Flush/Flush.hpp"
-#include "../Combination/FullHouse/FullHouse.hpp"
-#include "../Combination/FourOfAKind/FourOfAKind.hpp"
-#include "../Combination/StraightFlush/StraightFlush.hpp"
-#include "../Combination/HighCard/HighCard.hpp"
-#include "../Table/Table.hpp"
-#include "../InventoryHolder/InventoryHolder.hpp"
+#include "../Card/Card.cpp"
+#include "../Calculable/Calculable.cpp"
+#include "../Package/Package.cpp"
+#include "../Combination/Pair/Pair.cpp"
+#include "../Combination/TwoPair/TwoPair.cpp"
+#include "../Combination/ThreeOfAKind/ThreeOfAKind.cpp"
+#include "../Combination/Straight/Straight.cpp"
+#include "../Combination/Flush/Flush.cpp"
+#include "../Combination/FullHouse/FullHouse.cpp"
+#include "../Combination/FourOfAKind/FourOfAKind.cpp"
+#include "../Combination/StraightFlush/StraightFlush.cpp"
+#include "../Combination/HighCard/HighCard.cpp"
+#include "../Table/Table.cpp"
+#include "../InventoryHolder/InventoryHolder.cpp"
 
 class Player
 {

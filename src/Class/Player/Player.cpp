@@ -485,31 +485,31 @@ std::pair<bool, std::vector<Card>> Player::isStraightFlush(std::vector<Card> car
 }
 
 
-// int main() {
-//     Player player;
-//     Table table;
-//     std::vector<Card> card;
-//     // card.push_back(Card(1, 1));
-//     card.push_back(Card(1, 2));
-//     card.push_back(Card(2, 3));
-//     // card.push_back(Card(5, 1));
-//     // card.push_back(Card(4, 1));
-//     table.push(Card(1, 3));
-//     table.push(Card(5, 3));
-//     table.push(Card(4, 3));
-//     table.push(Card(3, 3));
-//     table.push(Card(6, 3));
-//     //add hand
-//     player.setHands(card);
-//     // std::pair<bool, std::vector<Card>> pair = player.isPair(card);
-//     // std::cout << pair.first << std::endl;
-//     // std::cout << pair.second.getValue() << std::endl;
-//     // std::cout << pair.second.getNumber() << std::endl;
-//     // std::cout << pair.second.getColor() << std::endl;
-//     // player.getHighestCombo() = new Pair(pair.second);
-//     player.findCombo(table);
-//     std::cout << player.getHighestCombo().getValue() << std::endl;
-// }
+int main() {
+    Player player;
+    Table table;
+    std::vector<Card> card;
+    // card.push_back(Card(1, 1));
+    card.push_back(Card(13, 3));
+    card.push_back(Card(13, 2));
+    // card.push_back(Card(5, 1));
+    // card.push_back(Card(4, 1));
+    table.push(Card(5, 1));
+    table.push(Card(10, 3));
+    table.push(Card(12, 2));
+    table.push(Card(13, 1));
+    table.push(Card(13, 0));
+    //add hand
+    player.setHands(card);
+    // std::pair<bool, std::vector<Card>> pair = player.isPair(card);
+    // std::cout << pair.first << std::endl;
+    // std::cout << pair.second.getValue() << std::endl;
+    // std::cout << pair.second.getNumber() << std::endl;
+    // std::cout << pair.second.getColor() << std::endl;
+    // player.getHighestCombo() = new Pair(pair.second);
+    player.findCombo(table);
+    std::cout << player.getHighestCombo().getValue() << std::endl;
+}
 
 
 
@@ -696,15 +696,25 @@ void Player::findCombo(Table river) {
         {
             delete p2;
             std::vector<Card> temp;
-            temp = table;
-            temp.erase((temp.begin()));
-            temp.push_back(this->hands[0]);
-            temp.push_back(this->hands[1]);
-            temp = sortCard(temp);
-            // for (int i = 0; i < temp.size(); i++)
-            // {
-            //     std::cout << temp[i].getValue() << std::endl;
-            // }
+            if (hands[0].getNumber()==hands[1].getNumber()){
+                temp = full.second;
+                temp.erase(temp.end());
+                temp.erase(temp.end());
+                temp.push_back(this->hands[0]);
+                temp.push_back(this->hands[1]);
+                temp = sortCard(temp);
+            }
+            else{
+                temp = table;
+                temp.erase((temp.begin()));
+                temp.push_back(this->hands[0]);
+                temp.push_back(this->hands[1]);
+                temp = sortCard(temp);
+                // for (int i = 0; i < temp.size(); i++)
+                // {
+                //     std::cout << temp[i].getValue() << std::endl;
+                // }
+            }
             std::pair<bool, std::vector<Card>> nfull = this->isFullHouse(temp);
             if (nfull.first)
             {
@@ -873,6 +883,64 @@ void Player::findCombo(Table river) {
         if (p2->getValue() == p->getValue())
         {
             delete p2;
+            if (hands[0].getNumber()==hands[1].getNumber()){
+                std::vector<Card> temp;
+                temp = doub.second;
+                temp.erase(temp.end());
+                temp.erase(temp.end());
+                temp.push_back(hands[0]);
+                temp.push_back(hands[1]);
+                temp = sortCard(temp);
+                std::pair<bool, std::vector<Card>> ndoub = this->isTwoPair(temp);
+                if (ndoub.first)
+                {
+                    p2 = new TwoPair(ndoub.second);
+                    if (p2->getValue() == p->getValue())
+                    {
+                        delete p2;
+                    }
+                    else {
+                        found = true;
+                    }
+                }
+            }
+            else{
+                std::vector<Card> temp;
+                temp = table;
+                // erase element in temp which is in hands
+                for (int i=0; i<temp.size(); i++)
+                {
+                    if (temp[i].getNumber() == doub.second[3].getNumber())
+                    {
+                        temp.erase(temp.begin() + i);
+                        break;
+                    }
+                }
+                for (int i=0; i<temp.size(); i++)
+                {
+                    if (temp[i].getNumber() == doub.second[3].getNumber())
+                    {
+                        temp.erase(temp.begin() + i);
+                        break;
+                    }
+                }
+                temp.push_back(hands[0]);
+                temp.push_back(hands[1]);
+                temp = sortCard(temp);
+                std::pair<bool, std::vector<Card>> ndoub = this->isTwoPair(temp);
+                if (ndoub.first)
+                {
+                    p2 = new TwoPair(ndoub.second);
+                    if (p2->getValue() == p->getValue())
+                    {
+                        delete p2;
+                    }
+                    else {
+                        found = true;
+                    }
+                }
+            }
+
         }
         else {
             found = true;
