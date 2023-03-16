@@ -2,20 +2,20 @@
 #define __PLAYER_HPP__
 
 #include <iostream>
-#include "../Card/Card.cpp"
-#include "../Calculable/Calculable.cpp"
-#include "../Package/Package.cpp"
-#include "../Combination/Pair/Pair.cpp"
-#include "../Combination/TwoPair/TwoPair.cpp"
-#include "../Combination/ThreeOfAKind/ThreeOfAKind.cpp"
-#include "../Combination/Straight/Straight.cpp"
-#include "../Combination/Flush/Flush.cpp"
-#include "../Combination/FullHouse/FullHouse.cpp"
-#include "../Combination/FourOfAKind/FourOfAKind.cpp"
-#include "../Combination/StraightFlush/StraightFlush.cpp"
-#include "../Combination/HighCard/HighCard.cpp"
-#include "../Table/Table.cpp"
-#include "../InventoryHolder/InventoryHolder.cpp"
+#include "../Card/Card.hpp"
+#include "../Calculable/Calculable.hpp"
+#include "../Package/Package.hpp"
+#include "../Combination/Pair/Pair.hpp"
+#include "../Combination/TwoPair/TwoPair.hpp"
+#include "../Combination/ThreeOfAKind/ThreeOfAKind.hpp"
+#include "../Combination/Straight/Straight.hpp"
+#include "../Combination/Flush/Flush.hpp"
+#include "../Combination/FullHouse/FullHouse.hpp"
+#include "../Combination/FourOfAKind/FourOfAKind.hpp"
+#include "../Combination/StraightFlush/StraightFlush.hpp"
+#include "../Combination/HighCard/HighCard.hpp"
+#include "../Table/Table.hpp"
+#include "../InventoryHolder/InventoryHolder.hpp"
 
 class Player
 {
@@ -24,6 +24,7 @@ private:
     long long int points;
     std::vector<Card> hands;
     bool isDisable;
+    Package highestCombo;
 
 public:
     // === CONSTRUCTOR DESTRUCTOR ==================================
@@ -43,14 +44,29 @@ public:
     // === OPERATOR OVERLOADING ====================================
     Player operator+(long long int addedPoints);
     Player operator+(Card addedCard);
-    // void operator-(Card removedCard);
+    void operator-(Card removedCard);
 
     // === METHOD ==================================================
     void inputName();
-    // void findCombo(Package river);
+    void findCombo(Table river);
+
+    std::vector<Card> sortCard(std::vector<Card> card);
+
+    std::pair<bool, std::vector<Card>> isHigh(std::vector<Card> card);
+    std::pair<bool, std::vector<Card>> isPair(std::vector<Card> card);
+    std::pair<bool, std::vector<Card>> isTwoPair(std::vector<Card> card);
+    std::pair<bool, std::vector<Card>> isThreeOfAKind(std::vector<Card> card);
+    std::pair<bool, std::vector<Card>> isStraight(std::vector<Card> card);
+    std::pair<bool, std::vector<Card>> isFlush(std::vector<Card> card);
+    std::pair<bool, std::vector<Card>> isFullHouse(std::vector<Card> card);
+    std::pair<bool, std::vector<Card>> isFourOfAKind(std::vector<Card> card);
+    std::pair<bool, std::vector<Card>> isStraightFlush(std::vector<Card> card);
 
     // === DISPLAY =================================================
     void displayHands();
+
+    Package getHighestCombo();
+    
 };
 
 #endif

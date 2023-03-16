@@ -9,6 +9,12 @@ Package::~Package()
 {
 }
 
+
+double Package::getValue()
+{
+    return value;
+}
+
 std::vector<Card> Package::getCardBuffer()
 {
     return cardBuffer;

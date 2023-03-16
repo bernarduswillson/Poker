@@ -44,3 +44,12 @@ void Table::push(Card card)
     this->buffer.push_back(card);
     this->length++;
 }
+
+Card Table::pop()
+{
+    Card temp = this->buffer[0];
+    std::vector<Card>::iterator itr = this->buffer.begin();
+    this->buffer.erase(itr);
+    this->length--;
+    return temp;
+}

@@ -160,10 +160,6 @@ void GameState::randomizeDeck()
 
     this->playingDeck->shuffle();
 
-    for (int i = 0; i < 5; i++)
-    {
-        this->table->push(this->playingDeck->getElmt(i));
-    }
 }
 
 void GameState::rollPlayingCard()
@@ -181,11 +177,6 @@ void GameState::rollPlayingCard()
         }
     }
 
-    for (int i = 0; i < 5; i++)
-    {
-        this->table->push(this->playingDeck->getElmt(0));
-        this->playingDeck->pop();
-    }
 }
 
 void GameState::initializeAbilityDeck()
@@ -239,6 +230,7 @@ void GameState::newGame()
 
     // 2. Initialize players
     initializePlayer();
+    this->table->push(Card(20, 20));
 
     // 3. Initialize deck
     initializePlayingDeck();
@@ -261,7 +253,11 @@ void GameState::nextTurn()
 void GameState::nextRound()
 {
     this->round++;
+    if (round == 2){
+        this->table->pop();
+    }
     this->players->roundRobin();
+    this->table->push(this->playingDeck->roll());
 }
 
 void GameState::nextGame()
@@ -279,6 +275,8 @@ void GameState::nextGame()
     this->game++;
     this->round = 1;
     this->prize = 64;
+    this->table = new Table();
+
 }
 
 void GameState::playerAction()
@@ -291,6 +289,8 @@ void GameState::playerAction()
     {
         this->displayGameState();
         this->displayTable();
+        std::cout << this->table->getLength() << std::endl;
+        this->players->getElmt(0).findCombo(*table);
         std::cout << "\n#-----=========== PLAYER TURN ===========-----#\n"
                   << std::endl;
         std::cout << "Name:\t" << this->players->getElmt(0).getName() << std::endl;

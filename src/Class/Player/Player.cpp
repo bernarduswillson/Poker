@@ -75,6 +75,29 @@ Player Player::operator+(Card addedCard)
 
 // }
 
+std::vector<Card> Player::sortCard(std::vector<Card> card)
+{
+    std::vector<double> value;
+    std::vector<Card> result;
+
+    for (int i = 0; i < card.size(); i++)
+    {
+        value.push_back(card[i].getValue());
+    }
+    std::sort(value.begin(), value.end(), std::greater<double>());
+    for (int i = 0; i < value.size(); i++)
+    {
+        for (int j = 0; j < card.size(); j++)
+        {
+            if (value[i] == card[j].getValue())
+            {
+                result.push_back(card[j]);
+            }
+        }
+    }
+    return result;
+}
+
 // === METHOD ==================================================
 void Player::inputName()
 {
@@ -462,31 +485,31 @@ std::pair<bool, std::vector<Card>> Player::isStraightFlush(std::vector<Card> car
 }
 
 
-int main() {
-    Player player;
-    Table table;
-    std::vector<Card> card;
-    // card.push_back(Card(1, 1));
-    card.push_back(Card(1, 2));
-    card.push_back(Card(2, 3));
-    // card.push_back(Card(5, 1));
-    // card.push_back(Card(4, 1));
-    table.push(Card(1, 3));
-    table.push(Card(5, 3));
-    table.push(Card(4, 3));
-    table.push(Card(3, 3));
-    table.push(Card(6, 3));
-    //add hand
-    player.setHands(card);
-    // std::pair<bool, std::vector<Card>> pair = player.isPair(card);
-    // std::cout << pair.first << std::endl;
-    // std::cout << pair.second.getValue() << std::endl;
-    // std::cout << pair.second.getNumber() << std::endl;
-    // std::cout << pair.second.getColor() << std::endl;
-    // player.getHighestCombo() = new Pair(pair.second);
-    player.findCombo(table);
-    std::cout << player.getHighestCombo().getValue() << std::endl;
-}
+// int main() {
+//     Player player;
+//     Table table;
+//     std::vector<Card> card;
+//     // card.push_back(Card(1, 1));
+//     card.push_back(Card(1, 2));
+//     card.push_back(Card(2, 3));
+//     // card.push_back(Card(5, 1));
+//     // card.push_back(Card(4, 1));
+//     table.push(Card(1, 3));
+//     table.push(Card(5, 3));
+//     table.push(Card(4, 3));
+//     table.push(Card(3, 3));
+//     table.push(Card(6, 3));
+//     //add hand
+//     player.setHands(card);
+//     // std::pair<bool, std::vector<Card>> pair = player.isPair(card);
+//     // std::cout << pair.first << std::endl;
+//     // std::cout << pair.second.getValue() << std::endl;
+//     // std::cout << pair.second.getNumber() << std::endl;
+//     // std::cout << pair.second.getColor() << std::endl;
+//     // player.getHighestCombo() = new Pair(pair.second);
+//     player.findCombo(table);
+//     std::cout << player.getHighestCombo().getValue() << std::endl;
+// }
 
 
 
@@ -495,7 +518,7 @@ void Player::findCombo(Table river) {
     Package *p2;
     std::vector<Card> table;
     std::vector<Card> card;
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < river.getLength(); i++)
     {
         card.push_back(river.getElmt(i));
         table.push_back(river.getElmt(i));
