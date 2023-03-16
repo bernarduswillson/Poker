@@ -94,6 +94,47 @@ void GameState::displayWinner()
     std::cin.get();
 }
 
+void GameState::displayLeaderboard()
+{
+    GArray<Player> playerLeaderboard;
+    for (int i = 0; i < 7; i++)
+    {
+        playerLeaderboard.push(this->players->getElmt(i));
+    }
+    playerLeaderboard.gSort();
+
+    system("clear");
+    std::cout << "\n#-----=========== LEADERBOARD ===========-----#\n"
+              << std::endl;
+    for (int i = 0; i < 7; i++)
+    {
+        if (i == 0)
+        {
+            std::cout << "[1st] ";
+        }
+        else if (i == 1)
+        {
+            std::cout << "[2nd] ";
+        }
+        else if (i == 2)
+        {
+            std::cout << "[3rd] ";
+        }
+        else
+        {
+            std::cout << i + 1 << ". ";
+        }
+        std::cout << this->players->getElmt(i).getName() << " (" << this->players->getElmt(i).getPoints() << ") with ";
+        this->players->getElmt(i).findCombo(*table);
+        std::cout << this->players->getElmt(i).getHighestCombo().getValue();
+        std::cout << std::endl;
+    }
+    std::cout << "\n#-----=====#*#========#@#========#*#=====-----#\n"
+              << std::endl;
+    std::cin.ignore();
+    std::cin.get();
+}
+
 // === INITIALIZER =============================================
 
 void GameState::initializePlayer()
@@ -248,6 +289,10 @@ void GameState::evaluateWinner()
     for (int i = 0; i < 7; i++)
     {
         playersPackage.push(this->players->getElmt(i).getHighestCombo());
+        std::cout << playersPackage.getElmt(i).getName() << std::endl;
+        std::cout << playersPackage.getLength() << std::endl;
+        std::cin.ignore();
+        std::cin.get();
     }
     int winnerIdx = playersPackage.getIdxMax();
 
@@ -323,6 +368,7 @@ void GameState::nextRound()
 void GameState::nextGame()
 {
     this->evaluateWinner();
+    this->displayLeaderboard();
     this->evaluateGameWinner();
 
     for (int i = 0; i < 7; i++)

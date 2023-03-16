@@ -54,6 +54,7 @@ public:
     void displayGameState();
     void displayTable();
     void displayWinner();
+    void displayLeaderboard();
 
     // === INITIALIZER =============================================
     void initializePlayer();

@@ -22,7 +22,7 @@ template <typename T>
 int GArray<T>::getIdxMax()
 {
     int maxIdx = 0;
-    for (int i = 1; i < this->buffer.size(); i++)
+    for (int i = 0; i < this->buffer.size(); i++)
     {
         if (this->buffer[i] >= this->buffer[maxIdx])
         {
@@ -36,4 +36,11 @@ template <typename T>
 void GArray<T>::push(T elmt)
 {
     this->buffer.push_back(elmt);
+}
+
+template <typename T>
+void GArray<T>::gSort()
+{
+    sort(this->buffer.begin(), this->buffer.end());
+    std::reverse(this->buffer.begin(), this->buffer.end());
 }

@@ -45,6 +45,9 @@ public:
     // === OPERATOR OVERLOADING ====================================
     Player operator+(long long int addedPoints);
     Player operator+(Card addedCard);
+    bool operator>=(Player &);
+    bool operator>(Player &);
+    bool operator<(Player &);
 
     // === METHOD ==================================================
     void inputName();

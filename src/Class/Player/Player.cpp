@@ -17,7 +17,7 @@ void Player::operator=(const Player &other)
     {
         this->hands[i] = other.hands[i];
     }
-    // this->highestCombo = other.highestCombo;
+    this->highestCombo = other.highestCombo;
 }
 
 Player::~Player() {}
@@ -69,6 +69,21 @@ Player Player::operator+(Card addedCard)
 {
     this->hands.push_back(addedCard);
     return *this;
+}
+
+bool Player::operator>=(Player &other)
+{
+    return this->points >= other.points;
+}
+
+bool Player::operator>(Player &other)
+{
+    return this->points > other.points;
+}
+
+bool Player::operator<(Player &other)
+{
+    return this->points < other.points;
 }
 
 // void Player::operator-(Card removedCard) {
