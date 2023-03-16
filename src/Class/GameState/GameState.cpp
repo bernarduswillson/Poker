@@ -16,6 +16,7 @@ GameState::GameState()
     this->playingDeck = new Deck<Card>;
     this->abilityDeck = new Deck<Ability *>;
     this->table = new Table();
+    this->winner = new Player();
 }
 
 GameState::~GameState()
@@ -23,6 +24,8 @@ GameState::~GameState()
     delete this->players;
     delete this->playingDeck;
     delete this->table;
+    delete this->abilityDeck;
+    delete this->winner;
 }
 
 // === GETTER SETTER ===========================================
@@ -84,9 +87,11 @@ void GameState::displayWinner()
 {
     std::cout << "\n#-----======= CONGRATULATION !!! ========-----#\n"
               << std::endl;
-    std::cout << this->winner.getName() << " wins the game with " << this->winner.getPoints() << " points!" << std::endl;
+    std::cout << this->winner->getName() << " wins the game with " << this->winner->getPoints() << " points!" << std::endl;
     std::cout << "\n#-----=====#*#========#@#========#*#=====-----#\n"
               << std::endl;
+    std::cin.clear();
+    std::cin.get();
 }
 
 // === INITIALIZER =============================================
@@ -251,14 +256,20 @@ void GameState::evaluateWinner()
 
 void GameState::evaluateGameWinner()
 {
+    std::cout << "Evaluate game winner running" << std::endl;
     for (int i = 0; i < 7; i++)
     {
+        std::cout << "Evaluate game loop" << std::endl;
+        std::cout << this->players->getElmt(i).getPoints() << std::endl;
         if (this->players->getElmt(i).getPoints() >= this->target)
         {
             this->ongoing = false;
-            this->winner = this->players->getElmt(i);
+            std::cout << "Menang ea" << std::endl;
+            this->winner = &this->players->getElmt(i);
+            std::cout << "Menang ea 2" << std::endl;
         }
     }
+    std::cout << "Evaluate game winner finished" << std::endl;
 }
 
 // === GAME CONTROL ============================================

@@ -37,7 +37,7 @@ private:
     Deck<Ability *> *abilityDeck;
     std::map<std::string, Ability *> playersAbility;
     Table *table;
-    Player winner;
+    Player *winner;
 
 public:
     // === CONSTRUCTOR DESTRUCTOR ==================================
