@@ -24,7 +24,7 @@ private:
     long long int points;
     std::vector<Card> hands;
     bool isDisable;
-    Package highestCombo;
+    Package *highestCombo;
 
 public:
     // === CONSTRUCTOR DESTRUCTOR ==================================
@@ -40,17 +40,21 @@ public:
     void setHands(std::vector<Card> hands);
     bool getIsDisable();
     void setIsDisable();
+    Package *getHighestCombo();
 
     // === OPERATOR OVERLOADING ====================================
     Player operator+(long long int addedPoints);
     Player operator+(Card addedCard);
-    void operator-(Card removedCard);
+    bool operator>=(Player &);
+    bool operator>(Player &);
+    bool operator<(Player &);
 
     // === METHOD ==================================================
     void inputName();
     void findCombo(Table river);
 
     std::vector<Card> sortCard(std::vector<Card> card);
+    void resetHands();
 
     std::pair<bool, std::vector<Card>> isHigh(std::vector<Card> card);
     std::pair<bool, std::vector<Card>> isPair(std::vector<Card> card);
@@ -64,9 +68,6 @@ public:
 
     // === DISPLAY =================================================
     void displayHands();
-
-    Package getHighestCombo();
-    
 };
 
 #endif
