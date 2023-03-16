@@ -368,6 +368,29 @@ void GameState::nextGame()
     this->displayLeaderboard();
     this->evaluateGameWinner();
 
+    // 1.1 Reset game status
+    this->game++;
+    this->round = 1;
+    this->turn = 1;
+    this->prize = 64;
+
+    // 1.2 Reset table
+    delete this->table;
+    this->table = new Table();
+    this->table->push(Card(20, 20));
+
+    // 1.3 Reset playing deck
+    delete this->playingDeck;
+    this->playingDeck = new Deck<Card>;
+    // this->playingDeck->resetBuffer();
+
+    // 2.1 Reset players hands
+    for (int i = 0; i < 7; i++)
+    {
+        this->players->getElmt(i).resetHands();
+    }
+
+    // 2.2 Reset players ability
     for (int i = 0; i < 7; i++)
     {
         if (this->players->getElmt(i).getIsDisable())
@@ -376,31 +399,16 @@ void GameState::nextGame()
         }
     }
 
-    this->game++;
-    this->round = 1;
-    this->turn = 1;
-    this->prize = 64;
-    delete this->table;
-    this->table = new Table();
-    this->table->push(Card(20, 20));
-    this->playingDeck->resetBuffer();
-
-    // 1. Reset players card
-    for (int i = 0; i < 7; i++)
-    {
-        this->players->getElmt(i).resetHands();
-    }
-
-    // 2. Initialize deck
+    // 3. Initialize deck
     initializePlayingDeck();
 
-    // 3. Roll playing cards
+    // 4. Roll playing cards
     rollPlayingCard();
 
-    // 4. Initialize ability
+    // 5. Initialize ability
     initializeAbilityDeck();
 
-    // 5. Roll ability
+    // 6. Roll ability
     rollAbility();
 }
 
