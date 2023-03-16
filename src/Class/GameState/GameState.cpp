@@ -360,6 +360,15 @@ void GameState::nextTurn()
 {
     this->turn++;
     this->players->roundRobin();
+    system("clear");
+    std::cout << "\n#-----=========== CHANGE TURN ===========-----#\n"
+              << std::endl;
+    std::cout << "              Next turn: " << this->players->getElmt(0).getName() << std::endl;
+    std::cout << "\n#-----=====#*#========#@#========#*#=====-----#\n"
+              << std::endl;
+    std::cout << "           Press enter to continue..." << std::endl;
+    std::cin.ignore();
+    std::cin.get();
 }
 
 void GameState::nextRound()
