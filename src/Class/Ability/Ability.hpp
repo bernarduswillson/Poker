@@ -21,7 +21,7 @@ public:
     std::string getName();
 
     virtual long long int use(long long int) = 0;
-    virtual void use(PlayerList &, Deck<Card> &) = 0;
+    virtual void use(PlayerList &, Deck<Card> &, int &) = 0;
 };
 
 #endif

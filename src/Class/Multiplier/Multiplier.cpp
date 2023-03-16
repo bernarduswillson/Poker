@@ -19,4 +19,4 @@ long long int Multiplier::use(long long int prize)
     return prize;
 }
 
-void Multiplier::use(PlayerList &players, Deck<Card> &playingDeck) {}
+void Multiplier::use(PlayerList &players, Deck<Card> &playingDeck, int &round) {}

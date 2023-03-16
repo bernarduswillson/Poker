@@ -11,7 +11,7 @@ public:
     ~PlayerManipulation();
 
     long long int use(long long int) override;
-    void use(PlayerList &, Deck<Card> &) override;
+    void use(PlayerList &, Deck<Card> &, int &) override;
 };
 
 #endif

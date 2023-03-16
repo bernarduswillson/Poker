@@ -16,9 +16,17 @@ Ability::Ability(int id)
     {
         this->name = "Quarter";
     }
-    else if (this->id == 2)
+    else if (this->id == 3)
     {
         this->name = "Abilityless";
+    }
+    else if (this->id == 4)
+    {
+        this->name = "ReRoll";
+    }
+    else if (this->id == 5)
+    {
+        this->name = "Reverse";
     }
 }
 

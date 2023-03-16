@@ -7,6 +7,7 @@ GameState::GameState()
 {
     this->game = 0;
     this->round = 0;
+    this->turn = 0;
     this->prize = 0;
     this->target = 0;
     this->ongoing = false;
@@ -62,6 +63,7 @@ void GameState::displayGameState()
               << std::endl;
     std::cout << "Game:\t\t" << this->game << std::endl;
     std::cout << "Round:\t\t" << this->round << std::endl;
+    std::cout << "Turn:\t\t" << this->turn << std::endl;
     std::cout << "Table prize:\t" << this->prize << " points" << std::endl;
     std::cout
         << "\n#-----=====#*#========#@#========#*#=====-----#\n"
@@ -159,7 +161,6 @@ void GameState::randomizeDeck()
     }
 
     this->playingDeck->shuffle();
-
 }
 
 void GameState::rollPlayingCard()
@@ -176,33 +177,36 @@ void GameState::rollPlayingCard()
             rolledCards.clear();
         }
     }
-
 }
 
 void GameState::initializeAbilityDeck()
 {
-    PlayerManipulation *Reroll = new PlayerManipulation(1);
-    this->abilityDeck->push(Reroll);
-    
-    PlayerManipulation *abiliyless = new PlayerManipulation(3);
-    this->abilityDeck->push(abiliyless);
 
     Multiplier *quadruple = new Multiplier(1);
     this->abilityDeck->push(quadruple);
 
     Multiplier *quarter = new Multiplier(2);
     this->abilityDeck->push(quarter);
+
+    PlayerManipulation *abiliyless = new PlayerManipulation(3);
+    this->abilityDeck->push(abiliyless);
+
+    PlayerManipulation *reroll = new PlayerManipulation(4);
+    this->abilityDeck->push(reroll);
+
+    PlayerManipulation *reverse = new PlayerManipulation(5);
+    this->abilityDeck->push(reverse);
 }
 
 void GameState::rollAbility()
 {
     this->playersAbility[this->players->getElmt(0).getName()] = this->abilityDeck->getElmt(0);
     this->playersAbility[this->players->getElmt(1).getName()] = this->abilityDeck->getElmt(1);
-    this->playersAbility[this->players->getElmt(2).getName()] = this->abilityDeck->getElmt(2);
+    this->playersAbility[this->players->getElmt(2).getName()] = this->abilityDeck->getElmt(4);
     this->playersAbility[this->players->getElmt(3).getName()] = this->abilityDeck->getElmt(2);
-    this->playersAbility[this->players->getElmt(4).getName()] = this->abilityDeck->getElmt(2);
-    this->playersAbility[this->players->getElmt(5).getName()] = this->abilityDeck->getElmt(2);
-    this->playersAbility[this->players->getElmt(6).getName()] = this->abilityDeck->getElmt(2);
+    this->playersAbility[this->players->getElmt(4).getName()] = this->abilityDeck->getElmt(3);
+    this->playersAbility[this->players->getElmt(5).getName()] = this->abilityDeck->getElmt(1);
+    this->playersAbility[this->players->getElmt(6).getName()] = this->abilityDeck->getElmt(1);
 }
 
 void GameState::evaluateGameWinner()
@@ -224,6 +228,7 @@ void GameState::newGame()
     // 1. Initialize game status
     this->game = 1;
     this->round = 1;
+    this->turn = 1;
     this->prize = 64;
     this->target = 4294967296;
     this->ongoing = true;
@@ -247,13 +252,16 @@ void GameState::newGame()
 
 void GameState::nextTurn()
 {
+    this->turn++;
     this->players->roundRobin();
 }
 
 void GameState::nextRound()
 {
     this->round++;
-    if (round == 2){
+    this->turn = 1;
+    if (round == 2)
+    {
         this->table->pop();
     }
     this->players->roundRobin();
@@ -274,9 +282,9 @@ void GameState::nextGame()
 
     this->game++;
     this->round = 1;
+    this->turn = 1;
     this->prize = 64;
     this->table = new Table();
-
 }
 
 void GameState::playerAction()
@@ -341,7 +349,7 @@ void GameState::playerAction()
                     throw "Ability disabled\n";
                 }
                 this->setPrize(this->playersAbility[this->players->getElmt(0).getName()]->use(this->prize));
-                this->playersAbility[this->players->getElmt(0).getName()]->use(*this->players, *this->playingDeck);
+                this->playersAbility[this->players->getElmt(0).getName()]->use(*this->players, *this->playingDeck, this->turn);
                 this->players->getElmt(0).setIsDisable();
             }
             else

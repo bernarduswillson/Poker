@@ -13,7 +13,7 @@ void PlayerList::operator=(PlayerList &other)
 
 PlayerList::~PlayerList() {}
 
-// === GETTER ==================================================
+// === GETTER SETTER ===========================================
 
 int PlayerList::getLength()
 {
@@ -23,6 +23,11 @@ int PlayerList::getLength()
 Player &PlayerList::getElmt(int index)
 {
     return this->buffer[index];
+}
+
+void PlayerList::setElmt(int index, Player newPlayer)
+{
+    this->buffer[index] = newPlayer;
 }
 
 // === INSERT ==================================================

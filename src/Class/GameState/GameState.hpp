@@ -24,6 +24,7 @@ class GameState
 private:
     int game;
     int round;
+    int turn;
     long long int prize;
     long long int target;
     bool ongoing;
