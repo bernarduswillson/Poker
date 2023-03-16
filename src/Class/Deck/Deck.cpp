@@ -34,12 +34,14 @@ template <typename T>
 void Deck<T>::push(const T &other)
 {
     this->buffer.push_back(other);
+    this->length++;
 }
 
 template <typename T>
 void Deck<T>::pop()
 {
     this->buffer.pop_back();
+    this->length--;
 }
 
 template <typename T>
@@ -64,7 +66,17 @@ void Deck<T>::shuffle()
 template <typename T>
 T Deck<T>::roll()
 {
-    T temp = T(this->buffer[0]);
-    this->buffer.erase(this->buffer.begin());
+    T temp = T(this->buffer[this->length - 1]);
+    this->pop();
     return temp;
+}
+
+template <typename T>
+void Deck<T>::resetBuffer()
+{
+    for (int i = 0; i < this->buffer.size(); i++)
+    {
+        this->buffer.pop_back();
+    }
+    this->length = 0;
 }

@@ -16,7 +16,7 @@ MenuException::~MenuException()
 {
 }
 
-const char* MenuException::what() const
+std::string MenuException::what() const
 {
     return "Menu unavailable\n";
 }
@@ -29,7 +29,7 @@ ActionException::~ActionException()
 {
 }
 
-const char* ActionException::what() const
+std::string ActionException::what() const
 {
     return "Action unavailable\n";
 }
@@ -42,7 +42,7 @@ TargetException::~TargetException()
 {
 }
 
-const char* TargetException::what() const
+std::string TargetException::what() const
 {
     return "Target unavailable\n";
 }

@@ -28,6 +28,7 @@ public:
     void pop();
     void shuffle();
     T roll();
+    void resetBuffer();
 };
 
 #endif

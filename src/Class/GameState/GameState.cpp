@@ -383,6 +383,7 @@ void GameState::nextGame()
     delete this->table;
     this->table = new Table();
     this->table->push(Card(20, 20));
+    this->playingDeck->resetBuffer();
 
     // 1. Reset players card
     for (int i = 0; i < 7; i++)
@@ -416,7 +417,10 @@ void GameState::playerAction()
         for (int i = 0; i < this->playingDeck->getLength(); i++)
         {
             this->playingDeck->getElmt(i).displayCard();
+            std::cout << " ";
         }
+        std::cout << std::endl;
+        std::cout << this->playingDeck->getLength() << std::endl;
         std::cout << "\n#-----=========== PLAYER TURN ===========-----#\n"
                   << std::endl;
         std::cout << "Name:\t" << this->players->getElmt(0).getName() << std::endl;
@@ -467,7 +471,7 @@ void GameState::playerAction()
             {
                 if (this->players->getElmt(0).getIsDisable())
                 {
-                    throw "Ability disabled\n";
+                    throw ActionException();
                 }
                 this->setPrize(this->playersAbility[this->players->getElmt(0).getName()]->use(this->prize));
                 this->playersAbility[this->players->getElmt(0).getName()]->use(*this->players, *this->playingDeck, this->turn);

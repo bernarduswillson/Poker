@@ -1,12 +1,14 @@
-#ifndef __Exception_HPP__
-#define __Exception_HPP__
+#ifndef __EXCEPTION_HPP__
+#define __EXCEPTION_HPP__
+
+#include <string>
 
 class Exception
 {
 public:
     Exception();
     ~Exception();
-    virtual const char* what() const = 0;
+    virtual std::string what() const = 0;
 };
 
 class MenuException : public Exception
@@ -14,7 +16,7 @@ class MenuException : public Exception
 public:
     MenuException();
     ~MenuException();
-    const char* what() const;
+    std::string what() const;
 };
 
 class ActionException : public Exception
@@ -22,7 +24,7 @@ class ActionException : public Exception
 public:
     ActionException();
     ~ActionException();
-    const char* what() const;
+    std::string what() const;
 };
 
 class TargetException : public Exception
@@ -30,9 +32,7 @@ class TargetException : public Exception
 public:
     TargetException();
     ~TargetException();
-    const char* what() const;
+    std::string what() const;
 };
-
-
 
 #endif
