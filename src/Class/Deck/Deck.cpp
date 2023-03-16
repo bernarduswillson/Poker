@@ -1,6 +1,8 @@
 #include "Deck.hpp"
 #include <ctime>
 #include <algorithm>
+#include <random>
+#include <chrono>
 
 // === CONSTRUCTOR DESTRUCTOR ==================================
 
@@ -65,8 +67,11 @@ void Deck<T>::shuffle()
     //     this->buffer[swapidx1] = this->buffer[swapidx2];
     //     this->buffer[swapidx2] = temp;
     // }
-    std::random_shuffle(this->buffer.begin(), this->buffer.end());
-    // std::shuffle(this->buffer.begin(), this->buffer.end(), g);
+    // std::random_shuffle(this->buffer.begin(), this->buffer.end());
+    unsigned seed = std::chrono::system_clock::now()
+                        .time_since_epoch()
+                        .count();
+    std::shuffle(std::begin(this->buffer), std::end(this->buffer), std::default_random_engine(seed));
 }
 
 template <typename T>
