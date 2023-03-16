@@ -3,6 +3,10 @@
 
 #include <iostream>
 #include <map>
+#include <fstream>
+#include <string>
+#include <utility>
+#include <vector>
 
 #include "../PlayerList/PlayerList.hpp"
 #include "../Player/Player.hpp"
@@ -54,6 +58,7 @@ public:
     void initializePlayer();
     void initializePlayingDeck();
     void randomizeDeck();
+    void generateDeckTxt();
     void rollPlayingCard();
     void initializeAbilityDeck();
     void rollAbility();

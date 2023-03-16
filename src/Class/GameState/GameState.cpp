@@ -145,6 +145,12 @@ void GameState::initializePlayingDeck()
     {
         this->randomizeDeck();
     }
+    else if (menu == "2")
+    {
+        this->generateDeckTxt();
+        std::cout << this->playingDeck->getLength() << std::endl;
+        this->playingDeck->getElmt(0).displayCard();
+    }
 }
 
 void GameState::randomizeDeck()
@@ -162,11 +168,31 @@ void GameState::randomizeDeck()
 
 }
 
+void GameState::generateDeckTxt(){
+    std::ifstream infile("./config/deck.txt");
+    int a, b;
+    std::vector<std::pair<int, int>> vec;
+    
+    while (infile >> a >> b) {
+        vec.push_back(std::make_pair(a, b));
+    }
+    
+    for (auto p : vec) {
+        std::cout << "(" << p.first << ", " << p.second << ")" << std::endl;
+    }
+    
+    for (auto p : vec) 
+    {
+        std::cout << "(" << p.first << ", " << p.second << ")" << std::endl;
+        Card *newCard = new Card(p.first, p.second);
+        this->playingDeck->push(*newCard);
+    }
+    
+}
+
 void GameState::rollPlayingCard()
 {
-    std::vector<Card> temp;
-    for (int j = 0; j < 2; j++)
-    {
+
         std::vector<Card> rolledCards;
         for (int i = 0; i < 7; i++)
         {
@@ -177,7 +203,6 @@ void GameState::rollPlayingCard()
         }
     }
 
-}
 
 void GameState::initializeAbilityDeck()
 {
@@ -291,6 +316,9 @@ void GameState::playerAction()
         this->displayTable();
         std::cout << this->table->getLength() << std::endl;
         this->players->getElmt(0).findCombo(*table);
+        for (int i = 0; i < this->playingDeck->getLength(); i++){
+            this->playingDeck->getElmt(i).displayCard() ;
+        }
         std::cout << "\n#-----=========== PLAYER TURN ===========-----#\n"
                   << std::endl;
         std::cout << "Name:\t" << this->players->getElmt(0).getName() << std::endl;

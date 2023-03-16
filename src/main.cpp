@@ -1,3 +1,5 @@
+
+
 #include <iostream>
 
 #include "./Class/GameState/GameState.hpp"
@@ -18,6 +20,8 @@ int main()
         {
             for (int turn = 1; turn < 8; turn++)
             {
+                gameState->displayGameState();
+                gameState->displayTable();
                 gameState->playerAction();
                 gameState->nextTurn();
             }
