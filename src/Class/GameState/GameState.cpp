@@ -128,14 +128,14 @@ void GameState::initializePlayingDeck()
 
             if (menu != "1" && menu != "2")
             {
-                throw "Menu not available\n";
+                throw MenuException();
             }
 
             isMenuValid = true;
         }
-        catch (const char *err)
+        catch (MenuException err)
         {
-            errMsg = err;
+            errMsg = err.what();
         }
         catch (...)
         {
@@ -382,13 +382,13 @@ void GameState::playerAction()
             }
             else
             {
-                throw "Action is not available\n";
+                throw ActionException();
             }
             isValid = true;
         }
-        catch (const char *err)
+        catch (ActionException err)
         {
-            errMsg = err;
+            errMsg = err.what();
         }
     }
 }

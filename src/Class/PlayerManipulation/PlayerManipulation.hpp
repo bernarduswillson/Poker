@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "../Ability/Ability.hpp"
+#include "../Exception/Exception.hpp"
 
 class PlayerManipulation : virtual public Ability
 {

@@ -22,6 +22,7 @@
 #include "../Deck/Deck.hpp"
 #include "../Card/Card.hpp"
 #include "../Table/Table.hpp"
+#include "../Exception/Exception.hpp"
 
 class GameState
 {

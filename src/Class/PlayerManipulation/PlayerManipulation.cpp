@@ -32,22 +32,21 @@ void PlayerManipulation::use(PlayerList &players, Deck<Card> &playingDeck, int &
             try
             {
                 std::cerr << errMsg;
-                std::cout << players.getLength() << std::endl;
                 std::cout << "\nChoose a target: ";
                 std::cin >> target;
 
                 if (target != "1" && target != "2" && target != "3" && target != "4" && target != "5" && target != "6" && target != "7")
                 {
-                    throw "Target is not available\n";
+                    throw TargetException();
                 }
 
                 isValid = true;
                 int targetIdx = std::stoi(target);
                 players.getElmt(targetIdx).setIsDisable();
             }
-            catch (const char *err)
+            catch (TargetException err)
             {
-                errMsg = err;
+                errMsg = err.what();
             }
         }
     }
