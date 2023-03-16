@@ -1,18 +1,6 @@
 #include "PlayerManipulation.hpp"
 
-PlayerManipulation::PlayerManipulation(int id) : Ability(id)
-{
-    this->id = id;
-    if (id == 1)
-    {
-        this->name = "Reroll";
-    }
-
-    if (id == 3)
-    {
-        this->name = "Abilityless";
-    }
-}
+PlayerManipulation::PlayerManipulation(int id) : Ability(id) {}
 
 PlayerManipulation::~PlayerManipulation() {}
 
@@ -21,19 +9,8 @@ long long int PlayerManipulation::use(long long int prize)
     return prize;
 }
 
-void PlayerManipulation::use(PlayerList &players, Deck<Card> &playingDeck)
+void PlayerManipulation::use(PlayerList &players, Deck<Card> &playingDeck, int &turn)
 {
-    // Reroll
-    if (this->id == 1)
-    {
-        std::vector<Card> temp;
-        for (int i = 0; i < 2; i++)
-        {
-            temp.push_back(playingDeck.roll());
-        }
-        players.getElmt(0).setHands(temp);
-    }
-    
     // Abilityless
     if (this->id == 3)
     {
@@ -72,6 +49,43 @@ void PlayerManipulation::use(PlayerList &players, Deck<Card> &playingDeck)
             {
                 errMsg = err;
             }
+        }
+    }
+
+    // Reroll
+    else if (this->id == 4)
+    {
+        std::vector<Card> temp;
+        for (int i = 0; i < 2; i++)
+        {
+            temp.push_back(playingDeck.roll());
+        }
+        players.getElmt(0).setHands(temp);
+    }
+
+    else if (this->id == 5)
+    {
+        std::vector<Player> remains;
+        for (int i = 0; i < 7 - turn; i++)
+        {
+            remains.push_back(players.getElmt(i + 1));
+        }
+        std::reverse(remains.begin(), remains.end());
+
+        std::vector<Player> complete;
+        for (int i = 0; i < turn - 1; i++)
+        {
+            complete.push_back(players.getElmt(8 - turn));
+        }
+        std::reverse(complete.begin(), complete.end());
+
+        for (int i = 1; i < 8 - turn; i++)
+        {
+            players.setElmt(i, remains[i - 1]);
+        }
+        for (int i = 0; i < turn - 1; i++)
+        {
+            players.setElmt(8 - turn + i, complete[i]);
         }
     }
 }
