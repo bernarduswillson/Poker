@@ -49,13 +49,14 @@ First Project for Object Oriented Programming Course at Institut Teknologi Bandu
 - Run the command in [compile](#compile) section
 - Enjoy the game
 ## Compile
-'''
+- Run the command below
+```
 g++ -std=c++17 ./src/main.cpp ./src/Class/GameState/GameState.cpp ./src/Class/Ability/Ability.cpp ./src/Class/Multiplier/Multiplier.cpp ./src/Class/PlayerManipulation/PlayerManipulation.cpp ./src/Class/PlayerList/PlayerList.cpp ./src/Class/Player/Player.cpp ./src/Class/Deck/Deck.cpp ./src/Class/Card/Card.cpp ./src/Class/Table/Table.cpp ./src/Class/InventoryHolder/InventoryHolder.cpp ./src/Class/Calculable/Calculable.cpp ./src/Class/Package/Package.cpp ./src/Class/Combination/Flush/Flush.cpp ./src/Class/Combination/FourOfAKind/FourOfAKind.cpp ./src/Class/Combination/StraightFlush/StraightFlush.cpp ./src/Class/Combination/FullHouse/FullHouse.cpp ./src/Class/Combination/Straight/Straight.cpp ./src/Class/Combination/ThreeOfAKind/ThreeOfAKind.cpp ./src/Class/Combination/TwoPair/TwoPair.cpp ./src/Class/Combination/Pair/Pair.cpp ./src/Class/Combination/HighCard/HighCard.cpp ./src/Class/Exception/Exception.cpp ./src/Class/GArray/GArray.cpp -o ./bin/candyCard.out
-'''
+```
 
 
 ## Structure
-'''
+```
 .
 |____bin
 | |____candyCard.out
@@ -149,7 +150,7 @@ g++ -std=c++17 ./src/main.cpp ./src/Class/GameState/GameState.cpp ./src/Class/Ab
 | | | | | | |____DWARF
 | | | |____Player.hpp
 | |____main.cpp
-'''
+```
 
 
 
